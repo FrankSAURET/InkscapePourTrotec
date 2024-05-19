@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+   <name>Engrenage</name>
+   <id>fablabchemnitz.de.gears_dev</id>
+   <param name="active_tab" type="notebook">
+      <page name="Gear" gui-text="Engrenages">
+         <param name="teeth" type="int" min="3" max="1200" gui-text="Nombre de dents (de 3 à 1200)" >20</param>
+         <param name="dimension" type="float" min="0.0001" max="1000.0" precision="5" gui-text="Taille de dent (Module, Pa, Pc)" gui-description="à choisir dans «Système de dent»">1.0</param>
+         <param name="units" type="optiongroup" appearance="combo" gui-text="Unités">
+            <option value="mm" translatable="no">mm</option>
+            <option value="cm" translatable="no">cm</option>
+            <option value="in" translatable="no">in</option>
+            <option value="pt" translatable="no">pt</option>
+            <option value="px" translatable="no">px</option>
+         </param>
+         <param name="system" gui-text="Système de dent" type="optiongroup" appearance="combo">
+            <option value="MM">Module</option>
+            <option value="CP">Pas angulaire</option>
+            <option value="DP">Pas circulaire</option>
+         </param>
+         <param name="internal_ring" type="bool" gui-text="Engrenage annulaire (Engrenage interne)">false</param>
+         <separator/>
+         <param name="angle" type="float" min="5.0" max="45.0" precision="1" gui-text="Angle de pression (de 5 à 45)">20.0</param>
+         <param name="centercross" type="bool" gui-text="Dessiner la croix centrale">false</param>
+         <param name="pitchcircle" type="bool" gui-text="Dessiner le cercle primitif (pour l'engrenage)">false</param>
+         <param name="annotation" type="bool" gui-text="Dessiner le texte d'annotation">false</param>
+      </page>
+      <page name="rack" gui-text="Crémaillère">
+         <param name="draw_rack" type="bool" gui-text="Dessiner la crémaillère">false</param>
+         <param name="rack_teeth_length" type="int" min="1" max="500" gui-text="Longueur de la crémaillère (dents)">10</param>
+         <param name="rack_base_height" type="float" min="0.1" max="100" precision="3" gui-text="Hauteur de la base">5</param>
+         <param name="rack_base_tab" type="float" min="0" max="100" precision="3" gui-text="Longueur de l'onglet de fin">5</param>
+         <label>La crémaillère correspondante est dessinée en plus et en dessous de l'engrenage à denture droite.</label>
+      </page>
+      <page name="advanced" gui-text="Options avancées">
+         <param name="clearance" type="float" min="0" max="100" precision="3" gui-text="Jeu (bas)">0</param>
+         <param name="profile_shift" type="float" min="-50" max="50" precision="1" gui-text="Déplacement de profil [% du module]">0</param>
+         <param name="mount_hole" type="float" min="0" max="100" precision="3" gui-text="Diamètre du trou de montage (0 pour ne pas le dessiner)">4.0</param>
+         <param name="spoke_count" type="int" min="0" max="100" gui-text="Nombre de rayons (0 si aucun)">3</param>
+         <param name="spoke_width" type="float" min=".01" max="1000" precision="3" gui-text="Largeur du rayon, jante (ou anneau)">3.0</param>
+         <param name="mount_diameter" type="float" min=".01" max="1000" precision="3" gui-text="Diamètre du support de montage">10.0</param>
+         <param name="accuracy" type="optiongroup" appearance="combo" gui-text="Précision de la dent">
+            <option value="0">automatique</option>
+            <option value="20">20 points : meilleur</option>
+            <option value="12">12 points : moyen</option>
+            <option value="6">6 points : faible</option>
+         </param>
+         <label xml:space="preserve">Utilisez une précision plus élevée avec un nombre de dents plus faible.
+         </label>
+         <separator/>
+         <label xml:space="preserve">
+                  Attention : La sous-coupe n'est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu'un avertissement.
+         </label>
+         <param name="undercut_alert" type="bool" gui-text="Confirmer l'engrenage avec sous-coupe">true</param>
+      </page>
+
+      <page name="Usage" gui-text="Explications">
+         <param name="active_tab" type="notebook">
+            <page name="page_1" gui-text="Vocabulaire">
+               <vbox>
+                  <image>gears_dev.png</image>
+                  <label appearance="url">
+                                 https://www.toutcalculer.com/mecanique/dimensions-engrenage.php#calcul
+                  </label>
+               </vbox>
+            </page>
+            <page name="page_2" gui-text="Calculs">
+               <vbox>
+                  <label xml:space="preserve">Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.
+
+Pour que les engrenages s'engrènent - la taille des dents sur chaque engrenage doit être la même.
+C'est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.
+
+Le pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.
+p = pi x D / z
+   - où z est le nombre de dents sur un engrenage de diamètre primitif D.
+La mesure SI est le module - qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :
+m = p / pi = D / z
+
+   - Cercle primitif : Le rayon est égal à la distance du centre de l'engrenage au point primitif.
+   - Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.
+   - Angle de pression [en degrés]. Habituellement 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l'angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction]).
+                  </label>
+               </vbox>
+            </page>
+         </param>
+       </page>
+   </param>
+   <effect>
+      <object-type>all</object-type>
+      <effects-menu>
+         <submenu name="Formes">
+            
+         </submenu>
+      </effects-menu>
+   </effect>
+   <script>
+      <command location="inx" interpreter="python">gears_dev.py</command>
+   </script>
+</inkscape-extension>

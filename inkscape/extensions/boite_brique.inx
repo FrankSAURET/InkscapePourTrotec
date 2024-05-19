@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<name>Boite « Brique »</name>
+	<id>org.inkscape.BoiteLaser</id>
+	<dependency type="executable" location="extensions">boite_brique.py</dependency>
+	<param name="tab" type="notebook">
+		<page name="Dimensions" gui-text="Dimensions">
+			<param name="laserboxuse" type="description" xml:space="preserve">Les dimensions peuvent mesurer la taille externe ou interne de la boîte.
+Les unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).
+La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur).
+-----------------------------------------------------------------------------
+			</param>
+			<param name="aveccouvercle" gui-text="La boite doit elle avoir un couvercle (boite fermée) : " type="optiongroup" appearance="minimal">
+				<option value="True">Avec couvercle</option>
+				<option value="False">Sans couvercle</option></param>
+			<param name="int_ext" gui-text="Les dimensions sont : " type="optiongroup" appearance="combo">
+				<option value="True">Externe</option>
+				<option value="False">Interne</option></param>				
+			<param name="units" gui-text="Unité" type="optiongroup" appearance="combo">>
+				<option value="px" translatable="no">px</option>
+				<option value="pt" translatable="no">pt</option>
+				<option value="in" translatable="no">in</option>
+				<option value="cm" translatable="no">cm</option>
+				<option value="mm" translatable="no">mm</option></param>
+			<param name="width"  type="float" min="0.1" max="1000.0" gui-text="Largeur">50.0</param>
+			<param name="height" type="float" min="0.1" max="1000.0" gui-text="Longueur">30.0</param>
+			<param name="depth"  type="float" min="0.1" max="1000.0" gui-text="Hauteur">15</param>
+			<param name="thickness" type="float" min="0.0" max="20.0" precision="2" gui-text="Epaisseur du matériau">3.0</param>
+			<param name="ntab_W" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la largeur">11</param>
+			<param name="ntab_H" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la longueur">11</param>
+			<param name="ntab_D" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la hauteur">6</param>
+			<param name="laserboxuse" type="description" xml:space="preserve">-----------------------------------------------------------------------------
+Les coins des cubes peuvent être omis ou pas.
+			</param>
+			<param name="corners" type="boolean" gui-text="Inclure les coins.">True</param>
+			<param name="halftabs" type="bool" gui-text="Encoche de demi-taille près des coins.">true</param>
+		</page>
+		<page name="Usage2" gui-text="Largeur du trait de coupe">
+			<param name="laserboxuse2" type="description" xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.
+
+Mettre le trait de coupe à 0 créera une boîte qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle.
+
+Si le trait de coupe est supérieur à zéro, vous pouvez avoir un « ajustement précis » ou ajouter des bosses. Cela modifiera la largeur des languettes pour tenir compte du matériau brûlé par le laser.
+Les bosses permettront un « ajustement serré » (voir onglet suivant)
+Les éléments de la boite seront séparés, en utilisant plus de matériau, parce qu’une seule ligne de découpe laser ne peut pas être utilisée.
+-----------------------------------------------------------------------------
+			</param>
+			<param name="commentairekerfchoice" type="description" xml:space="preserve">Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe.
+La liste des matériaux peut-être modifiée dans le fichier "boite_brique.inx" qui se trouve dans votre dossier extension (sous windows il est sans doute ici :
+"%AppData%\Roaming\inkscape\extensions".			
+			</param>
+			<param name="bymaterial" type="optiongroup" gui-text=" ">
+			   <option value="True">Choisir un matériau</option>
+			   <option value="False">Indiquer la largeur du trait de coupe</option>
+			</param>
+			<param name="materiaux" type="optiongroup" appearance="minimal" gui-text="Liste des matériaux :">
+				<!-- 
+				Lister ci dessous les matériaux pour votre machine et leur largeur de trait de coupe pour un ajustement serré 
+ 				-->
+				<option value="0.1">PMMA 5 mm</option>
+				<option value="0.1">PMMA 3 mm</option>
+				<option value="0.28">Médium 3 mm</option>
+			</param>
+			<param name="kerf_size" type="float" min="0.00" max="3.00" precision="3" gui-text="trait de coupe (quantité perdue par le laser)">0.00</param>
+			<param name="linewidth" type="boolean" gui-text="Largeur de ligne affichée = trait de coupe">False</param>
+			<param name="forcingseparation" type="boolean" gui-text="Forcer la séparation des panneaux si le trait de coupe est égale à 0">False</param>
+		</page>
+		<page name="Usage3" gui-text="Bosses">
+			<param name="laserboxuse3" type="description" xml:space="preserve">Les bosses sont utilisées pour qu’un ajustement serré puisse être effectué en matériaux déformables comme le bois.
+Si bosses est coché, aucun ajustement précis du trait de coupe n’est effectué sur les languettes. Au lieu de cela, une petite bosse est ajoutée à chaque languettes pour permettre un ajustement serré.
+– la taille de la bosse est égale à la taille du trait de scie.
+– Les bosses sont utiles pour les matériaux flexibles comme le bois, mais pas pour les matériaux rigides comme le plexiglas.
+– Le style des bosses est soit demi-rondes soit triangles. Les triangles sont moins chers à couper mais les demi-rondes s’ajustent mieux.
+			</param>
+			<param name="dimples" type="boolean" gui-text="Des bosses à la place d'un ajustement serré">False</param>
+			<param name="dstyle" gui-text="Style de bosse" type="optiongroup" appearance="radio">
+				<option value="False">Demi-rondes</option>
+				<option value="True">Triangles</option></param>
+		</page>
+		<page name="Usage4" gui-text="Misc">
+			<param name="laserboxuse4" type="description" xml:space="preserve">Couleurs :
+Le schéma de couleurs utilisé par Ponoko (fabricant de machine) est utilisé ici. Plus précisément :
+– Bleu (0,0, 255) est la couleur de la ligne coupée au laser,
+– Orange est une annotation non imprimable.
+			<!-- 
+				Les annotations peuvent être affichées. Elles ne décrivent que la valeur du trait de coupe et sont indiqués sur chaque pièce. Ceci peut être utile si les tests d’impression s’adaptent à différents matériaux. 
+			-->
+			</param>
+			<!-- <param name="annotation" type="boolean" gui-text="Inclure les annotations">True</param> -->
+			<image>boite_brique1.jpg</image>
+		</page>
+	</param>
+	<effect>
+		<object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Découpe Laser"/>
+        </effects-menu>
+	</effect>
+	<script>
+		<command location="inx" interpreter="python">boite_brique.py</command>
+	</script>
+</inkscape-extension>
