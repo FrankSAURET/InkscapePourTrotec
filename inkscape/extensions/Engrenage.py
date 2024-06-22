@@ -38,7 +38,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			AttributeError: 'module' object inkex has no attribute 'uutounit
 			Fixed https://github.com/jnweiger/inkscape-gears-dev
 2020-7-4   spadino 1.0 ported to inkscape 1.0
-2022-04-21 Frank sauret 1.1 : traduction en français. Modification de la couleur en cas d'undercut. Modification du deddendum pour qu'il fasse 1.25 fois l'addendum.
+2024-04-21 Frank sauret 1.1 : traduction en français. Modification de la couleur en cas d'undercut. Modification du deddendum pour qu'il fasse 1.25 fois l'addendum.
+2024-06-18 Frank sauret 1.2 : Ajout de la possibilité de choisir la forme du trou (rectangulaire, ronde ou empreinte de servo) et de choisir les dimensions du trou. Ajout de la possibilité de choisir une empreinte pour le trou du servo. Les empreintes sont placées dans le fichier engrenage.ini
+2024-06-22 Frank sauret 1.3 : Ajout de couleurs pour l'ordre de découpe. Séparation en plusieurs objet pour faciliter la retouche et la recolorisation.
 '''
 
 import inkex
@@ -46,11 +48,15 @@ from lxml import etree
 from os import devnull # for debugging
 from math import pi, cos, sin, tan, radians, degrees, ceil, asin, acos, sqrt
 two_pi = 2 * pi
+import json
+import csv
+from configparser import ConfigParser
+import os
 
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
-__version__ = '1.1'
+__version__ = '1.3'
 
 def uutounit(self,nn,uu):
     return self.svg.uutounit(nn,uu)
@@ -112,7 +118,6 @@ def draw_SVG_circle(parent, r, cx, cy, name, style):
                     inkex.addNS('label','inkscape'):name}
     circle = etree.SubElement(parent, inkex.addNS('circle','svg'), circ_attribs )
 
-
 ### Undercut support functions
 def undercut_min_teeth(pitch_angle, k=1.0):
     """ computes the minimum tooth count for a 
@@ -138,13 +143,11 @@ def undercut_min_angle(teeth, k=1.0):
     """
     return degrees(asin(min(0.856, sqrt(2.0*k/teeth))))    # max 59.9 deg
 
-
 def have_undercut(teeth, pitch_angle=20.0, k=1.0):
     """ returns true if the specified number of teeth would
         cause an undercut.
     """
     return (teeth < undercut_min_teeth(pitch_angle, k))
-
 
 ## gather all basic gear calculations in one place
 def gear_calculations(num_teeth, circular_pitch, pressure_angle, clearance=0, ring_gear=False, profile_shift=0.):
@@ -180,7 +183,6 @@ def gear_calculations(num_teeth, circular_pitch, pressure_angle, clearance=0, ri
             tooth_thickness
             )
 
- 
 def generate_rack_points(tooth_count, pitch, addendum, pressure_angle,
                        rack_base_height, tab_length, clearance=0, draw_guides=False):
         """ Return path (suitable for svg) of the Rack gear.
@@ -240,7 +242,6 @@ def generate_rack_points(tooth_count, pitch, addendum, pressure_angle,
             guide_path = points_to_svgd(p)
         # return points ready for use in an SVG 'path'
         return (points, guide_path)
-    
 
 def generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular):
     """ given a set of core gear params
@@ -284,15 +285,16 @@ def generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_ra
         points.extend( p_tmp )
     return (points)
 
-
 def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
                          unit_factor, unit_label):
-    """ given a set of constraints
-        - generate the svg path for the gear spokes
-        - lies between mount_radius (inner hole) and root_radius (bottom of the teeth)
-        - spoke width also defines the spacing at the root_radius
-        - mount_radius is adjusted so that spokes fit if there is room
-        - if no room (collision) then spokes not drawn
+    """ 
+    Trace les rayons
+    donne un ensemble de contraintes
+        - générer le chemin SVG pour les rayons de l'engrenage
+        - se situe entre mount_radius (trou intérieur) et root_radius (base des dents)
+        - la largeur des rayons définit également l'espacement au niveau du root_radius
+        - le mount_radius est ajusté pour que les rayons s'adaptent s'il y a de la place
+        - si pas de place (collision) alors les rayons ne sont pas dessinés
     """
     # Spokes
     collision = False # assume we draw spokes
@@ -347,20 +349,12 @@ def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mo
                     )
     return (path, messages)
 
-
 class Gears(inkex.EffectExtension):
     def __init__(self):
         inkex.Effect.__init__(self)
-        # an alternate way to get debug info:
-        # could use inkex.utils.debug(string) instead...
-        # try:
-        #     self.tty = open("/dev/tty", 'w')
-        # except:
-        #     self.tty = open(devnull, 'w')  # '/dev/null' for POSIX, 'nul' for Windows.
-        #     # print >>self.tty, "gears-dev " + __version__
 
         self.arg_parser.add_argument("-t", "--teeth", type=int, default=24, help="Number of teeth")
-        self.arg_parser.add_argument("-s", "--system", default='CP', help="Select system: 'CP' (Cyclic Pitch (default)), 'DP' (Diametral Pitch), 'MM' (Metric Module)")
+        self.arg_parser.add_argument("-s", "--system", default='MM', help="Select system: 'CP' (Cyclic Pitch (default)), 'DP' (Diametral Pitch), 'MM' (Metric Module)")
         self.arg_parser.add_argument("-d", "--dimension", type=float, default=1.0, help="Tooth size, depending on system (which defaults to CP)")
         self.arg_parser.add_argument("-a", "--angle", type=float, default=20.0, help="Pressure Angle (common values: 14.5, 20, 25 degrees)")
         self.arg_parser.add_argument("-p", "--profile_shift", type=float, default=20.0, help="Profile shift [in percent of the module]. Negative values help against undercut")
@@ -370,7 +364,7 @@ class Gears(inkex.EffectExtension):
         self.arg_parser.add_argument("-cl", "--clearance", type=float, default=0.0, help="Clearance between bottom of gap of this gear and top of tooth of another")
         self.arg_parser.add_argument("-an", "--annotation", type=inkex.Boolean, default=False, help="Draw annotation text")
         self.arg_parser.add_argument("-i", "--internal_ring", type=inkex.Boolean, default=False, help="Ring (or Internal) gear style (default: normal spur gear)")
-        self.arg_parser.add_argument("-mh", "--mount_hole", type=float, default=5, help="Mount hole diameter")
+        self.arg_parser.add_argument("-mh", "--mount_hole", type=float, default=4.42, help="Mount hole diameter")
         self.arg_parser.add_argument("-md", "--mount_diameter", type=float, default=15, help="Mount support diameter")
         self.arg_parser.add_argument("-sc", "--spoke_count", type=int, default=3, help="Spokes count")
         self.arg_parser.add_argument("-sw", "--spoke_width", type=float, default=5, help="Spoke width")
@@ -383,7 +377,12 @@ class Gears(inkex.EffectExtension):
         self.arg_parser.add_argument("-rh", "--rack_base_height", type=float, default=8, help="Height of base of rack")
         self.arg_parser.add_argument("-rt", "--rack_base_tab", type=float, default=14, help="Length of tabs on ends of rack")
         self.arg_parser.add_argument("-ua", "--undercut_alert", type=inkex.Boolean, default=False, help="Let the user confirm a warning dialog if undercut occurs. This dialog also shows helpful hints against undercut")
-  
+        self.arg_parser.add_argument("-ho", "--hole", type=inkex.Boolean, default=True, help="Hole or not that is the question")
+        self.arg_parser.add_argument("-sh", "--shape", type=str, default="Rectangulaire", help="Shape of the hole")
+        self.arg_parser.add_argument("-hw", "--hole_width", type=float, default=2.9, help="Width of rectangular hole")
+        self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole")
+        self.arg_parser.add_argument("-se", "--servo", type=str, default="HS422", help="shape of servo")
+        
     def add_text(self, node, text, position, text_height=12, Attention=False):
         """ Create and insert a single line of text into the svg under node.
             - use 'text' type and label as anootation
@@ -447,15 +446,19 @@ class Gears(inkex.EffectExtension):
         # it is independent of the doc_units!
         return circular_pitch / uutounit(self, 1.0, 'in')
 
-
-
     def effect(self):
         """ Calculate Gear factors from inputs.
             - Make list of radii, angles, and centers for each tooth and 
               iterate through them
             - Turn on other visual features e.g. cross, rack, annotations, etc
         """
-        path_stroke = '#000000'  # might expose one day
+        config = ConfigParser()
+        stroke_color_teeth = '#663300'
+        stroke_color_hole = '#0000FF'
+        stroke_color_ring = '#660066'
+        stroke_color_spoke = '#006633'
+        stroke_color_guide = '#FF6600'
+        path_stroke='#000000'
         path_fill   = 'none'     # no fill - just a line
         path_stroke_width  = uutounit(self, 0.1, 'mm') # might expose one day
         path_stroke_light  = uutounit(self, 0.05, 'mm') # guides are thinner
@@ -470,7 +473,12 @@ class Gears(inkex.EffectExtension):
         # Clearance: Radial distance between top of tooth on one gear to 
         # bottom of gap on another.
         clearance = self.options.clearance * unit_factor
+        hole=self.options.hole
+        shape=self.options.shape
+        hole_width=self.options.hole_width * unit_factor
+        hole_length=self.options.hole_length * unit_factor
         mount_hole = self.options.mount_hole * unit_factor
+        servo=self.options.servo
         # for spokes
         mount_radius = self.options.mount_diameter * 0.5 * unit_factor
         spoke_count = self.options.spoke_count
@@ -479,6 +487,13 @@ class Gears(inkex.EffectExtension):
         # visible guide lines
         centercross = self.options.centercross # draw center or not (boolean)
         pitchcircle = self.options.pitchcircle # draw pitch circle or not (boolean)
+        if shape=="Rectangulaire":
+            mount_hole=sqrt( hole_width**2 + hole_length**2 )
+        if shape=="Empreinte" :
+            config.read('engrenage.ini')
+            servoDiameter = config.getfloat(servo, 'diametre')
+            servoPath=config.get(servo, 'd')
+            mount_hole=servoDiameter
         # Accuracy of teeth curves
         accuracy_involute = 20 # Number of points of the involute curve
         accuracy_circular = 9  # Number of points on circular parts
@@ -500,8 +515,6 @@ class Gears(inkex.EffectExtension):
          outer_radius, root_radius, tooth) = gear_calculations(teeth, pitch, angle, clearance, self.options.internal_ring, self.options.profile_shift*0.01)
 
         # Detect Undercut of teeth
-##        undercut = int(ceil(undercut_min_teeth( angle )))
-##        needs_undercut = teeth < undercut #? no longer needed ?
         if have_undercut(teeth, angle, 1.0):
             min_teeth = int(ceil(undercut_min_teeth(angle, 1.0)))
             min_angle = undercut_min_angle(teeth, 1.0) + .1
@@ -519,72 +532,52 @@ class Gears(inkex.EffectExtension):
 
         # All base calcs done. Start building gear
         points = generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular)
-        
-##        half_thick_angle = two_pi / (4.0 * teeth ) #?? = pi / (2.0 * teeth)
-##        pitch_to_base_angle  = involute_intersect_angle( base_radius, pitch_radius )
-##        pitch_to_outer_angle = involute_intersect_angle( base_radius, outer_radius ) - pitch_to_base_angle
-##
-##        start_involute_radius = max(base_radius, root_radius)
-##        radii = linspace(start_involute_radius, outer_radius, accuracy_involute)
-##        angles = [involute_intersect_angle(base_radius, r) for r in radii]
-##
-##        centers = [(x * two_pi / float( teeth) ) for x in range( teeth ) ]
-##        points = []
-##
-##        for c in centers:
-##            # Angles
-##            pitch1 = c - half_thick_angle
-##            base1  = pitch1 - pitch_to_base_angle
-##            offsetangles1 = [ base1 + x for x in angles]
-##            points1 = [ point_on_circle( radii[i], offsetangles1[i]) for i in range(0,len(radii)) ]
-##
-##            pitch2 = c + half_thick_angle
-##            base2  = pitch2 + pitch_to_base_angle
-##            offsetangles2 = [ base2 - x for x in angles] 
-##            points2 = [ point_on_circle( radii[i], offsetangles2[i]) for i in range(0,len(radii)) ]
-##
-##            points_on_outer_radius = [ point_on_circle(outer_radius, x) for x in linspace(offsetangles1[-1], offsetangles2[-1], accuracy_circular) ]
-##
-##            if root_radius > base_radius:
-##                pitch_to_root_angle = pitch_to_base_angle - involute_intersect_angle(base_radius, root_radius )
-##                root1 = pitch1 - pitch_to_root_angle
-##                root2 = pitch2 + pitch_to_root_angle
-##                points_on_root = [point_on_circle (root_radius, x) for x in linspace(root2, root1+(two_pi/float(teeth)), accuracy_circular) ]
-##                p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root[1:-1] # [::-1] reverses list; [1:-1] removes first and last element
-##            else:
-##                points_on_root = [point_on_circle (root_radius, x) for x in linspace(base2, base1+(two_pi/float(teeth)), accuracy_circular) ]
-##                p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root # [::-1] reverses list
-##
-##            points.extend( p_tmp )
 
-        path = points_to_svgd( points )
+        pathSpoke=""
+        pathHole=""
+        pathRing = ""
+        pathTeeth = points_to_svgd( points )
         bbox_center = points_to_bbox_center( points )
+       
 
-        # Spokes (add to current path)
         if not self.options.internal_ring:  # only draw internals if spur gear
+            # dessin des rayons
             spokes_path, msg = generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
                                                     unit_factor, self.options.units)
             warnings.extend(msg)
-            path += spokes_path
-
-            # Draw mount hole
-            # A : rx,ry  x-axis-rotation, large-arch-flag, sweepflag  x,y
-            r = mount_hole / 2
-            path += (
-                    "M %f,%f" % (0,r) +
-                    "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,-r) +
-                    "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,r) 
-                    )
+            # Spokes (add to current path)
+            pathSpoke = spokes_path
+            if hole:
+                if shape=="Rond":
+                    # Draw mount hole
+                    # A : rx,ry  x-axis-rotation, large-arch-flag, sweepflag  x,y
+                    r = mount_hole / 2
+                    pathHole= (
+                            "M %f,%f" % (0,r) +
+                            "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,-r) +
+                            "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,r) 
+                            )
+                if shape=="Rectangulaire":    
+                    pathHole=(
+                            "M %f,%f" % (0, hole_length/2) +
+                            "L %f,%f" % (hole_width/2, hole_length/2)+
+                            "L %f,%f" % (hole_width/2, -hole_length/2) +
+                            "L %f,%f" % (-hole_width/2, -hole_length/2)+
+                            "L %f,%f" % (-hole_width/2, hole_length/2)+
+                            "Z"
+                            )
+                if shape=="Empreinte":
+                    pathHole= servoPath
         else:
-            # its a ring gear
+            # its a ring gear // pas de trou central
             # which only has an outer ring where width = spoke width
             r = outer_radius + spoke_width
-            path += (
+            pathRing= (
                     "M %f,%f" % (0,r) +
                     "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,-r) +
                     "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,r) 
                     )
-        
+            
         # Embed gear in group to make animation easier:
         #  Translate group, Rotate path.
         t = 'translate(' + str( self.svg.namedview.center[0] ) + ',' + str( self.svg.namedview.center[1] ) + ')'
@@ -597,13 +590,35 @@ class Gears(inkex.EffectExtension):
         g = etree.SubElement(self.svg.get_current_layer(), 'g', g_attribs )
 
         # Create gear path under top level group
-        style = { 'stroke': path_stroke, 'fill': path_fill, 'stroke-width': path_stroke_width }
-        gear_attribs = { 'style': str(inkex.Style(style)), 'd': path }
-        gear = etree.SubElement(g, inkex.addNS('path','svg'), gear_attribs )
+        # Définir les styles spécifiques pour chaque path
+        styles = {
+            'pathTeeth': {'stroke': 'red', 'fill': 'none', 'stroke-width': 2},
+            'pathHole': {'stroke': 'blue', 'fill': 'none', 'stroke-width': 2},
+            'pathRing': {'stroke': 'green', 'fill': 'none', 'stroke-width': 2},
+            'pathSpoke': {'stroke': 'yellow', 'fill': 'none', 'stroke-width': 2},
+        }
+        styles = {
+            'pathTeeth': {'stroke': stroke_color_teeth, 'fill': 'none', 'stroke-width': path_stroke_width},
+            'pathHole': {'stroke': stroke_color_hole, 'fill': 'none', 'stroke-width': path_stroke_width},
+            'pathRing': {'stroke': stroke_color_ring, 'fill': 'none', 'stroke-width': path_stroke_width},
+            'pathSpoke': {'stroke': stroke_color_spoke, 'fill': 'none', 'stroke-width': path_stroke_width},
+        }
+        paths = {
+            'pathTeeth': pathTeeth,
+            'pathHole': pathHole,
+            'pathRing': pathRing,
+            'pathSpoke': pathSpoke,
+        }
+        # Itérer sur chaque path et appliquer son style spécifique
+        for path_name, path_data in paths.items():
+            style = styles[path_name]
+            style_str = str(inkex.Style(style))
+            gear_attribs = {'style': style_str, 'd': path_data}
+            etree.SubElement(g, inkex.addNS('path', 'svg'), gear_attribs)
 
         # Add center
         if centercross:
-            style = {'stroke': path_stroke, 'fill': path_fill,
+            style = {'stroke': stroke_color_guide, 'fill': path_fill,
                      'stroke-width': path_stroke_light}
             cs = str(pitch / 3)  # centercross length
             d = 'M-'+cs+',0L'+cs+',0M0,-'+cs+'L0,'+cs  # 'M-10,0L10,0M0,-10L0,10'
@@ -614,7 +629,7 @@ class Gears(inkex.EffectExtension):
 
         # Add pitch circle (for mating)
         if pitchcircle:
-            style = { 'stroke': path_stroke, 'fill': path_fill, 'stroke-width': path_stroke_light }
+            style = { 'stroke': stroke_color_guide, 'fill': path_fill, 'stroke-width': path_stroke_light }
             draw_SVG_circle(g, pitch_radius, 0, 0, 'Pitch circle', style)
 
         # Add Rack (below)
@@ -626,10 +641,6 @@ class Gears(inkex.EffectExtension):
                                                         rack_base_height, tab_width, clearance, pitchcircle)
             path = points_to_svgd(points)
             # position below Gear, so that it meshes nicely
-            # xoff = 0          ## if teeth % 4 == 2.
-            # xoff = -0.5*pitch     ## if teeth % 4 == 0.
-            # xoff = -0.75*pitch    ## if teeth % 4 == 3.
-            # xoff = -0.25*pitch    ## if teeth % 4 == 1.
             xoff = (-0.5, -0.25, 0, -0.75)[teeth % 4] * pitch
             t = 'translate(' + str( xoff ) + ',' + str( pitch_radius ) + ')'
             g_attribs = { inkex.addNS('label', 'inkscape'): 'RackGear' + str(tooth_count),
@@ -637,12 +648,12 @@ class Gears(inkex.EffectExtension):
             rack = etree.SubElement(g, 'g', g_attribs)
 
             # Create SVG Path for gear
-            style = {'stroke': path_stroke, 'fill': 'none', 'stroke-width': path_stroke_width }
+            style = {'stroke': stroke_color_teeth, 'fill': 'none', 'stroke-width': path_stroke_width }
             gear_attribs = { 'style': str(inkex.Style(style)), 'd': path }
             gear = etree.SubElement(
                 rack, inkex.addNS('path', 'svg'), gear_attribs)
             if guide_path is not None:
-                style2 = { 'stroke': path_stroke, 'fill': 'none', 'stroke-width': path_stroke_light }
+                style2 = { 'stroke': stroke_color_guide, 'fill': 'none', 'stroke-width': path_stroke_light }
                 gear_attribs2 = { 'style':  str(inkex.Style(style2)), 'd': guide_path }
                 gear = etree.SubElement(
                     rack, inkex.addNS('path', 'svg'), gear_attribs2)

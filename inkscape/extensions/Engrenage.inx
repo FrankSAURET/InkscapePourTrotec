@@ -4,7 +4,7 @@
    <id>fablabchemnitz.de.gears_dev</id>
    <param name="active_tab" type="notebook">
       <page name="Gear" gui-text="Engrenages">
-         <param name="teeth" type="int" min="3" max="1200" gui-text="Nombre de dents (de 3 à 1200)" >20</param>
+         <param name="teeth" type="int" min="3" max="1200" gui-text="Nombre de dents (de 3 à 1200)">20</param>
          <param name="dimension" type="float" min="0.0001" max="1000.0" precision="5" gui-text="Taille de dent (Module, Pa, Pc)" gui-description="à choisir dans «Système de dent»">1.0</param>
          <param name="units" type="optiongroup" appearance="combo" gui-text="Unités">
             <option value="mm" translatable="no">mm</option>
@@ -24,6 +24,42 @@
          <param name="centercross" type="bool" gui-text="Dessiner la croix centrale">false</param>
          <param name="pitchcircle" type="bool" gui-text="Dessiner le cercle primitif (pour l'engrenage)">false</param>
          <param name="annotation" type="bool" gui-text="Dessiner le texte d'annotation">false</param>
+         <label>Le texte d'annotation donne notamment le diamètre primitif.</label>
+      </page>
+      <page name="Hole" gui-text="Perçage">
+         <hbox>
+            <param name="hole" type="bool" gui-text="Dessiner un trou central">false</param>
+         </hbox>
+         <separator />
+         <hbox>
+            <param name="shape" type="optiongroup" gui-text="Forme du trou :" appearance="radio">
+               <option value="Rectangulaire">Rectangulaire</option>
+               <option value="Rond">Rond</option>
+               <option value="Empreinte">Empreinte (servo moteur ou autres)</option>
+            </param>
+            <spacer/>
+         </hbox>
+         <separator />
+         <hbox>
+            <param name="mount_hole" type="float" min="0.1" max="100" precision="3" gui-text="Diamètre du trou central : ">4.42</param>
+         </hbox>
+         <separator />
+         <hbox>
+            <param name="hole_width" type="float" min="0.1" max="100" precision="3" gui-text="Largeur du trou rectangulaire (dimension horizontale): ">2.9</param>
+         </hbox>
+         <hbox>
+            <param name="hole_length" type="float" min="0.1" max="100" precision="3" gui-text="Hauteur du trou rectangulaire (dimension Verticale) : ">2.9</param>
+         </hbox>
+         <separator />
+         <hbox>
+            <param name="servo" type="optiongroup" appearance="minimal" gui-text="Choisir le servo : ">
+               <!--  Lister ci dessous les servo moteurs utilisés   -->
+               <option value="MOTOR02">Servomoteur : MOTOR02</option>
+               <option value="FS5113R">Servomoteur : FS5113R</option>
+               <option value="FS5106R">Servomoteur : FS5106R</option>
+               <option value="HS422">Servomoteur : HS-422</option>
+            </param>
+         </hbox>
       </page>
       <page name="rack" gui-text="Crémaillère">
          <param name="draw_rack" type="bool" gui-text="Dessiner la crémaillère">false</param>
@@ -35,7 +71,6 @@
       <page name="advanced" gui-text="Options avancées">
          <param name="clearance" type="float" min="0" max="100" precision="3" gui-text="Jeu (bas)">0</param>
          <param name="profile_shift" type="float" min="-50" max="50" precision="1" gui-text="Déplacement de profil [% du module]">0</param>
-         <param name="mount_hole" type="float" min="0" max="100" precision="3" gui-text="Diamètre du trou de montage (0 pour ne pas le dessiner)">4.0</param>
          <param name="spoke_count" type="int" min="0" max="100" gui-text="Nombre de rayons (0 si aucun)">3</param>
          <param name="spoke_width" type="float" min=".01" max="1000" precision="3" gui-text="Largeur du rayon, jante (ou anneau)">3.0</param>
          <param name="mount_diameter" type="float" min=".01" max="1000" precision="3" gui-text="Diamètre du support de montage">10.0</param>
@@ -53,15 +88,18 @@
          </label>
          <param name="undercut_alert" type="bool" gui-text="Confirmer l'engrenage avec sous-coupe">true</param>
       </page>
-
       <page name="Usage" gui-text="Explications">
          <param name="active_tab" type="notebook">
             <page name="page_1" gui-text="Vocabulaire">
+               <label xml:space="preserve">L'entraxe entre 2 roues est égal à la somme des rayons primitifs des 2 roues.</label>
                <vbox>
-                  <image>gears_dev.png</image>
+                  <image>Engrenage.png</image>
                   <label appearance="url">
                                  https://www.toutcalculer.com/mecanique/dimensions-engrenage.php#calcul
                   </label>
+               <label >
+                  Based on fablabchemnitz.de.gears_dev extension.                          
+               </label>
                </vbox>
             </page>
             <page name="page_2" gui-text="Calculs">
@@ -84,17 +122,17 @@ m = p / pi = D / z
                </vbox>
             </page>
          </param>
-       </page>
+      </page>
    </param>
    <effect>
       <object-type>all</object-type>
       <effects-menu>
          <submenu name="Formes">
-            
+
          </submenu>
       </effects-menu>
    </effect>
    <script>
-      <command location="inx" interpreter="python">gears_dev.py</command>
+      <command location="inx" interpreter="python">Engrenage.py</command>
    </script>
 </inkscape-extension>
