@@ -41,22 +41,20 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 2024-04-21 Frank sauret 1.1 : traduction en français. Modification de la couleur en cas d'undercut. Modification du deddendum pour qu'il fasse 1.25 fois l'addendum.
 2024-06-18 Frank sauret 1.2 : Ajout de la possibilité de choisir la forme du trou (rectangulaire, ronde ou empreinte de servo) et de choisir les dimensions du trou. Ajout de la possibilité de choisir une empreinte pour le trou du servo. Les empreintes sont placées dans le fichier engrenage.ini
 2024-06-22 Frank sauret 1.3 : Ajout de couleurs pour l'ordre de découpe. Séparation en plusieurs objet pour faciliter la retouche et la recolorisation.
+2024-07-20 Frank sauret 1.4 : Ajout du tracé de poulie au pas métrique
+
 '''
 
 import inkex
 from lxml import etree
-from os import devnull # for debugging
 from math import pi, cos, sin, tan, radians, degrees, ceil, asin, acos, sqrt
-two_pi = 2 * pi
-import json
-import csv
 from configparser import ConfigParser
-import os
-
+import numpy as np
+two_pi = 2 * np.pi
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 def uutounit(self,nn,uu):
     return self.svg.uutounit(nn,uu)
@@ -69,14 +67,29 @@ def linspace(a,b,n):
     return [a+x*(b-a)/(n-1) for x in range(0,n)]
 
 def involute_intersect_angle(Rb, R):
+    """_summary_
+
+    Args:
+        Rb (_type_): _description_
+        R (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     " "
     Rb, R = float(Rb), float(R)
     return (sqrt(R**2 - Rb**2) / (Rb)) - (acos(Rb / R))
 
 def point_on_circle(radius, angle):
-    " return xy coord of the point at distance radius from origin at angle "
-    x = radius * cos(angle)
-    y = radius * sin(angle)
+    """Calcule les coordonnées d'un point sur un cercle. données un rayon et un angle.
+    Args:
+        radius (float): rayon du cercle
+        angle (float): angle en radians entre 2 points 
+    Returns:
+        point (tupple): x, y 
+    """
+    x = radius * np.cos(angle)
+    y = radius * np.sin(angle)
     return (x, y)
     
 def points_to_bbox(p):
@@ -183,6 +196,28 @@ def gear_calculations(num_teeth, circular_pitch, pressure_angle, clearance=0, ri
             tooth_thickness
             )
 
+def pulley_values(pitch):
+    # Sélection basée sur le pas (comme précédemment décrit)
+    if pitch == 2:
+        return (0.15, 0.25, 0.55, 1.1, 0.7)
+    elif pitch == 2.5:
+        return (0.2, 0.3, 0.6, 1.3, 1)
+    elif pitch == 5:
+        return (0.4, 0.6, 1, 1.8, 1.8)
+    elif pitch == 10:
+        return (0.6, 0.8, 2, 3.2, 3.5)
+    elif pitch == 20:
+        return (0.8, 1, 2.87, 5.7, 6.5)
+    
+def pulley_calculations(teeth, pitch):
+    ri, re, Sp, hd, tooth_width = pulley_values(pitch)
+    
+    pitch_radius = (teeth * pitch) /np.pi/2 # Rayon primitif
+    outer_radius= pitch_radius - (Sp/2) # Rayon externe
+    root_radius=outer_radius-hd # Rayon interne
+   
+    return (pitch_radius, outer_radius, root_radius)
+
 def generate_rack_points(tooth_count, pitch, addendum, pressure_angle,
                        rack_base_height, tab_length, clearance=0, draw_guides=False):
         """ Return path (suitable for svg) of the Rack gear.
@@ -244,46 +279,74 @@ def generate_rack_points(tooth_count, pitch, addendum, pressure_angle,
         return (points, guide_path)
 
 def generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular):
-    """ given a set of core gear params
-        - generate the svg path for the gear
-    """
-    half_thick_angle = two_pi / (4.0 * teeth ) #?? = pi / (2.0 * teeth)
-    pitch_to_base_angle  = involute_intersect_angle( base_radius, pitch_radius )
-    pitch_to_outer_angle = involute_intersect_angle( base_radius, outer_radius ) - pitch_to_base_angle
+    """Génère les points pour le tracé SVG d'une roue dentée."""
+    half_thick_angle = np.pi / (2.0 * teeth)
+    pitch_to_base_angle = involute_intersect_angle(base_radius, pitch_radius)
+    pitch_to_outer_angle = involute_intersect_angle(base_radius, outer_radius) - pitch_to_base_angle
 
     start_involute_radius = max(base_radius, root_radius)
     radii = linspace(start_involute_radius, outer_radius, accuracy_involute)
     angles = [involute_intersect_angle(base_radius, r) for r in radii]
 
-    centers = [(x * two_pi / float( teeth) ) for x in range( teeth ) ]
+    centers = [(x * two_pi / float(teeth)) for x in range(teeth)]
     points = []
 
     for c in centers:
-        # Angles
         pitch1 = c - half_thick_angle
-        base1  = pitch1 - pitch_to_base_angle
-        offsetangles1 = [ base1 + x for x in angles]
-        points1 = [ point_on_circle( radii[i], offsetangles1[i]) for i in range(0,len(radii)) ]
+        base1 = pitch1 - pitch_to_base_angle
+        offsetangles1 = [base1 + x for x in angles]
+        points1 = [point_on_circle(radii[i], offsetangles1[i]) for i in range(len(radii))]
 
         pitch2 = c + half_thick_angle
-        base2  = pitch2 + pitch_to_base_angle
-        offsetangles2 = [ base2 - x for x in angles] 
-        points2 = [ point_on_circle( radii[i], offsetangles2[i]) for i in range(0,len(radii)) ]
+        base2 = pitch2 + pitch_to_base_angle
+        offsetangles2 = [base2 - x for x in angles]
+        points2 = [point_on_circle(radii[i], offsetangles2[i]) for i in range(len(radii))]
 
-        points_on_outer_radius = [ point_on_circle(outer_radius, x) for x in linspace(offsetangles1[-1], offsetangles2[-1], accuracy_circular) ]
+        points_on_outer_radius = [point_on_circle(outer_radius, x) for x in linspace(offsetangles1[-1], offsetangles2[-1], accuracy_circular)]
 
         if root_radius > base_radius:
-            pitch_to_root_angle = pitch_to_base_angle - involute_intersect_angle(base_radius, root_radius )
+            pitch_to_root_angle = pitch_to_base_angle - involute_intersect_angle(base_radius, root_radius)
             root1 = pitch1 - pitch_to_root_angle
             root2 = pitch2 + pitch_to_root_angle
-            points_on_root = [point_on_circle (root_radius, x) for x in linspace(root2, root1+(two_pi/float(teeth)), accuracy_circular) ]
-            p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root[1:-1] # [::-1] reverses list; [1:-1] removes first and last element
+            points_on_root = [point_on_circle(root_radius, x) for x in linspace(root2, root1 + (two_pi / float(teeth)), accuracy_circular)]
+            p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root[1:-1]
         else:
-            points_on_root = [point_on_circle (root_radius, x) for x in linspace(base2, base1+(two_pi/float(teeth)), accuracy_circular) ]
-            p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root # [::-1] reverses list
+            points_on_root = [point_on_circle(root_radius, x) for x in linspace(base2, base1 + (two_pi / float(teeth)), accuracy_circular)]
+            p_tmp = points1 + points_on_outer_radius[1:-1] + points2[::-1] + points_on_root
 
-        points.extend( p_tmp )
-    return (points)
+        points.extend(p_tmp)
+    return points
+
+def generate_pulley_points(teeth, pitch, Re, Ri):
+    # Sélection des valeurs en fonction du pas
+    ri, re, Sp, hd, tooth_width = pulley_values(pitch)
+
+    flank_angle_rad = np.radians(25) # Angle des dents de 25°
+
+    thick_angle= two_pi / teeth # angle d'une dent
+    ext_angle = tooth_width / Re  #  angle correspondant à la largeur externe de la dent
+    
+    bf=thick_angle-ext_angle
+    Lbf=bf*Re
+    rx=(Lbf/2)/np.sin(flank_angle_rad)
+    dpep=sin(flank_angle_rad)*(rx-hd)
+
+    de=dpep/Ri
+    flank_angle=(bf-2*de)/2
+
+    points = []
+    for tooth in range(teeth):
+        c = tooth * two_pi / teeth
+        # Points de la dent (extérieur)
+        Ce_left = point_on_circle(Re, c )
+        Ce_right = point_on_circle(Re, c + ext_angle)
+        # Points de la dent (intérieur)
+        Ci_left = point_on_circle(Ri, c + ext_angle + flank_angle)
+        Ci_right = point_on_circle(Ri, c - flank_angle)
+        
+        points.extend([Ci_right,Ce_left,Ce_right,Ci_left])
+
+    return points
 
 def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
                          unit_factor, unit_label):
@@ -322,7 +385,7 @@ def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mo
         # not enough room to draw spokes so cancel
         collision = True
     if collision: # don't draw spokes if no room.
-        messages.append("Pas assez d'espace pour les rayons. Diminuez la largeur du rayon.")
+        messages.append("Pas assez d'espace pour les rayons. Diminuez le diamètre.")
     else: # draw spokes
         for i in range(spoke_count):
             points = []
@@ -354,7 +417,6 @@ class Gears(inkex.EffectExtension):
         inkex.Effect.__init__(self)
 
         self.arg_parser.add_argument("-t", "--teeth", type=int, default=24, help="Number of teeth")
-        self.arg_parser.add_argument("-s", "--system", default='MM', help="Select system: 'CP' (Cyclic Pitch (default)), 'DP' (Diametral Pitch), 'MM' (Metric Module)")
         self.arg_parser.add_argument("-d", "--dimension", type=float, default=1.0, help="Tooth size, depending on system (which defaults to CP)")
         self.arg_parser.add_argument("-a", "--angle", type=float, default=20.0, help="Pressure Angle (common values: 14.5, 20, 25 degrees)")
         self.arg_parser.add_argument("-p", "--profile_shift", type=float, default=20.0, help="Profile shift [in percent of the module]. Negative values help against undercut")
@@ -382,6 +444,9 @@ class Gears(inkex.EffectExtension):
         self.arg_parser.add_argument("-hw", "--hole_width", type=float, default=2.9, help="Width of rectangular hole")
         self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole")
         self.arg_parser.add_argument("-se", "--servo", type=str, default="HS422", help="shape of servo")
+        self.arg_parser.add_argument("-ty", "--type", type=str, default="dev", help="Type de la denture")
+        self.arg_parser.add_argument("-pa", "--pas", type=float, default="5", help="Pas pour la denture métrique")
+        self.arg_parser.add_argument("-hp", "--draw_spoke", type=inkex.Boolean, default=True, help="Spoke or not")
         
     def add_text(self, node, text, position, text_height=12, Attention=False):
         """ Create and insert a single line of text into the svg under node.
@@ -391,15 +456,6 @@ class Gears(inkex.EffectExtension):
         global PremiereLigne
         if Attention:
             CoulText="#FF0405"
-            if PremiereLigne:
-                rect = etree.SubElement(node, inkex.addNS('rect','svg'))
-                # Définir les attributs du rectangle
-                rect.set('x', str(position[0]))
-                rect.set('y', str((position[1] - text_height) ))
-                rect.set('width', text_height * 23.5)
-                rect.set('height', str(text_height*1.2*7))
-                rect.set('fill', 'yellow')  # Couleur de fond
-                PremiereLigne=False
         else :
             CoulText="#F6921E"
             
@@ -413,7 +469,7 @@ class Gears(inkex.EffectExtension):
                        }
         line = etree.SubElement(node, inkex.addNS('text','svg'), line_attribs)
         line.text = text
-         
+
     def calc_unit_factor(self):
         """ return the scale factor for all dimension conversions.
             - The document units are always irrelevant as
@@ -430,15 +486,8 @@ class Gears(inkex.EffectExtension):
             Expressed in inkscape units which is 90dpi 'pixel' units.
         """
         dimension = self.options.dimension
-        # print >> self.tty, "unit_factor=%s, doc_units=%s, dialog_units=%s (%s), system=%s" % (unit_factor, doc_units, dialog_units, self.options.units, self.options.system)
-        if   self.options.system == 'CP': # circular pitch
-            circular_pitch = dimension
-        elif self.options.system == 'DP': # diametral pitch 
-            circular_pitch = pi / dimension
-        elif self.options.system == 'MM': # module (metric)
-            circular_pitch = dimension * pi / 25.4
-        else:
-            inkex.utils.debug("unknown system '%s', try CP, DP, MM" % self.options.system)
+        circular_pitch = dimension * pi / 25.4
+
         # circular_pitch defines the size in inches.
         # We divide the internal inch factor (px = 90dpi), to remove the inch 
         # unit.
@@ -470,6 +519,8 @@ class Gears(inkex.EffectExtension):
         teeth = self.options.teeth
         # Angle of tangent to tooth at circular pitch wrt radial line.
         angle = self.options.angle 
+        type=self.options.type
+        pas=self.options.pas
         # Clearance: Radial distance between top of tooth on one gear to 
         # bottom of gap on another.
         clearance = self.options.clearance * unit_factor
@@ -482,6 +533,8 @@ class Gears(inkex.EffectExtension):
         # for spokes
         mount_radius = self.options.mount_diameter * 0.5 * unit_factor
         spoke_count = self.options.spoke_count
+        if not(self.options.draw_spoke):
+            spoke_count=0
         spoke_width = self.options.spoke_width * unit_factor
         holes_rounding = self.options.holes_rounding * unit_factor # unused
         # visible guide lines
@@ -511,8 +564,12 @@ class Gears(inkex.EffectExtension):
         # Pitch diameter: Diameter of pitch circle.
         pitch = self.calc_circular_pitch()
         # Replace section below with this call to get the combined gear_calculations() above
-        (pitch_radius, base_radius, addendum, dedendum,
-         outer_radius, root_radius, tooth) = gear_calculations(teeth, pitch, angle, clearance, self.options.internal_ring, self.options.profile_shift*0.01)
+        if type=="dev":
+            (pitch_radius, base_radius, addendum, dedendum,
+            outer_radius, root_radius, tooth) = gear_calculations(teeth, pitch, angle, clearance, self.options.internal_ring, self.options.profile_shift*0.01)
+        else:
+            (pitch_radius, outer_radius, root_radius) = pulley_calculations(teeth, pas)
+            self.options.draw_rack=False
 
         # Detect Undercut of teeth
         if have_undercut(teeth, angle, 1.0):
@@ -525,20 +582,20 @@ class Gears(inkex.EffectExtension):
             # newlines.
             # so split and make a list
             warnings.extend(msg.split("\n"))
-	    #if self.options.undercut_alert: 
-     #           inkex.utils.debug(msg)
-	    #else:
-     #           print >> self.tty, msg
-
-        # All base calcs done. Start building gear
-        points = generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular)
+        
 
         pathSpoke=""
         pathHole=""
         pathRing = ""
-        pathTeeth = points_to_svgd( points )
+        # All base calcs done. Start building gear
+        if type=="dev":
+            points = generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular)
+        else :
+            points=generate_pulley_points(teeth, pas, outer_radius, root_radius)
+
+        pathTeeth = points_to_svgd( points )    
         bbox_center = points_to_bbox_center( points )
-       
+        # inkex.utils.debug(f"pathTeeth : {pathTeeth}")##########
 
         if not self.options.internal_ring:  # only draw internals if spur gear
             # dessin des rayons
@@ -658,7 +715,6 @@ class Gears(inkex.EffectExtension):
                 gear = etree.SubElement(
                     rack, inkex.addNS('path', 'svg'), gear_attribs2)
 
-
         # Add Annotations (above)
         if self.options.annotation:
             outer_dia = outer_radius * 2
@@ -671,31 +727,59 @@ class Gears(inkex.EffectExtension):
             else :
                 Attention=False    
             #notes.append('Document (%s) scale conversion = %2.4f' % (self.document.getroot().find(inkex.addNS('namedview', 'sodipodi')).get(inkex.addNS('document-units', 'inkscape')), unit_factor))
-            notes.extend([
-    'Dents : %d' % (teeth),
-    'Pas angulaire : %s %s (%s °)' % (locale.format_string("%.2f", pitch / unit_factor).rstrip('0').rstrip(','), self.options.units,locale.format_string("%.1f", 360/teeth).rstrip('0').rstrip(',')),
-    'Module : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / teeth).rstrip('0').rstrip(','), self.options.units),
-    'Angle de pression : %s °' % (locale.format_string("%.2f", angle).rstrip('0').rstrip(',')),
-    'Diamètre primitif : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Diamètre extérieur : %s %s' % (locale.format_string("%.2f", outer_dia / unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Diamètre de base :  %s %s' % (locale.format_string("%.2f", base_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Diamètre de pied :  %s %s' % (locale.format_string("%.2f",  pitch_radius * 2 * (1-2.5/teeth) ).rstrip('0').rstrip(','), self.options.units),
-    'Hauteur de dent :  %s %s' % (locale.format_string("%.2f",  (dedendum+addendum)/ unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Épaisseur de dent : %s %s' % (locale.format_string("%.2f", tooth / unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Saillie : %s %s' % (locale.format_string("%.2f", addendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
-    'Creux : %s %s' % (locale.format_string("%.2f", dedendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
-])
+            if type=="dev":
+                notes.extend([
+                    'Dents : %d' % (teeth),
+                    'Pas angulaire : %s %s (%s °)' % (locale.format_string("%.2f", pitch / unit_factor).rstrip('0').rstrip(','), self.options.units,locale.format_string("%.1f", 360/teeth).rstrip('0').rstrip(',')),
+                    'Module : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / teeth).rstrip('0').rstrip(','), self.options.units),
+                    'Angle de pression : %s °' % (locale.format_string("%.2f", angle).rstrip('0').rstrip(',')),
+                    'Diamètre primitif : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Diamètre extérieur : %s %s' % (locale.format_string("%.2f", outer_dia / unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Diamètre de base :  %s %s' % (locale.format_string("%.2f", base_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Diamètre de pied :  %s %s' % (locale.format_string("%.2f",  pitch_radius * 2 * (1-2.5/teeth) ).rstrip('0').rstrip(','), self.options.units),
+                    'Hauteur de dent :  %s %s' % (locale.format_string("%.2f",  (dedendum+addendum)/ unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Épaisseur de dent : %s %s' % (locale.format_string("%.2f", tooth / unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Saillie : %s %s' % (locale.format_string("%.2f", addendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    'Creux : %s %s' % (locale.format_string("%.2f", dedendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    ])
+            else:
+                ri, re, Sp, hd, tooth_width = pulley_values(pas)
+                notes.extend([
+                    'Dents : %d' % teeth,
+                    'Pas : %s' % locale.format_string("%.1f", pas),
+                    'Diamètre primitif : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    'Diamètre extérieur : %s %s' % (locale.format_string("%.2f", outer_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    'Diamètre intérieur :  %s %s' % (locale.format_string("%.2f", root_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    'Hauteur de dent :  %s %s' % (locale.format_string("%.2f", hd), self.options.units),
+                    'Largeur de dent : %s %s' % (locale.format_string("%.2f", tooth_width), self.options.units),
+                    ])          
             # text height relative to gear size.
             # ranges from 10 to 22 over outer radius size 60 to 360
             text_height = max(10, min(10+(outer_dia-60)/24, 22))
             # position above
             y = - outer_radius - (len(notes)+1) * text_height * 1.2
+            haut=y
             x=-outer_dia//2
-            global PremiereLigne
-            PremiereLigne=True
+            largeur=0
+            nb_lignes=0
             for note in notes:
-                self.add_text(g, note, [x,y], text_height,Attention)
-                y += text_height * 1.2
-
+                lar=len(note)
+                if lar>largeur:
+                    largeur=(lar+1)*text_height/2
+                nb_lignes+=1    
+               
+            if Attention:
+                rect = etree.SubElement(g, inkex.addNS('rect','svg'))
+                # Définir les attributs du rectangle
+                rect.set('x', str(x))
+                rect.set('y', str((haut - text_height) ))
+                rect.set('width', largeur)
+                rect.set('height', str(text_height*1.2*nb_lignes))
+                rect.set('fill', 'yellow')  # Couleur de fond
+                PremiereLigne=False
+            for note in notes:
+                self.add_text(g, note, [x,y], text_height, Attention)
+                y += text_height * 1.2    
+                
 if __name__ == '__main__':
     Gears().run()
