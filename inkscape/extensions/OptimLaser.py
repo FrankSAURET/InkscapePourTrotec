@@ -154,7 +154,6 @@ class OptimLaser(inkex.Effect,inkex.EffectExtension):
                                 segment_path = inkex.Path([inkex.paths.Move(*debut)] + [inkex.paths.Line(*fin)])
                         segmentPrev = segment
                     else:    # si Z ferme la forme par une ligne droite
-                        inkex.utils.debug(f"segmentPrev : {segmentPrev}")##########
                         if segmentPrev.letter!='C':
                             debut=(round(segmentPrev.x, 6), round(segmentPrev.y, 6))
                         else:
