@@ -21,9 +21,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="607.5"
-     inkscape:cy="207"
+     inkscape:zoom="2"
+     inkscape:cx="323.5"
+     inkscape:cy="129.5"
      inkscape:document-units="mm"
      inkscape:current-layer="svg8"
      showgrid="true"
@@ -83,6 +83,13 @@
       </cc:License>
     </rdf:RDF>
   </metadata>
+  <rect
+     style="fill:#ffffff;stroke-width:1"
+     id="rect1"
+     width="94.985413"
+     height="69.982292"
+     x="0"
+     y="0" />
   <g
      inkscape:groupmode="layer"
      id="layer2"

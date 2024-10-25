@@ -22,8 +22,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="175.00892"
-     inkscape:cy="203.64674"
+     inkscape:cx="174.65537"
+     inkscape:cy="202.93964"
      inkscape:document-units="mm"
      inkscape:current-layer="layer3"
      showgrid="true"
@@ -98,6 +98,13 @@
      id="layer3"
      inkscape:label="Découpes"
      transform="translate(-266.67327,-121.4667)">
+    <rect
+       style="fill:#ffffff;stroke-width:1"
+       id="rect1"
+       width="75.022552"
+       height="71.654961"
+       x="266.67328"
+       y="121.4667" />
     <g
        id="g1">
       <g

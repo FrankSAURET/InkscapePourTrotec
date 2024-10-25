@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 2024-06-18 Frank sauret 1.2 : Ajout de la possibilité de choisir la forme du trou (rectangulaire, ronde ou empreinte de servo) et de choisir les dimensions du trou. Ajout de la possibilité de choisir une empreinte pour le trou du servo. Les empreintes sont placées dans le fichier engrenage.ini
 2024-06-22 Frank sauret 1.3 : Ajout de couleurs pour l'ordre de découpe. Séparation en plusieurs objet pour faciliter la retouche et la recolorisation.
 2024-07-20 Frank sauret 1.4 : Ajout du tracé de poulie au pas métrique
-
+2024-10-25 Frank sauret 1.5 : Ajout du tracé de roue de fixation pour les servomoteurs
 '''
 
 import inkex
@@ -54,7 +54,7 @@ two_pi = 2 * np.pi
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
-__version__ = '1.4'
+__version__ = '1.5'
 
 def uutounit(self,nn,uu):
     return self.svg.uutounit(nn,uu)
@@ -112,7 +112,7 @@ def points_to_bbox_center(p):
     """
     bbox = points_to_bbox(p)
     return ((bbox[0]+bbox[2])/2.0, (bbox[1]+bbox[3])/2.0)
-                
+
 def points_to_svgd(p):
     " convert list of points into a closed SVG path list"
     f = p[0]
@@ -130,6 +130,14 @@ def draw_SVG_circle(parent, r, cx, cy, name, style):
                     'r': str(r),
                     inkex.addNS('label','inkscape'):name}
     circle = etree.SubElement(parent, inkex.addNS('circle','svg'), circ_attribs )
+
+def draw_SVG_rect(parent, x, y, w, h, name, style):
+    " add an SVG rectangle entity to parent "
+    rect_attribs = {'style': str(inkex.Style(style)),
+                    'x': str(x), 'y': str(y), 
+                    'width': str(w), 'height': str(h),
+                    inkex.addNS('label','inkscape'):name}
+    rect = etree.SubElement(parent, inkex.addNS('rect','svg'), rect_attribs )
 
 ### Undercut support functions
 def undercut_min_teeth(pitch_angle, k=1.0):
@@ -415,38 +423,42 @@ def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mo
 class Gears(inkex.EffectExtension):
     def __init__(self):
         inkex.Effect.__init__(self)
-
+        # ! 1-onglet denture
         self.arg_parser.add_argument("-t", "--teeth", type=int, default=24, help="Number of teeth")
+        self.arg_parser.add_argument("-u", "--units", default='mm', help="Units this dialog is using")
+        self.arg_parser.add_argument("-ty", "--type", type=str, default="dev", help="Type de la denture")        
         self.arg_parser.add_argument("-d", "--dimension", type=float, default=1.0, help="Tooth size, depending on system (which defaults to CP)")
         self.arg_parser.add_argument("-a", "--angle", type=float, default=20.0, help="Pressure Angle (common values: 14.5, 20, 25 degrees)")
-        self.arg_parser.add_argument("-p", "--profile_shift", type=float, default=20.0, help="Profile shift [in percent of the module]. Negative values help against undercut")
-        self.arg_parser.add_argument("-u", "--units", default='mm', help="Units this dialog is using")
-        self.arg_parser.add_argument("-A", "--accuracy", type=int, default=0, help="Accuracy of involute: automatic: 5..20 (default), best: 20(default), medium 10, low: 5; good acuracy is important with a low tooth count")
-        # Clearance: Radial distance between top of tooth on one gear to bottom of gap on another.
-        self.arg_parser.add_argument("-cl", "--clearance", type=float, default=0.0, help="Clearance between bottom of gap of this gear and top of tooth of another")
-        self.arg_parser.add_argument("-an", "--annotation", type=inkex.Boolean, default=False, help="Draw annotation text")
         self.arg_parser.add_argument("-i", "--internal_ring", type=inkex.Boolean, default=False, help="Ring (or Internal) gear style (default: normal spur gear)")
+        # ! 2-onglet perçage
+        self.arg_parser.add_argument("-ho", "--hole", type=inkex.Boolean, default=True, help="Hole or not that is the question")
+        self.arg_parser.add_argument("-sh", "--shape", type=str, default="Rectangulaire", help="Shape of the hole")
         self.arg_parser.add_argument("-mh", "--mount_hole", type=float, default=4.42, help="Mount hole diameter")
-        self.arg_parser.add_argument("-md", "--mount_diameter", type=float, default=15, help="Mount support diameter")
+        self.arg_parser.add_argument("-hw", "--hole_width", type=float, default=2.9, help="Width of rectangular hole")
+        self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole")        
+        self.arg_parser.add_argument("-se", "--servo", type=str, default="HS422", help="shape of servo")
+        self.arg_parser.add_argument("-rs", "--RoueServo", type=inkex.Boolean, default=True, help="dessine une roue pour fixer le servo ou non")
+        self.arg_parser.add_argument("-pa", "--pas", type=float, default="5", help="Pas pour la denture métrique")
+        # ! 3-onglet Rayons
+        self.arg_parser.add_argument("-hp", "--draw_spoke", type=inkex.Boolean, default=True, help="Spoke or not")
         self.arg_parser.add_argument("-sc", "--spoke_count", type=int, default=3, help="Spokes count")
         self.arg_parser.add_argument("-sw", "--spoke_width", type=float, default=5, help="Spoke width")
-        self.arg_parser.add_argument("-hr", "--holes_rounding", type=float, default=5, help="Holes rounding")
-        self.arg_parser.add_argument("-at", "--active_tab", default='', help="Active tab. Not used now.")
-        self.arg_parser.add_argument("-x", "--centercross", type=inkex.Boolean, default=False, help="Draw cross in center")
-        self.arg_parser.add_argument("-c", "--pitchcircle", type=inkex.Boolean, default=False, help="Draw pitch circle (for mating)")
+        self.arg_parser.add_argument("-md", "--mount_diameter", type=float, default=15, help="Mount support diameter")
+        # ! 4-onglet crémaillère
         self.arg_parser.add_argument("-r", "--draw_rack", type=inkex.Boolean, default=False, help="Draw rack gear instead of spur gear")
         self.arg_parser.add_argument("-rl", "--rack_teeth_length", type=int, default=12, help="Length (in teeth) of rack")
         self.arg_parser.add_argument("-rh", "--rack_base_height", type=float, default=8, help="Height of base of rack")
-        self.arg_parser.add_argument("-rt", "--rack_base_tab", type=float, default=14, help="Length of tabs on ends of rack")
+        self.arg_parser.add_argument("-rt", "--rack_base_tab", type=float, default=14, help="Length of tabs on ends of rack")        
+        # ! 5-onglet options avancées
+        self.arg_parser.add_argument("-x", "--centercross", type=inkex.Boolean, default=False, help="Draw cross in center")
+        self.arg_parser.add_argument("-c", "--pitchcircle", type=inkex.Boolean, default=False, help="Draw pitch circle (for mating)")
+        self.arg_parser.add_argument("-an", "--annotation", type=inkex.Boolean, default=False, help="Draw annotation text")
+        self.arg_parser.add_argument("-cl", "--clearance", type=float, default=0.0, help="Clearance between bottom of gap of this gear and top of tooth of another") # Clearance: Radial distance between top of tooth on one gear to bottom of gap on another.
+        self.arg_parser.add_argument("-p", "--profile_shift", type=float, default=20.0, help="Profile shift [in percent of the module]. Negative values help against undercut")
+        self.arg_parser.add_argument("-A", "--accuracy", type=int, default=0, help="Accuracy of involute: automatic: 5..20 (default), best: 20(default), medium 10, low: 5; good acuracy is important with a low tooth count")
         self.arg_parser.add_argument("-ua", "--undercut_alert", type=inkex.Boolean, default=False, help="Let the user confirm a warning dialog if undercut occurs. This dialog also shows helpful hints against undercut")
-        self.arg_parser.add_argument("-ho", "--hole", type=inkex.Boolean, default=True, help="Hole or not that is the question")
-        self.arg_parser.add_argument("-sh", "--shape", type=str, default="Rectangulaire", help="Shape of the hole")
-        self.arg_parser.add_argument("-hw", "--hole_width", type=float, default=2.9, help="Width of rectangular hole")
-        self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole")
-        self.arg_parser.add_argument("-se", "--servo", type=str, default="HS422", help="shape of servo")
-        self.arg_parser.add_argument("-ty", "--type", type=str, default="dev", help="Type de la denture")
-        self.arg_parser.add_argument("-pa", "--pas", type=float, default="5", help="Pas pour la denture métrique")
-        self.arg_parser.add_argument("-hp", "--draw_spoke", type=inkex.Boolean, default=True, help="Spoke or not")
+        
+        self.arg_parser.add_argument("-at", "--active_tab", default='', help="Active tab. Not used now.")
         
     def add_text(self, node, text, position, text_height=12, Attention=False):
         """ Create and insert a single line of text into the svg under node.
@@ -506,6 +518,7 @@ class Gears(inkex.EffectExtension):
         stroke_color_hole = '#0000FF'
         stroke_color_ring = '#660066'
         stroke_color_spoke = '#006633'
+        stroke_color_rect = '#006633'
         stroke_color_guide = '#FF6600'
         path_stroke='#000000'
         path_fill   = 'none'     # no fill - just a line
@@ -536,7 +549,6 @@ class Gears(inkex.EffectExtension):
         if not(self.options.draw_spoke):
             spoke_count=0
         spoke_width = self.options.spoke_width * unit_factor
-        holes_rounding = self.options.holes_rounding * unit_factor # unused
         # visible guide lines
         centercross = self.options.centercross # draw center or not (boolean)
         pitchcircle = self.options.pitchcircle # draw pitch circle or not (boolean)
@@ -587,6 +599,7 @@ class Gears(inkex.EffectExtension):
         pathSpoke=""
         pathHole=""
         pathRing = ""
+        pathRect = ""
         # All base calcs done. Start building gear
         if type=="dev":
             points = generate_spur_points(teeth, base_radius, pitch_radius, outer_radius, root_radius, accuracy_involute, accuracy_circular)
@@ -599,6 +612,9 @@ class Gears(inkex.EffectExtension):
 
         if not self.options.internal_ring:  # only draw internals if spur gear
             # dessin des rayons
+            if self.options.RoueServo:# s'assure que les carrés de fixation soient dans de la matière
+                if mount_radius<10:
+                    mount_radius=10
             spokes_path, msg = generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
                                                     unit_factor, self.options.units)
             warnings.extend(msg)
@@ -634,7 +650,7 @@ class Gears(inkex.EffectExtension):
                     "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,-r) +
                     "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,r) 
                     )
-            
+        
         # Embed gear in group to make animation easier:
         #  Translate group, Rotate path.
         t = 'translate(' + str( self.svg.namedview.center[0] ) + ',' + str( self.svg.namedview.center[1] ) + ')'
@@ -649,22 +665,18 @@ class Gears(inkex.EffectExtension):
         # Create gear path under top level group
         # Définir les styles spécifiques pour chaque path
         styles = {
-            'pathTeeth': {'stroke': 'red', 'fill': 'none', 'stroke-width': 2},
-            'pathHole': {'stroke': 'blue', 'fill': 'none', 'stroke-width': 2},
-            'pathRing': {'stroke': 'green', 'fill': 'none', 'stroke-width': 2},
-            'pathSpoke': {'stroke': 'yellow', 'fill': 'none', 'stroke-width': 2},
-        }
-        styles = {
             'pathTeeth': {'stroke': stroke_color_teeth, 'fill': 'none', 'stroke-width': path_stroke_width},
             'pathHole': {'stroke': stroke_color_hole, 'fill': 'none', 'stroke-width': path_stroke_width},
             'pathRing': {'stroke': stroke_color_ring, 'fill': 'none', 'stroke-width': path_stroke_width},
             'pathSpoke': {'stroke': stroke_color_spoke, 'fill': 'none', 'stroke-width': path_stroke_width},
+            'pathRect': {'stroke': stroke_color_rect, 'fill': 'none', 'stroke-width': path_stroke_width}
         }
         paths = {
             'pathTeeth': pathTeeth,
             'pathHole': pathHole,
             'pathRing': pathRing,
             'pathSpoke': pathSpoke,
+            'pathRect': pathRect 
         }
         # Itérer sur chaque path et appliquer son style spécifique
         for path_name, path_data in paths.items():
@@ -672,7 +684,33 @@ class Gears(inkex.EffectExtension):
             style_str = str(inkex.Style(style))
             gear_attribs = {'style': style_str, 'd': path_data}
             etree.SubElement(g, inkex.addNS('path', 'svg'), gear_attribs)
-
+        
+        if self.options.RoueServo:
+            #trace les carrés sur l'engrenage
+            draw_SVG_rect(g,-8.0038776,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
+            draw_SVG_rect(g,5.2538781,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])
+            # trace la roue de liaison avec le servo et ses fixations
+            bbox_points= points_to_bbox(points)
+            # 10 = rayon de la roue de fixation
+            t2 = f'translate({bbox_points[2]+self.svg.namedview.center[0] +10},{-bbox_points[3]+self.svg.namedview.center[1] +10})'
+            g_attribs2 = { inkex.addNS('label','inkscape'):'Fixation servomoteur',
+                            inkex.addNS('transform-center-x','inkscape'): str(-bbox_center[0]),
+                            inkex.addNS('transform-center-y','inkscape'): str(-bbox_center[1]),
+                        'transform':t2}
+            g2 = etree.SubElement(self.svg.get_current_layer(), 'g', g_attribs2 )            
+            etree.SubElement(g, inkex.addNS('path', 'svg'), )
+            draw_SVG_rect(g2,-8.0038776,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
+            draw_SVG_rect(g2,5.2538781,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])
+            draw_SVG_circle(g2,10,-3.4954834e-07,-2.0043946e-07,'CercleFixation',styles['pathTeeth'])
+            draw_SVG_rect(g2,-2.9250004,-6.8744674,6,3.04,'RectFix1',styles['pathRect'])
+            draw_SVG_rect(g2,-2.9250004,3.8344669,6,3.04,'RectFix2',styles['pathRect'])
+            config.read('engrenage.ini')
+            servoPath=config.get(servo, 'd')
+            style = styles['pathHole']
+            style_str = str(inkex.Style(style))
+            gear_attribs = {'style': style_str, 'd': servoPath}
+            etree.SubElement(g2, inkex.addNS('path', 'svg'), gear_attribs)
+            
         # Add center
         if centercross:
             style = {'stroke': stroke_color_guide, 'fill': path_fill,

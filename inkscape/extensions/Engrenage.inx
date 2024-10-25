@@ -3,6 +3,8 @@
    <name>Engrenage</name>
    <id>fablabchemnitz.de.gears_dev</id>
    <param name="active_tab" type="notebook">
+
+   
       <page name="Gear" gui-text="Denture">
          <param name="teeth" type="int" min="3" max="1200" gui-text="Nombre de dents (de 3 à 1200)">20</param>
          <param name="units" type="optiongroup" appearance="combo" gui-text="Unités : ">
@@ -32,6 +34,8 @@
             <option value="20">20</option>
          </param>         
       </page>
+
+
       <page name="Hole" gui-text="Perçage">
          <hbox>
             <param name="hole" type="bool" gui-text="Dessiner un trou central">false</param>
@@ -67,14 +71,20 @@
             </param>
          </hbox>
          <label>Les empreintes sont stockées dans le fichier « engrenage.ini »</label>
+         <param name="RoueServo" type="bool" gui-text="Dessiner les empreintes de servo sur un cercle à part.">true</param>
       </page>
+
+
       <page name="Spokes" gui-text="Rayons">
          <param name="draw_spoke" type="bool" gui-text="Dessiner des rayons">false</param>
          <param name="spoke_count" type="int" min="0" max="100" gui-text="Nombre de rayons">3</param>
          <param name="spoke_width" type="float" min=".01" max="1000" precision="3" gui-text="Largeur de la jante et des rayons">3.0</param>
          <param name="mount_diameter" type="float" min=".01" max="1000" precision="3" gui-text="Diamètre du cercle interne">10.0</param>
+         <label>Le diamètre du cercle interne sera forcé à 20 mm minimum si l'option « Dessiner les empreintes de servo sur un cercle à part. » de l'onglet « perçage » a été coché.</label>
          <image>Engrenage-2.svg</image>
       </page>
+
+
       <page name="rack" gui-text="Crémaillère">
          <param name="draw_rack" type="bool" gui-text="Dessiner la crémaillère (inactif pour les poulies)">false</param>
          <param name="rack_teeth_length" type="int" min="1" max="500" gui-text="Longueur de la crémaillère (dents)">10</param>
@@ -83,6 +93,8 @@
          <label>La crémaillère (à denture droite) correspondante est dessinée en plus et en dessous de l'engrenage.</label>
          <image>Engrenage-3.svg</image>
       </page>
+
+
       <page name="advanced" gui-text="Options avancées">
          <param name="centercross" type="bool" gui-text="Dessiner la croix centrale">false</param>
          <param name="pitchcircle" type="bool" gui-text="Dessiner le cercle primitif (pour l'engrenage)">false</param>
@@ -105,6 +117,8 @@
          </label>
          <param name="undercut_alert" type="bool" gui-text="Confirmer automatiquement l'engrenage avec sous-coupe">true</param>
       </page>
+
+
       <page name="Usage" gui-text="Explications">
          <param name="active_tab" type="notebook">
             <page name="page_1" gui-text="Développante de cercle">

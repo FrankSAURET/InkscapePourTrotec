@@ -22,7 +22,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="274.00387"
+     inkscape:cx="274.35742"
      inkscape:cy="127.98632"
      inkscape:document-units="mm"
      inkscape:current-layer="layer3"
@@ -3870,6 +3870,13 @@
      id="layer3"
      inkscape:label="Découpes"
      transform="translate(-231.0496,-50.92489)">
+    <rect
+       style="fill:#ffffff;stroke-width:1"
+       id="rect1"
+       width="170.0636"
+       height="104.20838"
+       x="231.04961"
+       y="50.737801" />
     <g
        id="g42"
        transform="matrix(1.8296214,0,0,1.8296214,-247.32901,-119.94832)"

@@ -68,7 +68,7 @@ La liste des matériaux peut-être modifiée dans le fichier "boite_brique.inx" 
 		<page name="Usage3" gui-text="Bosses">
 			<param name="laserboxuse3" type="description" xml:space="preserve">Les bosses sont utilisées pour qu’un ajustement serré puisse être effectué en matériaux déformables comme le bois.
 Si bosses est coché, aucun ajustement précis du trait de coupe n’est effectué sur les languettes. Au lieu de cela, une petite bosse est ajoutée à chaque languettes pour permettre un ajustement serré.
-– la taille de la bosse est égale à la taille du trait de scie.
+– la taille de la bosse est égale à la taille du trait de coupe.
 – Les bosses sont utiles pour les matériaux flexibles comme le bois, mais pas pour les matériaux rigides comme le plexiglas.
 – Le style des bosses est soit demi-rondes soit triangles. Les triangles sont moins chers à couper mais les demi-rondes s’ajustent mieux.
 			</param>
@@ -79,8 +79,8 @@ Si bosses est coché, aucun ajustement précis du trait de coupe n’est effectu
 		</page>
 		<page name="Usage4" gui-text="Misc">
 			<param name="laserboxuse4" type="description" xml:space="preserve">Couleurs :
-Le schéma de couleurs utilisé par Ponoko (fabricant de machine) est utilisé ici. Plus précisément :
-– Bleu (0,0, 255) est la couleur de la ligne coupée au laser,
+– Les contours externes sont violet #660066,
+- Les contours internes sont vert foncé #006633,
 – Orange est une annotation non imprimable.
 			<!-- 
 				Les annotations peuvent être affichées. Elles ne décrivent que la valeur du trait de coupe et sont indiqués sur chaque pièce. Ceci peut être utile si les tests d’impression s’adaptent à différents matériaux. 

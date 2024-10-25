@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #  0.4 Add option for lid or not
 #  0.5 Modify tab for adjust kerf (increase tab size)[Frank SAURET 05-05-2021]
 
-__version__ = "0.5"
+__version__ = "0.6"
 
 #from math import *
 import sys
@@ -137,7 +137,7 @@ class LasercutBox(inkex.Effect):
                         help="The selected UI-tab when OK was pressed")
         #internal useful variables
         self.stroke_width  = 0.1 #default for visiblity
-        self.line_style = {'stroke':          '#0000FF', # Ponoko blue
+        self.external_line_style = {'stroke':          '#660066', # Violet
                            'fill':            'none',
                            'stroke-width':    self.stroke_width,
                            'stroke-linecap':  'butt',
@@ -504,10 +504,10 @@ class LasercutBox(inkex.Effect):
         # set the stroke width and line style
         sw = self.kerf
         if self.kerf == 0.0: sw = self.stroke_width
-        ls = self.line_style
+        ls = self.external_line_style
         if line_width: # user wants drawn line width to be same as kerf size
             ls['stroke-width'] = sw
-        line_style = str(inkex.Style(ls))
+        external_line_style = str(inkex.Style(ls))
 
         ###--------------------------- 
         ### create the inkscape object
@@ -520,7 +520,7 @@ class LasercutBox(inkex.Effect):
         # §Draw Lid (using SVG path definitions)
         line_path = self.draw_WH_lid(left_pos, lower_pos, self.aveccouvercle,'Top', False)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-lid', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-lid', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         # §draw the side of the box directly below modify by Frank SAURET 12-12-2018
@@ -535,7 +535,7 @@ class LasercutBox(inkex.Effect):
         # Draw side of the box (placed below the lid)
         line_path = self.draw_WD_side(left_pos, lower_pos, self.aveccouvercle,'Back', False, corners=corners)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-longside1', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-longside1', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         # §draw the bottom of the box directly below modify by Frank SAURET 12-12-2018
@@ -547,7 +547,7 @@ class LasercutBox(inkex.Effect):
         # §Draw base of the box
         line_path = self.draw_WH_lid(left_pos, lower_pos, self.aveccouvercle,'Bot', True)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-base', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-base', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         # draw the second side of the box directly below modify by Frank SAURET 12-12-2018
@@ -559,7 +559,7 @@ class LasercutBox(inkex.Effect):
         # Draw side of the box (placed below the bottom)
         line_path = self.draw_WD_side(left_pos, lower_pos, self.aveccouvercle, 'Front', False, corners=corners)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-longside2', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-longside2', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         # draw next on RHS of lid modify by Frank SAURET 12-12-2018
@@ -575,7 +575,7 @@ class LasercutBox(inkex.Effect):
         # Side of the box (placed next to the lid)
         line_path = self.draw_HD_side(left_pos, lower_pos, self.aveccouvercle,'Left', corners, False)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-endface2', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-endface2', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         # draw next on RHS of base modify by Frank SAURET 12-12-2018
@@ -590,7 +590,7 @@ class LasercutBox(inkex.Effect):
         # Side of the box (placed next to the lid)
         line_path = self.draw_HD_side(left_pos, lower_pos, self.aveccouvercle,'Right', corners, True)
         # Add to scene
-        line_atts = { 'style':line_style, 'id':box_id+'-endface1', 'd':str(Path(line_path)) }
+        line_atts = { 'style':external_line_style, 'id':box_id+'-endface1', 'd':str(Path(line_path)) }
         etree.SubElement(g, inkex.addNS('path','svg'), line_atts)
 
         ###----------------------------------------
