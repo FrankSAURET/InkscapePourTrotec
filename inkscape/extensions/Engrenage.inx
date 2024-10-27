@@ -32,7 +32,9 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
-         </param>         
+         </param>        
+         <param name="ajout_flanc" type="bool" gui-text="Ajouter 2 flancs à coller de chaque coté de la roue dentée.">false</param>
+         <image>Engrenage-6.svg</image>
       </page>
 
 

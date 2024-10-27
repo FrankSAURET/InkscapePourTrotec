@@ -42,7 +42,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 2024-06-18 Frank sauret 1.2 : Ajout de la possibilité de choisir la forme du trou (rectangulaire, ronde ou empreinte de servo) et de choisir les dimensions du trou. Ajout de la possibilité de choisir une empreinte pour le trou du servo. Les empreintes sont placées dans le fichier engrenage.ini
 2024-06-22 Frank sauret 1.3 : Ajout de couleurs pour l'ordre de découpe. Séparation en plusieurs objet pour faciliter la retouche et la recolorisation.
 2024-07-20 Frank sauret 1.4 : Ajout du tracé de poulie au pas métrique
-2024-10-25 Frank sauret 1.5 : Ajout du tracé de roue de fixation pour les servomoteurs
+2024-10-25 Frank sauret 2024.1 : Ajout du tracé de roue de fixation pour les servomoteurs. Changement de versionnage
+
 '''
 
 import inkex
@@ -54,7 +55,7 @@ two_pi = 2 * np.pi
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
-__version__ = '1.5'
+__version__ = '2024.1'
 
 def uutounit(self,nn,uu):
     return self.svg.uutounit(nn,uu)
@@ -430,6 +431,7 @@ class Gears(inkex.EffectExtension):
         self.arg_parser.add_argument("-d", "--dimension", type=float, default=1.0, help="Tooth size, depending on system (which defaults to CP)")
         self.arg_parser.add_argument("-a", "--angle", type=float, default=20.0, help="Pressure Angle (common values: 14.5, 20, 25 degrees)")
         self.arg_parser.add_argument("-i", "--internal_ring", type=inkex.Boolean, default=False, help="Ring (or Internal) gear style (default: normal spur gear)")
+        self.arg_parser.add_argument("-af", "--ajout_flanc", type=inkex.Boolean, default=False, help="Ajouter 2 flancs à coller de chaque coté de la roue dentée.")
         # ! 2-onglet perçage
         self.arg_parser.add_argument("-ho", "--hole", type=inkex.Boolean, default=True, help="Hole or not that is the question")
         self.arg_parser.add_argument("-sh", "--shape", type=str, default="Rectangulaire", help="Shape of the hole")
@@ -546,7 +548,7 @@ class Gears(inkex.EffectExtension):
         # for spokes
         mount_radius = self.options.mount_diameter * 0.5 * unit_factor
         spoke_count = self.options.spoke_count
-        if not(self.options.draw_spoke):
+        if not(self.options.draw_spoke) or  type=="T":
             spoke_count=0
         spoke_width = self.options.spoke_width * unit_factor
         # visible guide lines
@@ -594,7 +596,6 @@ class Gears(inkex.EffectExtension):
             # newlines.
             # so split and make a list
             warnings.extend(msg.split("\n"))
-        
 
         pathSpoke=""
         pathHole=""
@@ -685,12 +686,14 @@ class Gears(inkex.EffectExtension):
             gear_attribs = {'style': style_str, 'd': path_data}
             etree.SubElement(g, inkex.addNS('path', 'svg'), gear_attribs)
         
-        if self.options.RoueServo:
-            #trace les carrés sur l'engrenage
+        if self.options.RoueServo or (self.options.ajout_flanc and self.options.type=="T"):
+            #trace les carrés sur l'engrenage et les flancs
             draw_SVG_rect(g,-8.0038776,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
             draw_SVG_rect(g,5.2538781,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])
+            
+        bbox_points= points_to_bbox(points)
+        if self.options.RoueServo:            
             # trace la roue de liaison avec le servo et ses fixations
-            bbox_points= points_to_bbox(points)
             # 10 = rayon de la roue de fixation
             t2 = f'translate({bbox_points[2]+self.svg.namedview.center[0] +10},{-bbox_points[3]+self.svg.namedview.center[1] +10})'
             g_attribs2 = { inkex.addNS('label','inkscape'):'Fixation servomoteur',
@@ -698,7 +701,6 @@ class Gears(inkex.EffectExtension):
                             inkex.addNS('transform-center-y','inkscape'): str(-bbox_center[1]),
                         'transform':t2}
             g2 = etree.SubElement(self.svg.get_current_layer(), 'g', g_attribs2 )            
-            etree.SubElement(g, inkex.addNS('path', 'svg'), )
             draw_SVG_rect(g2,-8.0038776,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
             draw_SVG_rect(g2,5.2538781,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])
             draw_SVG_circle(g2,10,-3.4954834e-07,-2.0043946e-07,'CercleFixation',styles['pathTeeth'])
@@ -708,9 +710,38 @@ class Gears(inkex.EffectExtension):
             servoPath=config.get(servo, 'd')
             style = styles['pathHole']
             style_str = str(inkex.Style(style))
-            gear_attribs = {'style': style_str, 'd': servoPath}
-            etree.SubElement(g2, inkex.addNS('path', 'svg'), gear_attribs)
-            
+            gear_attribs2 = {'style': style_str, 'd': servoPath}
+            etree.SubElement(g2, inkex.addNS('path', 'svg'), gear_attribs2)
+        
+        if self.options.ajout_flanc and (self.options.type=="T" ):
+            #trace les flancs à coller de chaque coté de la roue dentée
+            if self.options.RoueServo:
+                t3 = f'translate({bbox_points[2]+self.svg.namedview.center[0] +20+outer_radius},{-bbox_points[3]+self.svg.namedview.center[1]+outer_radius })'
+            else:
+                t3 = f'translate({bbox_points[2]+self.svg.namedview.center[0] +outer_radius},{-bbox_points[3]+self.svg.namedview.center[1] +outer_radius})'
+            g_attribs3 = { inkex.addNS('label','inkscape'):'Flancs',
+                            inkex.addNS('transform-center-x','inkscape'): str(-bbox_center[0]),
+                            inkex.addNS('transform-center-y','inkscape'): str(-bbox_center[1]),
+                        'transform':t3}
+            g3 = etree.SubElement(self.svg.get_current_layer(), 'g', g_attribs3 ) 
+            draw_SVG_circle(g3,outer_radius,0,0,'Flanc1',styles['pathTeeth'])
+            draw_SVG_circle(g3,outer_radius,outer_radius*2,0,'Flanc2',styles['pathTeeth'])
+            draw_SVG_rect(g3,-8.0038776,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
+            draw_SVG_rect(g3,5.2538781,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])
+            draw_SVG_rect(g3,-8.0038776+outer_radius*2,-1.4092553,2.75,2.75,'RectFixationGauche',styles['pathRect'])
+            draw_SVG_rect(g3,5.2538781+outer_radius*2,-1.3407452,2.75,2.75,'RectFixationDroit',styles['pathRect'])      
+            style = styles['pathHole']
+            style_str = str(inkex.Style(style))
+            gear_attribs3 = {'style': style_str, 'd': pathHole}
+            etree.SubElement(g3, inkex.addNS('path', 'svg'), gear_attribs3)
+            # trace les barres de fixation
+            draw_SVG_rect(g3,42.390999,-13.827981,6.0800023,15.999998,'RectFixationDroit',styles['pathRect'])
+            style = styles['pathRect']
+            style_str = str(inkex.Style(style))
+            pathbarre='M 45.431,2.1720171 V -13.827981'
+            gear_attribs3 = {'style': style_str, 'd': pathbarre}
+            etree.SubElement(g3, inkex.addNS('path', 'svg'), gear_attribs3)            
+                       
         # Add center
         if centercross:
             style = {'stroke': stroke_color_guide, 'fill': path_fill,
