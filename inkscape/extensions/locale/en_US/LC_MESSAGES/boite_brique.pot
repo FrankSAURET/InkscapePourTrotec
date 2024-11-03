@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 19:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: FrankSAURET\boite_brique.inx:3
+msgid "Boite « Brique »"
+msgstr "Brick Box"
+
+#: FrankSAURET\boite_brique.inx:8
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: FrankSAURET\boite_brique.inx:14
+msgid "Les dimensions peuvent mesurer la taille externe ou interne de la boîte.\nLes unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).\nLa boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur).\n-----------------------------------------------------------------------------"
+msgstr "The dimensions can measure the external or internal size of the box.\nThe document units should be set to mm instead of pixels (assuming you really want to cut them with a laser).\nThe box can have a lid or not. If there is none, it will be the top of the box that will be smooth (width x length).\n-----------------------------------------------------------------------------"
+
+#: FrankSAURET\boite_brique.inx:18
+msgid "La boite doit elle avoir un couvercle (boite fermée) : "
+msgstr "Should the box have a lid (closed box):"
+
+#: FrankSAURET\boite_brique.inx:19
+msgid "Avec couvercle"
+msgstr "With lid"
+
+#: FrankSAURET\boite_brique.inx:20
+msgid "Sans couvercle"
+msgstr "Without lid"
+
+#: FrankSAURET\boite_brique.inx:22
+msgid "Les dimensions sont : "
+msgstr "The dimensions are:"
+
+#: FrankSAURET\boite_brique.inx:23
+msgid "Externe"
+msgstr "External"
+
+#: FrankSAURET\boite_brique.inx:24
+msgid "Interne"
+msgstr "Internal"
+
+#: FrankSAURET\boite_brique.inx:26
+msgid "Unité"
+msgstr "Unit"
+
+#: FrankSAURET\boite_brique.inx:32
+msgid "Largeur"
+msgstr "Width"
+
+#: FrankSAURET\boite_brique.inx:33
+msgid "Longueur"
+msgstr "Length"
+
+#: FrankSAURET\boite_brique.inx:34
+msgid "Hauteur"
+msgstr "Height"
+
+#: FrankSAURET\boite_brique.inx:35
+msgid "Epaisseur du matériau"
+msgstr "Material thickness"
+
+#: FrankSAURET\boite_brique.inx:36
+msgid "Nombre d'encoche dans la largeur"
+msgstr "Number of notches in the width"
+
+#: FrankSAURET\boite_brique.inx:37
+msgid "Nombre d'encoche dans la longueur"
+msgstr "Number of notches in the length"
+
+#: FrankSAURET\boite_brique.inx:38
+msgid "Nombre d'encoche dans la hauteur"
+msgstr "Number of notches in the height"
+
+#: FrankSAURET\boite_brique.inx:39
+msgid "Distance entre chaque pièces"
+msgstr "Distance between each piece"
+
+#: FrankSAURET\boite_brique.inx:42
+msgid "Les coins des cubes peuvent être omis ou pas."
+msgstr "The corners of the cubes can be omitted or not."
+
+#: FrankSAURET\boite_brique.inx:43
+msgid "Inclure les coins."
+msgstr "Include corners."
+
+#: FrankSAURET\boite_brique.inx:46
+msgid "Trait de coupe"
+msgstr "Kerf"
+
+#: FrankSAURET\boite_brique.inx:60
+msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.\n\nMettre le trait de coupe à 0 créera une boîte qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle."
+msgstr "The kerf is the amount lost relative to the laser's burn width. Typically in the range of 0.1 to 0.4 mm. Check with your laser supplier. This will depend on the material to be cut and the speed of the laser.\n\nSetting the kerf to 0 will create a box that uses the least amount of material possible. However, the pieces may be poorly fitted and will likely require glue."
+
+#: FrankSAURET\boite_brique.inx:61
+msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfinie - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\\Roaming\\inkscape\\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
+msgstr "You can either choose a material - which will apply a predefined kerf width - or specify the kerf width. The list of materials can be modified in the 'boite_brique.inx' file located in your extension folder (under Windows it is probably here: %AppData%\\Roaming\\inkscape\\extensions). In this file, search for the word 'Matos' to find the list of materials."
+
+#: FrankSAURET\boite_brique.inx:62
+msgid "Choisir un matériau"
+msgstr "Choose a material"
+
+#: FrankSAURET\boite_brique.inx:63
+msgid "Indiquer la largeur du trait de coupe"
+msgstr "Specify the kerf width"
+
+#: FrankSAURET\boite_brique.inx:65
+msgid "Liste des matériaux :"
+msgstr "List of materials:"
+
+#: FrankSAURET\boite_brique.inx:71
+msgid "PMMA 5 mm"
+msgstr "PMMA 5 mm"
+
+#: FrankSAURET\boite_brique.inx:72
+msgid "PMMA 3 mm"
+msgstr "PMMA 3 mm"
+
+#: FrankSAURET\boite_brique.inx:73
+msgid "Médium 3 mm"
+msgstr "Medium 3 mm"
+
+#: FrankSAURET\boite_brique.inx:75
+msgid "trait de coupe (quantité perdue par le laser)"
+msgstr "kerf (amount lost by the laser)"
+
+#: FrankSAURET\boite_brique.inx:76
+msgid "Largeur de ligne affichée = trait de coupe"
+msgstr "Displayed line width = kerf"
+
+#: FrankSAURET\boite_brique.inx:77
+msgid "Forcer la séparation des panneaux si le trait de coupe est égal à 0"
+msgstr "Force panel separation if the kerf is equal to 0"
+
+#: FrankSAURET\boite_brique.inx:80
+msgid "Informations :"
+msgstr "Informations:"
+
+#: FrankSAURET\boite_brique.inx:75
+msgid "Couleurs :\n– Les contours externes sont violet #660066,\n- Les contours internes sont vert foncé #006633,\n– Orange est une annotation non imprimable."
+msgstr "Colors:\n– External contours are purple #660066,\n- Internal contours are dark green #006633,\n– Orange is a non-printable annotation."
+
+#: FrankSAURET\boite_brique.inx:80
+msgid "Découpe Laser"
+msgstr "Laser Cut"  

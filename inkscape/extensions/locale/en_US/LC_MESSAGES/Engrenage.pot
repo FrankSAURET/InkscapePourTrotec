@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 19:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Engrenage.inx:3
+msgid "Engrenage"
+msgstr "Gear"
+
+#: Engrenage.inx:8
+msgid "Denture"
+msgstr "Tooth"
+
+#: Engrenage.inx:10
+msgid "Nombre de dents (de 3 à 1200)"
+msgstr "Number of teeth (from 3 to 1200)"
+
+#: Engrenage.inx:11
+msgid "Unités : "
+msgstr "Units:"
+
+#: Engrenage.inx:14
+msgid "Type de denture : "
+msgstr "Tooth type:"
+
+#: Engrenage.inx:15
+msgid "Développante de cercle"
+msgstr "Involute"
+
+#: Engrenage.inx:16
+msgid "Pas métrique (T)"
+msgstr "Metric pitch (T)"
+
+#: Engrenage.inx:19
+msgid "Profil de denture en développante de cercle : "
+msgstr "Involute tooth profile:"
+
+#: Engrenage.inx:20
+msgid "Module : "
+msgstr "Module:"
+
+#: Engrenage.inx:21
+msgid "Voir l'onglet explication au besoin."
+msgstr "See the explanation tab if needed."
+
+#: Engrenage.inx:22
+msgid "Angle de pression (de 5 à 45)"
+msgstr "Pressure angle (from 5 to 45)"
+
+#: Engrenage.inx:23
+msgid "Engrenage annulaire (Engrenage interne)"
+msgstr "Ring gear (Internal gear)"
+
+#: Engrenage.inx:26
+msgid "Poulie au pas métrique : "
+msgstr "Metric pitch pulley:"
+
+#: Engrenage.inx:27
+msgid "Longueur du pas : "
+msgstr "Pitch length:"
+
+#: Engrenage.inx:33
+msgid "Ajouter 2 flancs à coller de chaque coté de la roue dentée."
+msgstr "Add 2 flanks to glue on each side of the gear."
+
+#: Engrenage.inx:39
+msgid "Perçage"
+msgstr "Drilling"
+
+#: Engrenage.inx:41
+msgid "Dessiner un trou central"
+msgstr "Draw a central hole"
+
+#: Engrenage.inx:45
+msgid "Forme du trou :"
+msgstr "Hole shape:"
+
+#: Engrenage.inx:47
+msgid "Rectangulaire"
+msgstr "Rectangular"
+
+#: Engrenage.inx:48
+msgid "Rond"
+msgstr "Round"
+
+#: Engrenage.inx:49
+msgid "Empreinte (servo moteur ou autres)"
+msgstr "Footprint (servo motor or others)"
+
+#: Engrenage.inx:136
+msgid "Pas métrique"
+msgstr "Metric pitch"
+
+#: Engrenage.inx:139
+msgid "Calculs"
+msgstr "Calculations"
+
+#: Engrenage.inx:142
+msgid "Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.\n\nPour que les engrenages s'engrènent - la taille des dents sur chaque engrenage doit être la même.\nC'est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.\n\nLe pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.\np = pi x D / z\n   - où z est le nombre de dents sur un engrenage de diamètre primitif D.\nLa mesure SI est le module - qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :\nm = p / pi = D / z\n\n   - Cercle primitif : Le rayon est égal à la distance du centre de l'engrenage au point primitif.\n   - Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.\n   - Angle de pression [en degrés]. Habituellement 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l'angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction])."
+msgstr "Make sure to set the document properties to inches or mm if you want real dimensions.\n\nFor gears to mesh - the size of the teeth on each gear must be the same.\nThat's why the number of teeth and the circular pitch or metric module are used to define gears and not the radius.\n\nThe angular pitch, p, is the distance between adjacent teeth around the pitch circle.\np = pi x D / z\n   - where z is the number of teeth on a gear of pitch diameter D.\nThe SI measure is the module - which expresses the basic ratio between the pitch diameter and the number of teeth:\nm = p / pi = D / z\n\n   - Pitch circle: The radius is equal to the distance from the center of the gear to the pitch point.\n   - Pitch point: The point of tangency of the pitch circles of two meshing gears.\n   - Pressure angle [in degrees]. Usually 20. Historically: 14.5; High torque gears: 25 (The higher the pressure angle, the stronger the teeth. With higher pressure angles, more effort is required to turn the gears [due to friction])."
+
+#: Engrenage.inx:151
+msgid "Profil de denture au pas métrique (T) : "
+msgstr "Metric pitch tooth profile (T):"
+
+#: Engrenage.inx:152
+msgid "Le pas métrique est une mesure de la distance entre les dents d'un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l'engrenage, mesurée le long de l'arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres."
+msgstr "The metric pitch is a measure of the distance between the teeth of a gear. It is defined as the distance between two consecutive points on the pitch circle of the gear, measured along the arc of the pitch circle. The metric pitch is usually measured in millimeters."
+
+#: Engrenage.inx:161
+msgid "Formes"
+msgstr "Shapes"

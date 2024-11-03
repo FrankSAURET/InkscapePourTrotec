@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 19:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Engrenage.inx:3
+msgid "Engrenage"
+msgstr ""
+
+#: Engrenage.inx:8
+msgid "Denture"
+msgstr ""
+
+#: Engrenage.inx:10
+msgid "Nombre de dents (de 3 à 1200)"
+msgstr ""
+
+#: Engrenage.inx:11
+msgid "Unités : "
+msgstr ""
+
+#: Engrenage.inx:14
+msgid "Type de denture : "
+msgstr ""
+
+#: Engrenage.inx:15
+msgid "Développante de cercle"
+msgstr ""
+
+#: Engrenage.inx:16
+msgid "Pas métrique (T)"
+msgstr ""
+
+#: Engrenage.inx:19
+msgid "Profil de denture en développante de cercle : "
+msgstr ""
+
+#: Engrenage.inx:20
+msgid "Module : "
+msgstr ""
+
+#: Engrenage.inx:21
+msgid "Voir l'onglet explication au besoin."
+msgstr ""
+
+#: Engrenage.inx:22
+msgid "Angle de pression (de 5 à 45)"
+msgstr ""
+
+#: Engrenage.inx:23
+msgid "Engrenage annulaire (Engrenage interne)"
+msgstr ""
+
+#: Engrenage.inx:26
+msgid "Poulie au pas métrique : "
+msgstr ""
+
+#: Engrenage.inx:27
+msgid "Longueur du pas : "
+msgstr ""
+
+#: Engrenage.inx:33
+msgid "Ajouter 2 flancs à coller de chaque coté de la roue dentée."
+msgstr ""
+
+#: Engrenage.inx:39
+msgid "Perçage"
+msgstr ""
+
+#: Engrenage.inx:41
+msgid "Dessiner un trou central"
+msgstr ""
+
+#: Engrenage.inx:45
+msgid "Forme du trou :"
+msgstr ""
+
+#: Engrenage.inx:47
+msgid "Rectangulaire"
+msgstr ""
+
+#: Engrenage.inx:48
+msgid "Rond"
+msgstr ""
+
+#: Engrenage.inx:49
+msgid "Empreinte (servo moteur ou autres)"
+msgstr ""
+
+#: Engrenage.inx:136
+msgid "Pas métrique"
+msgstr ""
+
+#: Engrenage.inx:139
+msgid "Calculs"
+msgstr ""
+
+#: Engrenage.inx:142
+msgid "Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.\n\nPour que les engrenages s'engrènent - la taille des dents sur chaque engrenage doit être la même.\nC'est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.\n\nLe pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.\np = pi x D / z\n   - où z est le nombre de dents sur un engrenage de diamètre primitif D.\nLa mesure SI est le module - qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :\nm = p / pi = D / z\n\n   - Cercle primitif : Le rayon est égal à la distance du centre de l'engrenage au point primitif.\n   - Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.\n   - Angle de pression [en degrés]. Habituellement 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l'angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction])."
+msgstr ""
+
+#: Engrenage.inx:151
+msgid "Profil de denture au pas métrique (T) : "
+msgstr ""
+
+#: Engrenage.inx:152
+msgid "Le pas métrique est une mesure de la distance entre les dents d'un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l'engrenage, mesurée le long de l'arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres."
+msgstr ""
+
+#: Engrenage.inx:161
+msgid "Formes"
+msgstr ""

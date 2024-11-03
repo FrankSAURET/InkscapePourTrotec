@@ -4,7 +4,7 @@
 	<id>franksauret.BoiteLaser</id>
 	<dependency type="executable" location="extensions">boite_brique.py</dependency>
 	<param name="tab" type="notebook">
-		
+
 		<page name="Dimensions" gui-text="Dimensions">
 			<param name="laserboxuse" type="description" xml:space="preserve">Les dimensions peuvent mesurer la taille externe ou interne de la boîte.
 Les unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).
@@ -13,19 +13,22 @@ La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de
 			</param>
 			<param name="aveccouvercle" gui-text="La boite doit elle avoir un couvercle (boite fermée) : " type="optiongroup" appearance="minimal">
 				<option value="True">Avec couvercle</option>
-				<option value="False">Sans couvercle</option></param>
-			<param name="external_dimensions" gui-text="Les dimensions sont : " type="optiongroup" appearance="combo">
-				<option value="True">Externe</option>
-				<option value="False">Interne</option></param>				
+				<option value="False">Sans couvercle</option>
+			</param>
+				<param name="external_dimensions" gui-text="Les dimensions sont : " type="optiongroup" appearance="combo">
+					<option value="True">Externe</option>
+					<option value="False">Interne</option>
+				</param>
 			<param name="units" gui-text="Unité" type="optiongroup" appearance="combo">>
 				<option value="px" translatable="no">px</option>
 				<option value="pt" translatable="no">pt</option>
 				<option value="in" translatable="no">in</option>
 				<option value="cm" translatable="no">cm</option>
-				<option value="mm" translatable="no">mm</option></param>
-			<param name="width"  type="float" min="0.1" max="1000.0" gui-text="Largeur">60.0</param>
+				<option value="mm" translatable="no">mm</option>
+			</param>
+			<param name="width" type="float" min="0.1" max="1000.0" gui-text="Largeur">60.0</param>
 			<param name="length" type="float" min="0.1" max="1000.0" gui-text="Longueur">30.0</param>
-			<param name="height"  type="float" min="0.1" max="1000.0" gui-text="Hauteur">15</param>
+			<param name="height" type="float" min="0.1" max="1000.0" gui-text="Hauteur">15</param>
 			<param name="thickness" type="float" min="0.0" max="20.0" precision="2" gui-text="Epaisseur du matériau">3.0</param>
 			<param name="num_tab_Width" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la largeur">3</param>
 			<param name="num_tab_Length" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la longueur">3</param>
@@ -35,7 +38,7 @@ La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de
 			<param name="laserboxuse" type="description" xml:space="preserve">Les coins des cubes peuvent être omis ou pas.</param>
 			<param name="corners" type="boolean" gui-text="Inclure les coins.">True</param>
 		</page>
-		
+
 		<page name="Usage2" gui-text="Trait de coupe">
 			<param name="laserboxuse2" type="description" xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.
 
@@ -50,8 +53,8 @@ La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx
 %AppData%\Roaming\inkscape\extensions).	Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux.		
 			</param>
 			<param name="bymaterial" type="optiongroup" gui-text=" ">
-			   <option value="True">Choisir un matériau</option>
-			   <option value="False">Indiquer la largeur du trait de coupe</option>
+				<option value="True">Choisir un matériau</option>
+				<option value="False">Indiquer la largeur du trait de coupe</option>
 			</param>
 			<param name="materiaux" type="optiongroup" appearance="minimal" gui-text="Liste des matériaux :">
 				<!-- 
@@ -67,27 +70,24 @@ La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx
 			<param name="linewidth" type="boolean" gui-text="Largeur de ligne affichée = trait de coupe">False</param>
 			<param name="forcingseparation" type="boolean" gui-text="Forcer la séparation des panneaux si le trait de coupe est égale à 0">False</param>
 		</page>
-		
-		<page name="Usage4" gui-text="Misc">
+
+		<page name="Usage4" gui-text="Informations :">
+			<label appearance="header">Couleurs :</label>
 			<param name="laserboxuse4" type="description" xml:space="preserve">
-			Couleurs :
 	– Les contours externes sont violet #660066,
 	- Les contours internes sont vert foncé #006633,
 	– Orange est une annotation non imprimable.
-			<!-- 
-				Les annotations peuvent être affichées. Elles ne décrivent que la valeur du trait de coupe et sont indiqués sur chaque pièce. Ceci peut être utile si les tests d’impression s’adaptent à différents matériaux. 
-			-->
 			</param>
 			<!-- <param name="annotation" type="boolean" gui-text="Inclure les annotations">True</param> -->
 			<image>boite_brique1.jpg</image>
 		</page>
-		
+
 	</param>
 	<effect>
 		<object-type>all</object-type>
-        <effects-menu>
-            <submenu _name="Découpe Laser"/>
-        </effects-menu>
+		<effects-menu>
+			<submenu _name="Découpe Laser"/>
+		</effects-menu>
 	</effect>
 	<script>
 		<command location="inx" interpreter="python">boite_brique.py</command>

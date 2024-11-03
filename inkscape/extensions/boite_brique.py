@@ -458,16 +458,16 @@ class LasercutBox(inkex.Effect):
         g.set('transform', 'translate(%f,%f)' % (translate_x, translate_y))
 
 ###
-# if __name__ == '__main__':
-#     LasercutBox().run()
+if __name__ == '__main__':
+    LasercutBox().run()
     
 #Pour débugger dans VSCode et en lançant InkScape    
-if __name__ == '__main__':
-    filename='H:\\OneDrive\\TestBoiteBrique.svg'
-    if 'inkscape' in sys.argv[0]:
-        # Dans VSCode
-        input_file = filename
-        output_file = input_file
-        LasercutBox().run([input_file, '--output=' + output_file])
-    else:
-        LasercutBox().run()
+# if __name__ == '__main__':
+#     filename='H:\\OneDrive\\TestBoiteBrique.svg'
+#     if 'inkscape' in sys.argv[0]:
+#         # Dans VSCode
+#         input_file = filename
+#         output_file = input_file
+#         LasercutBox().run([input_file, '--output=' + output_file])
+#     else:
+#         LasercutBox().run()
