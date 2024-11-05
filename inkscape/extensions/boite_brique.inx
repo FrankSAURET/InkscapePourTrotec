@@ -62,9 +62,9 @@ La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx
 				"Value" est la largeur du trait de coupe en mm.
 				Matos
  				-->
-				<option value="0.15">PMMA 5 mm</option>
-				<option value="0.15">PMMA 3 mm</option>
-				<option value="0.28">Médium 3 mm</option>
+				<option value="0.20">PMMA 5 mm</option>
+				<option value="0.20">PMMA 3 mm</option>
+				<option value="0.15">Médium 3 mm</option>
 			</param>
 			<param name="kerf_size" type="float" min="0.00" max="3.00" precision="3" gui-text="trait de coupe (quantité perdue par le laser)">0.00</param>
 			<param name="linewidth" type="boolean" gui-text="Largeur de ligne affichée = trait de coupe">False</param>
