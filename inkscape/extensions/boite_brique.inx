@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+<inkscape-extension translationdomain="boite_brique" xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<name>Boite « Brique »</name>
 	<id>franksauret.BoiteLaser</id>
 	<dependency type="executable" location="extensions">boite_brique.py</dependency>
