@@ -1,43 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-	<_name>Assemblage rapide</name>
+<inkscape-extension translationdomain="Jointure_rapide" xmlns="http://www.inkscape.org/namespace/inkscape/extension">	
+	<name>Assemblage rapide</name>
 	<id>franksauret.Jointure_rapide</id>
 	<dependency type="executable" location="extensions">Jointure_rapide.py</dependency>
-	<param name="qjuse" type="description" xml:space="preserve">Ajoute des languettes ou des fentes d'assemblage à un chemin ou à une ligne.
-	
-	Attention il faut transformer les objets en chemin.
-	</param>
-	<param name="qjver" type="description" xml:space="preserve">Version 0.5</param>
-	<param name="activetab" type="notebook">
-		<page name="tabpage" gui-text="Languette">
-			<param name="side" type="int" min="0" max="512" gui-text="Numéro de coté : ">0</param>
-			<param name="numtabs" type="int" min="1" max="512" gui-text="Nombre de languettes :">1</param>
-		</page>
-		<page name="slotpage" gui-text="Fente">
-			<param name="numslots" type="int" min="1" max="512" gui-text="Nombre de fentes :">1</param>
-		</page>
-	</param>
+	<label xml:space="preserve">Ajoute des languettes ou des fentes d’assemblage à un chemin ou à une ligne.</label>
+	<separator/>
+	<label xml:space="preserve" appearance="header">Attention, il faut transformer les objets en chemin (Chemin > Objet en chemin).	</label>
+	<separator/>
 	<hbox>
 		<vbox>
-			<param name="Explication" type="description" xml:space="preserve">Pour faire un assemblage, tracé une forme et sélectionner le coté sur lequel mettre les languettes. A coté, tracer une droite de la taille du coté précédent et mettre les fentes.
-La largeur du trait de coupe sera appliquée pour créer des fentes réalisant un ajustement serré càd que la taille de la languette obtenu sera la même que la taille de la fente obtenue. Sur le dessin en noir les traits de centrage de la coupe. En rouge la matière enlevée pour les languettes et en bleu celle pour les fentes.
-
-			</param>
+			<label xml:space="preserve">Pour faire un assemblage, tracer une forme et sélectionner le côté sur lequel mettre les languettes. 
+La largeur du trait de coupe sera appliquée pour créer des fentes réalisant un ajustement serré càd que la taille de la languette obtenue sera la même que la taille de la fente obtenue (en tenant compte de la perte due au laser). 
+Sur le dessin ci-contre : en noir les traits de centrage de la coupe, en rouge la matière enlevée pour les languettes et en bleu celle pour les fentes.
+			</label>
 		</vbox>
 		<image>Jointure_rapide.svg</image>
 	</hbox>
-	<param name="thickness" type="float" min="0.0" max="1000.0" precision="3" gui-text="Épaisseur du matériau :">3.0</param>
-	<param name="kerf" type="float" min="-1000.0" max="1000.0" precision="5" gui-text="Largeur du trait de coupe :">0.1</param>
-	<param name="akerf" type="description" xml:space="preserve">Attention le trait de coupe diminue uniquement les fentes sur les 4 cotés. Il peut être négatif pour faire un ajustement large.</param>
-	<param name="units" type="optiongroup" appearance="combo" gui-text="Unité :">
-		<item value="mm" translatable="no">mm</item>
-		<item value="px" translatable="no">px</item>
-		<item value="pt" translatable="no">pt</item>
-		<item value="in" translatable="no">in</item>
-		<item value="cm" translatable="no">cm</item>
+	<param name="activetab" type="notebook">
+		<page name="tabpage" gui-text="Languette - Fente">
+			<param name="side" type="int" min="0" max="999" gui-text="Numéro de coté : ">1</param>
+			<param name="numtabs" type="int" min="2" max="999" gui-text="Nombre de languettes ou de fentes :">3</param>
+			<param name="typedeliaison" type="optiongroup" gui-text="Tracer : ">
+			   <option value="Languette">Languette.</option>
+			   <option value="Fente">Fente.</option>
+			   <option value="LesDeux">Les deux.</option>
+			</param>
+			<param name="gardejeu" type="boolean" gui-text="Garder un jeu." gui-description ="Garder un jeu de la taille du trait de coupe sur l'épaisseur de matériaux pour les fentes (permet de s'affranchir de la non planéité des matériaux).">True</param>
+			<param name="thickness" type="float" min="0.0" max="1000.0" precision="2" gui-text="Épaisseur du matériau :">3.0</param>
+			<param name="units" type="optiongroup" appearance="combo" gui-text="Unité :">
+				<item value="mm" translatable="no">mm</item>
+				<item value="px" translatable="no">px</item>
+				<item value="pt" translatable="no">pt</item>
+				<item value="in" translatable="no">in</item>
+				<item value="cm" translatable="no">cm</item>
+			</param>
+			<param name="edgefeatures" type="boolean" gui-text="Languette dans les angles.">True</param>
+			<param name="flipside" type="boolean" gui-text="Faire les languettes à l'extérieur de la forme.">True</param>
+		</page>
+
+		<page name="Usage2" gui-text="Trait de coupe">
+			<label xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. 
+			</label>
+			<separator/>
+			<label xml:space="preserve">Vous pouvez ici, soit choisir un matériau — ce qui appliquera une largeur de trait de coupe prédéfini — soit indiquer la largeur de trait de coupe.
+La liste des matériaux peut-être modifiée dans le fichier « Jointure_rapide.inx » qui se trouve dans votre dossier extension (sous Windows il est sans doute ici :
+« %AppData%\Roaming\inkscape\extensions ».			
+			</label>
+			<param name="bymaterial" type="optiongroup" gui-text=" ">
+			   <option value="True">Choisir un matériau</option>
+			   <option value="False">Indiquer la largeur du trait de coupe</option>
+			</param>
+			<param name="materiaux" type="optiongroup" appearance="minimal" gui-text="Liste des matériaux :">
+				<option value="0.2">PMMA 5 mm</option>
+				<option value="0.2">PMMA 3 mm</option>
+				<option value="0.15">Médium 3 mm</option>
+			</param>
+			<param name="kerf" type="float" min="0.00" max="3.00" precision="2" gui-text="trait de coupe (quantité perdue par le laser)">0.15</param>
+			<label xml:space="preserve">Attention le trait de coupe diminue uniquement les fentes sur les 4 cotés. </label>
+		</page>
 	</param>
-	<param name="edgefeatures" type="boolean" gui-text="Languette dans les angles.">True</param>
-	<param name="flipside" type="boolean" gui-text="Faire les languettes ou fentes à l'extérieur de la forme ou de l'autre coté de la ligne.">True</param>
+
 	<effect needs-live-preview="true">
 		<object-type>path</object-type>
 		<effects-menu>

@@ -9,6 +9,7 @@ Télécharger le zip (dans « Releases > latest » à droite de cette page).
 
 # Mise à Jour
 Désormais toutes mes extensions peuvent se mettre à jour toute seule.
+L'option est tout en bas des extensions.
 ![configuration 1](Maj1.png)
 
 Le faire régulièrement, il ne prévient pas lors d'une mise à jour possible.
