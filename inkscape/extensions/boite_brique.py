@@ -111,7 +111,7 @@ class LasercutBox(inkex.Effect):
                         help="Are kerf define by material")
         self.arg_parser.add_argument("-o", "--materiaux",
                         type=float,
-                        dest="materiaux", default=1, #**********************************************
+                        dest="materiaux", default=0.15,
                         help="Kerf size define by material")
         self.arg_parser.add_argument("-k", "--kerf_size",
                         type=float,
