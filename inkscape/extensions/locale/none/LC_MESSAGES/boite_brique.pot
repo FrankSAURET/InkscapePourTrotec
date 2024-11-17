@@ -6,13 +6,13 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Traduction \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-01 19:30+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-11-13 14:18+0100\n"
+"Last-Translator: Frank SAURET <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgid "Dimensions"
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:14
-msgid "Les dimensions peuvent mesurer la taille externe ou interne de la boîte.\nLes unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).\nLa boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur).\n-----------------------------------------------------------------------------"
+msgid "Les dimensions peuvent mesurer la taille externe ou interne de la boîte.\nLes unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).\nLa boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur)."
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:18
@@ -90,7 +90,7 @@ msgid "Distance entre chaque pièces"
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:42
-msgid "Les coins des cubes peuvent être omis ou pas."
+msgid "Les coins des boites peuvent être omis ou pas."
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:43
@@ -106,8 +106,9 @@ msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de co
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:61
-msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfinie - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\\Roaming\\inkscape\\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
+msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\\Roaming\\inkscape\\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
 msgstr ""
+
 
 #: FrankSAURET\boite_brique.inx:62
 msgid "Choisir un matériau"
@@ -142,17 +143,21 @@ msgid "Largeur de ligne affichée = trait de coupe"
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:77
-msgid "Forcer la séparation des panneaux si le trait de coupe est égal à 0"
+msgid "Forcer la séparation des panneaux si le trait de coupe est égale à 0"
 msgstr ""
 
 #: FrankSAURET\boite_brique.inx:80
-msgid "Informations :"
+msgid "Informations"
 msgstr ""
 
-#: FrankSAURET\boite_brique.inx:75
-msgid "Couleurs :\n– Les contours externes sont violet #660066,\n- Les contours internes sont vert foncé #006633,\n– Orange est une annotation non imprimable."
+#: FrankSAURET\boite_brique.inx:81
+msgid "Couleurs :"
 msgstr ""
 
-#: FrankSAURET\boite_brique.inx:80
+#: FrankSAURET\boite_brique.inx:82
+msgid "– Les contours externes sont violet #660066,\n– Les contours internes sont vert foncé #006633,\n– Orange est une annotation non imprimable."
+msgstr ""
+
+#: FrankSAURET\boite_brique.inx:83
 msgid "Découpe Laser"
 msgstr ""

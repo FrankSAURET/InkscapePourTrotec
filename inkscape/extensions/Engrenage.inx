@@ -19,7 +19,7 @@
             <image>Engrenage-1.svg</image>
          </hbox>
          <separator/>
-         <label appearance="header">Profil de denture en développante de cercle : </label>
+         <label appearance="header">dev</label>
          <hbox><param name="dimension" type="float" min="0.1" max="100.0" precision="0.1" gui-text="Module : " gui-description="Voir l'onglet explication au besoin.">1.0</param></hbox>
          <hbox><param name="angle" type="float" min="5.0" max="45.0" precision="1" gui-text="Angle de pression (de 5 à 45)">20.0</param></hbox>
          <param name="internal_ring" type="bool" gui-text="Engrenage annulaire (Engrenage interne)">false</param>
@@ -55,10 +55,22 @@
          </hbox>
          <separator/>
          <hbox>
-            <param name="hole_width" type="float" min="0.1" max="100" precision="3" gui-text="Largeur du trou rectangulaire (dimension horizontale): ">2.9</param>
-         </hbox>
-         <hbox>
-            <param name="hole_length" type="float" min="0.1" max="100" precision="3" gui-text="Hauteur du trou rectangulaire (dimension Verticale) : ">2.9</param>
+            <vbox>
+               <hbox>
+                  <param name="hole_width" type="float" min="0.1" max="100" precision="3" gui-text="Largeur du trou rectangulaire (dimension horizontale): ">2.9</param>
+               </hbox>
+               <hbox>
+                  <param name="hole_length" type="float" min="0.1" max="100" precision="3" gui-text="Hauteur du trou rectangulaire (dimension Verticale) : ">2.9</param>
+               </hbox>
+            </vbox>
+            <separator/>
+            <vbox>
+               <spacer/> <param name="CarreParfait" type="bool" gui-text="Carré parfait." >true</param>
+               <label>Dessine un carré correspondant à l'épaisseur du matériaux et au jeu de l'onglet Matériel et matériau.
+               </label>
+               <param name="BarreAxe" type="bool" gui-text="Dessiner la barre d'axe">true</param>
+               <hbox><param name="LongueurAxe" type="float" min="0.1" max="100" precision="1" gui-text="Longueur de la barre d'axe">6</param></hbox>
+            </vbox>   
          </hbox>
          <separator/>
          <hbox>
@@ -70,7 +82,7 @@
                <option value="HS422">Servomoteur : HS-422</option>
             </param>
          </hbox>
-         <label>Les empreintes sont stockées dans le fichier « engrenage.ini »</label>
+         <label>Les empreintes sont stockées dans le fichier « engrenage.ini ».</label>
          <param name="RoueServo" type="bool" gui-text="Dessiner les empreintes de servo sur un cercle à part.">true</param>
          <hbox>
             <param name="DiametreCercle" type="float" min="20" max="999" precision="2" gui-text="Diamètre de ce cercle :">20</param>
@@ -96,13 +108,12 @@
       </page>
       <!-- * 5-onglet Matériel et matériau  -->
       <page name="MatMat" gui-text="Matériel et matériau">
-         <param name="laserboxuse2" type="description" xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.
-         </param>
+         <param name="laserboxuse2" type="description" xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.</param>
          <separator/>
-         <param name="commentairekerfchoice" type="description" xml:space="preserve">Vous pouvez ici, soit choisir un matériau — ce qui appliquera une largeur de trait de coupe prédéfini — soit indiquer la largeur de trait de coupe.
-      La liste des matériaux peut-être modifiée dans le fichier « Engrenage.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici :
-      %AppData%\Roaming\inkscape\extensions).	Dans ce fichier, rechercher le mot « Matos » pour trouver la liste des matériaux.		
-         </param>
+         <param name="commentairekerfchoice" type="description" xml:space="preserve">Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe.
+La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici :
+%AppData%\Roaming\inkscape\extensions).
+Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux.</param>
          <hbox>
             <param name="bymaterial" type="optiongroup" gui-text=" ">
                <option value="True">Choisir un matériau</option>
@@ -142,12 +153,9 @@
             <option value="12">12 points : moyen</option>
             <option value="6">6 points : faible</option>
          </param></hbox>
-         <label xml:space="preserve">Utilisez une précision plus élevée avec un nombre de dents plus faible.
-         </label>
+         <label xml:space="preserve">Utilisez une précision plus élevée avec un nombre de dents plus faible.</label>
          <separator/>
-         <label xml:space="preserve">
-                  Attention : La sous-coupe n’est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents, nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu’un avertissement.
-         </label>
+         <label xml:space="preserve">Attention : La sous-coupe n’est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents, nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu’un avertissement.</label>
          <param name="undercut_alert" type="bool" gui-text="Confirmer automatiquement l'engrenage avec sous-coupe">true</param>
       </page>
       <!-- * 7-onglet Explications -->
@@ -170,7 +178,7 @@
             </page>
             <page name="page_2" gui-text="Calculs">
                <vbox>
-                  <label appearance="header">Profil de denture en développante de cercle : </label>
+                  <label appearance="header">dev</label>
                   <label xml:space="preserve">Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.
 
 Pour que les engrenages s’engrènent — la taille des dents sur chaque engrenage doit être la même.
@@ -184,13 +192,9 @@ m = p/pi = D/z
 
    – Cercle primitif : Le rayon est égal à la distance du centre de l’engrenage au point primitif.
    – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.
-   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction]).
-                  </label>
-                  <label appearance="header">Profil de denture au pas métrique (T) : </label>
-                  <label xml:space="preserve">
-                     Le pas métrique est une mesure de la distance entre les dents d’un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l’engrenage, mesurée le long de l’arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres.
-                     
-                  </label>
+   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction]).</label>
+                  <label appearance="header">Profil de denture au pas métrique (T) : </label>
+                  <label xml:space="preserve">Le pas métrique est une mesure de la distance entre les dents d’un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l’engrenage, mesurée le long de l’arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres.</label>
                </vbox>
             </page>
          </param>

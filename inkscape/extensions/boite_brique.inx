@@ -8,9 +8,8 @@
 		<page name="Dimensions" gui-text="Dimensions">
 			<param name="laserboxuse" type="description" xml:space="preserve">Les dimensions peuvent mesurer la taille externe ou interne de la boîte.
 Les unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).
-La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur).
------------------------------------------------------------------------------
-			</param>
+La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de la boite qui sera lisse (largeur x longueur).</param>
+			<separator/>
 			<param name="aveccouvercle" gui-text="La boite doit elle avoir un couvercle (boite fermée) : " type="optiongroup" appearance="minimal">
 				<option value="True">Avec couvercle</option>
 				<option value="False">Sans couvercle</option>
@@ -34,24 +33,18 @@ La boite peut avoir un couvercle ou pas. S'il n'y en a pas, ce sera le dessus de
 			<param name="num_tab_Length" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la longueur">3</param>
 			<param name="num_tab_Height" type="int" min="1" max="299" gui-text="Nombre d'encoche dans la hauteur">3</param>
 			<param name="distance_between_side" type="float" min="1" max="999" precision="2" gui-text="Distance entre chaque pièces">2</param>
-			<seperator/>
-			<param name="laserboxuse" type="description" xml:space="preserve">Les coins des cubes peuvent être omis ou pas.</param>
+			<separator/>
+			<param name="laserboxuse" type="description" xml:space="preserve">Les coins des boites peuvent être omis ou pas.</param>
 			<param name="corners" type="boolean" gui-text="Inclure les coins.">True</param>
 		</page>
 
 		<page name="Usage2" gui-text="Trait de coupe">
 			<param name="laserboxuse2" type="description" xml:space="preserve">Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.
 
-Mettre le trait de coupe à 0 créera une boîte qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle.
-
-Si le trait de coupe est supérieur à zéro, vous pouvez avoir un « ajustement précis » ou ajouter des bosses. Cela modifiera la largeur des languettes pour tenir compte du matériau brûlé par le laser.
-Les éléments de la boite seront séparés, en utilisant plus de matériau, parce qu’une seule ligne de découpe laser ne peut pas être utilisée.
------------------------------------------------------------------------------
-			</param>
-			<param name="commentairekerfchoice" type="description" xml:space="preserve">Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe.
-La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici :
-%AppData%\Roaming\inkscape\extensions).	Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux.		
-			</param>
+Mettre le trait de coupe à 0 créera une boîte qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle.</param>
+			<separator/>
+			<param name="commentairekerfchoice" type="description" xml:space="preserve">Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\Roaming\inkscape\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux.</param>
+			<separator/>
 			<param name="bymaterial" type="optiongroup" gui-text=" ">
 				<option value="True">Choisir un matériau</option>
 				<option value="False">Indiquer la largeur du trait de coupe</option>
@@ -71,14 +64,11 @@ La liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx
 			<param name="forcingseparation" type="boolean" gui-text="Forcer la séparation des panneaux si le trait de coupe est égale à 0">False</param>
 		</page>
 
-		<page name="Usage4" gui-text="Informations :">
+		<page name="Usage4" gui-text="Informations">
 			<label appearance="header">Couleurs :</label>
-			<param name="laserboxuse4" type="description" xml:space="preserve">
-	– Les contours externes sont violet #660066,
-	- Les contours internes sont vert foncé #006633,
-	– Orange est une annotation non imprimable.
-			</param>
-			<!-- <param name="annotation" type="boolean" gui-text="Inclure les annotations">True</param> -->
+			<param name="laserboxuse4" type="description" xml:space="preserve">– Les contours externes sont violet #660066,
+– Les contours internes sont vert foncé #006633,
+– Orange est une annotation non imprimable.</param>
 			<image>boite_brique1.jpg</image>
 		</page>
 

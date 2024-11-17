@@ -438,7 +438,10 @@ class Gears(inkex.EffectExtension):
         self.arg_parser.add_argument("-sh", "--shape", type=str, default="Rectangulaire", help="Shape of the hole")
         self.arg_parser.add_argument("-mh", "--mount_hole", type=float, default=4.42, help="Mount hole diameter")
         self.arg_parser.add_argument("-hw", "--hole_width", type=float, default=2.9, help="Width of rectangular hole")
-        self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole")        
+        self.arg_parser.add_argument("-hl", "--hole_length", type=float, default=2.9, help="Length of rectangular hole") 
+        self.arg_parser.add_argument("-cp", "--CarreParfait", type=inkex.Boolean, default=True, help="CarreParfait")
+        self.arg_parser.add_argument("-ba", "--BarreAxe", type=inkex.Boolean, default=True, help="BarreAxe")
+        self.arg_parser.add_argument("-ax", "--LongueurAxe", type=float, default=6, help="Longueur de l'axe")
         self.arg_parser.add_argument("-se", "--servo", type=str, default="HS422", help="shape of servo")
         self.arg_parser.add_argument("-rs", "--RoueServo", type=inkex.Boolean, default=True, help="dessine une roue pour fixer le servo ou non")
         self.arg_parser.add_argument("-dc", "--DiametreCercle", type=float, default=20, help="Diamètre du cercle de fixation du servo")
@@ -532,8 +535,6 @@ class Gears(inkex.EffectExtension):
         stroke_color_guide = '#FF6600'
         path_stroke='#000000'
         path_fill   = 'none'     # no fill - just a line
-        path_stroke_width  = uutounit(self, 0.1, 'mm') # might expose one day
-        path_stroke_light  = uutounit(self, 0.05, 'mm') # guides are thinner
         #
         warnings = [] # list of extra messages to be shown in annotations
         # calculate unit factor for units defined in dialog. 
@@ -559,6 +560,8 @@ class Gears(inkex.EffectExtension):
             kerf=self.options.materiaux * unit_factor
         else:
             kerf=self.options.kerf_size * unit_factor
+        path_stroke_width  = kerf # default line width = kerf
+        path_stroke_light  = uutounit(self, 0.05, 'mm') # guides are thinner
         DiametreCercle=self.options.DiametreCercle * unit_factor    
         cote=epaisseur_matos-kerf+jeu
         # for spokes
@@ -572,6 +575,8 @@ class Gears(inkex.EffectExtension):
         pitchcircle = self.options.pitchcircle # draw pitch circle or not (boolean)
         if shape=="Rectangulaire":
             mount_hole=sqrt( hole_width**2 + hole_length**2 )
+            if self.options.CarreParfait:
+                mount_hole=sqrt(2*(cote))
         if shape=="Empreinte" :
             config.read('engrenage.ini')
             servoDiameter = config.getfloat(servo, 'diametre')
@@ -643,7 +648,9 @@ class Gears(inkex.EffectExtension):
                             "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,-r) +
                             "A  %f,%f %s %s %s %f,%f" % (r,r, 0,0,0, 0,r) 
                             )
-                if shape=="Rectangulaire":    
+                if shape=="Rectangulaire":   
+                    if self.options.CarreParfait:
+                        hole_length=hole_width=cote
                     pathHole=(
                             "M %f,%f" % (0, hole_length/2) +
                             "L %f,%f" % (hole_width/2, hole_length/2)+
@@ -652,6 +659,7 @@ class Gears(inkex.EffectExtension):
                             "L %f,%f" % (-hole_width/2, hole_length/2)+
                             "Z"
                             )
+
                 if shape=="Empreinte":
                     pathHole= servoPath
         else:
@@ -703,7 +711,18 @@ class Gears(inkex.EffectExtension):
             draw_SVG_rect(g,-(5+cote),-cote/2,cote,cote,'RectFixationGauche',styles['pathRect'])
             draw_SVG_rect(g,5,-cote/2,cote,cote,'RectFixationDroit',styles['pathRect'])
             
-        bbox_points= points_to_bbox(points)
+        bbox_points = list(points_to_bbox(points))
+        
+        if self.options.CarreParfait and self.options.BarreAxe:
+            # trace l'axe
+            xAxe=DiametreCercle/2+2
+            yAxe=-DiametreCercle/2
+            LargeurAxe=epaisseur_matos+kerf
+            draw_SVG_rect(g,xAxe,yAxe,LargeurAxe,self.options.LongueurAxe,'RectFixationDroit',styles['pathRect'])
+            bbox_points[2] = bbox_points[2] + LargeurAxe
+            bbox_points = tuple(bbox_points)
+        
+            
         if self.options.RoueServo:            
             # trace la roue de liaison avec le servo et ses fixations
             DiametreCercleMin=2*(hypot(cote,cote)+5+2)
@@ -719,8 +738,8 @@ class Gears(inkex.EffectExtension):
             draw_SVG_rect(g2,-(5+cote),-cote/2,cote,cote,'RectFixationGauche',styles['pathRect'])
             draw_SVG_rect(g2,5,-cote/2,cote,cote,'RectFixationDroit',styles['pathRect'])
             draw_SVG_circle(g2,RayonCercle,0,0,'CercleFixation',styles['pathTeeth'])
-            LongueurRectFix=2*epaisseur_matos-kerf
-            LargeurRectFix=epaisseur_matos-kerf
+            LongueurRectFix=2*epaisseur_matos+kerf
+            LargeurRectFix=epaisseur_matos+kerf
             draw_SVG_rect(g2,-LongueurRectFix/2,-5-LargeurRectFix,LongueurRectFix,LargeurRectFix,'RectFix1',styles['pathRect'])
             draw_SVG_rect(g2,-LongueurRectFix/2,+5,LongueurRectFix,LargeurRectFix,'RectFix2',styles['pathRect'])
             config.read('engrenage.ini')
@@ -754,15 +773,16 @@ class Gears(inkex.EffectExtension):
             gear_attribs3 = {'style': style_str, 'd': pathHole}
             etree.SubElement(g3, inkex.addNS('path', 'svg'), gear_attribs3)
             # trace les barres de fixation
+            g4 = etree.SubElement(self.svg.get_current_layer(), 'g', g_attribs3 ) 
             xBarre=3*outer_radius
             yBarre=-outer_radius
-            LargeurBarre=epaisseur_matos*2+kerf
-            draw_SVG_rect(g3,xBarre,yBarre,LargeurBarre,LongueurBarre,'RectFixationDroit',styles['pathRect'])
+            LargeurBarre=(epaisseur_matos+kerf)*2
+            draw_SVG_rect(g4,xBarre,yBarre,LargeurBarre,LongueurBarre,'RectFixationDroit',styles['pathRect'])
             style = styles['pathRect']
             style_str = str(inkex.Style(style))
-            pathbarre = "M %.3f,%.3f v %.3f" % (xBarre+epaisseur_matos+kerf/2,yBarre,LongueurBarre)
-            gear_attribs3 = {'style': style_str, 'd': pathbarre}
-            etree.SubElement(g3, inkex.addNS('path', 'svg'), gear_attribs3)            
+            pathbarre = "M %.3f,%.3f v %.3f" % (xBarre+epaisseur_matos+kerf,yBarre,LongueurBarre)
+            gear_attribs4 = {'style': style_str, 'd': pathbarre}
+            etree.SubElement(g4, inkex.addNS('path', 'svg'), gear_attribs4)            
                        
         # Add center
         if centercross:

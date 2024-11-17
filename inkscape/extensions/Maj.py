@@ -4,7 +4,7 @@ import zipfile
 import shutil
 import inkex
 
-__version__ = "2024.1"
+__version__ = "2024.2"
 
 REPO = "https://github.com/FrankSAURET"
 INKSCAPE_EXT_DIR = os.path.join(os.getenv('APPDATA'), 'inkscape', 'extensions')

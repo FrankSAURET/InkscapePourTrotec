@@ -1,5 +1,21 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: Traduction \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 19:30+0100\n"
+"PO-Revision-Date: 2024-11-13 14:18+0100\n"
+"Last-Translator: Frank SAURET <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -12,7 +28,10 @@ msgstr ""
 msgid "Attention, il faut transformer les objets en chemin (Chemin > Objet en chemin)."
 msgstr ""
 
-msgid "Pour faire un assemblage, tracer une forme et sélectionner le côté sur lequel mettre les languettes. La largeur du trait de coupe sera appliquée pour créer des fentes réalisant un ajustement serré càd que la taille de la languette obtenue sera la même que la taille de la fente obtenue (en tenant compte de la perte due au laser). Sur le dessin ci-contre : en noir les traits de centrage de la coupe, en rouge la matière enlevée pour les languettes et en bleu celle pour les fentes."
+msgid "Pour faire un assemblage, tracer une forme et sélectionner le côté sur lequel mettre les languettes. \nLa largeur du trait de coupe sera appliquée pour créer des fentes réalisant un ajustement serré càd que la taille de la languette obtenue sera la même que la taille de la fente obtenue (en tenant compte de la perte due au laser). \nSur le dessin ci-contre : en noir les traits de centrage de la coupe, en rouge la matière enlevée pour les languettes et en bleu celle pour les fentes."
+msgstr ""
+
+msgid "Languette - Fente"
 msgstr ""
 
 msgid "Numéro de coté : "
@@ -66,10 +85,14 @@ msgstr ""
 msgid "Faire les languettes à l'extérieur de la forme."
 msgstr ""
 
-msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm."
+msgid "Trait de coupe"
 msgstr ""
 
-msgid "Vous pouvez ici, soit choisir un matériau — ce qui appliquera une largeur de trait de coupe prédéfini — soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « Jointure_rapide.inx » qui se trouve dans votre dossier extension (sous Windows il est sans doute ici : « %AppData%\\Roaming\\inkscape\\extensions »."
+msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm."
+msgstr ""
+
+msgid "Vous pouvez ici, soit choisir un matériau — ce qui appliquera une largeur de trait de coupe prédéfini — soit indiquer la largeur de trait de coupe.\nLa liste des matériaux peut-être modifiée dans le fichier « Jointure_rapide.inx » qui se trouve dans votre dossier extension (sous Windows il est sans doute ici :\n« %AppData%\\Roaming\\inkscape\\extensions »."
+
 msgstr ""
 
 msgid "Choisir un matériau"
@@ -81,17 +104,20 @@ msgstr ""
 msgid "Liste des matériaux :"
 msgstr ""
 
-msgid "PMMA 5 mm"
+msgid "PMMA 5 mm"
 msgstr ""
 
-msgid "PMMA 3 mm"
+msgid "PMMA 3 mm"
 msgstr ""
 
-msgid "Médium 3 mm"
+msgid "Médium 3 mm"
 msgstr ""
 
 msgid "trait de coupe (quantité perdue par le laser)"
 msgstr ""
 
 msgid "Attention le trait de coupe diminue uniquement les fentes sur les 4 cotés."
+msgstr ""
+
+msgid "Découpe Laser"
 msgstr ""

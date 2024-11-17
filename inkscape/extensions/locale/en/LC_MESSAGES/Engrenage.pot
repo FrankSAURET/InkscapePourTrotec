@@ -1,0 +1,482 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Traduction \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 19:30+0100\n"
+"PO-Revision-Date: 2024-11-13 14:18+0100\n"
+"Last-Translator: Frank SAURET <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Engrenage.inx:3
+msgid "Engrenage"
+msgstr "Gear"
+
+#: Engrenage.inx:8
+msgid "Denture"
+msgstr "Tooth"
+
+#: Engrenage.inx:10
+msgid "Nombre de dents (de 3 à 1200)"
+msgstr "Number of teeth (from 3 to 1200)"
+
+#: Engrenage.inx:11
+msgid "Unités : "
+msgstr "Units:"
+
+#: Engrenage.inx:14
+msgid "Type de denture : "
+msgstr "Tooth type:"
+
+#: Engrenage.inx:15
+msgid "Développante de cercle"
+msgstr "Involute"
+
+#: Engrenage.inx:16
+msgid "Pas métrique (T)"
+msgstr "Metric pitch (T)"
+
+#: Engrenage.inx:19
+msgid "dev"
+msgstr "Involute tooth profile:"
+
+#: Engrenage.inx:20
+msgid "Module : "
+msgstr "Module:"
+
+#: Engrenage.inx:21
+msgid "Voir l'onglet explication au besoin."
+msgstr "See the explanation tab if needed."
+
+#: Engrenage.inx:22
+msgid "Angle de pression (de 5 à 45)"
+msgstr "Pressure angle (from 5 to 45)"
+
+#: Engrenage.inx:23
+msgid "Engrenage annulaire (Engrenage interne)"
+msgstr "Ring gear (Internal gear)"
+
+#: Engrenage.inx:26
+msgid "Poulie au pas métrique : "
+msgstr "Metric pitch pulley:"
+
+#: Engrenage.inx:27
+msgid "Longueur du pas : "
+msgstr "Pitch length:"
+
+#: Engrenage.inx:33
+msgid "Ajouter 2 flancs à coller de chaque coté de la roue dentée."
+msgstr "Add 2 flanks to glue on each side of the gear."
+
+#: Engrenage.inx:39
+msgid "Perçage"
+msgstr "Drilling"
+
+#: Engrenage.inx:41
+msgid "Dessiner un trou central"
+msgstr "Draw a central hole"
+
+#: Engrenage.inx:45
+msgid "Forme du trou :"
+msgstr "Hole shape:"
+
+#: Engrenage.inx:47
+msgid "Rectangulaire"
+msgstr "Rectangular"
+
+#: Engrenage.inx:48
+msgid "Rond"
+msgstr "Round"
+
+#: Engrenage.inx:49
+msgid "Empreinte (servomoteur ou autres)"
+msgstr "Footprint (servo motor or others)"
+
+#: Engrenage.inx:58
+msgid "Largeur du trou rectangulaire (dimension horizontale): "
+msgstr "Width of the rectangular hole (horizontal dimension):"
+
+#: Engrenage.inx:61
+msgid "Hauteur du trou rectangulaire (dimension Verticale) : "
+msgstr "Height of the rectangular hole (vertical dimension):"
+
+#: Engrenage.inx:65
+msgid "Carré parfait."
+msgstr "Perfect square."
+
+#: Engrenage.inx:66
+msgid "Dessine un carré correspondant à l'épaisseur du matériaux et au jeu de l'onglet Matériel et matériau."
+msgstr "Draws a square corresponding to the thickness of the material and the clearance in the Tools and Material tab."
+
+#: Engrenage.inx:68
+msgid "Dessiner la barre d'axe"
+msgstr "Draw the axle bar"
+
+#: Engrenage.inx:69
+msgid "Longueur de la barre d'axe"
+msgstr "Length of the axle bar"
+
+#: Engrenage.inx:73
+msgid "Choisir le servo : "
+msgstr "Choose the servo:"
+
+#: Engrenage.inx:75
+msgid "Servomoteur : MOTOR02"
+msgstr "Servo motor: MOTOR02"
+
+#: Engrenage.inx:76
+msgid "Servomoteur : FS5113R"
+msgstr "Servo motor: FS5113R"
+
+#: Engrenage.inx:77
+msgid "Servomoteur : FS5106R"
+msgstr "Servo motor: FS5106R"
+
+#: Engrenage.inx:78
+msgid "Servomoteur : HS-422"
+msgstr "Servo motor: HS-422"
+
+#: Engrenage.inx:80
+msgid "Les empreintes sont stockées dans le fichier « engrenage.ini »."
+msgstr "The footprints are stored in the file 'engrenage.ini'."
+
+#: Engrenage.inx:81
+msgid "Dessiner les empreintes de servo sur un cercle à part."
+msgstr "Draw the servo footprints on a separate circle."
+
+#: Engrenage.inx:83
+msgid "Diamètre de ce cercle :"
+msgstr "Diameter of this circle:"
+
+#: Engrenage.inx:87
+msgid "Rayons"
+msgstr "Spokes"
+
+#: Engrenage.inx:88
+msgid "Dessiner des rayons"
+msgstr "Draw spokes"
+
+#: Engrenage.inx:89
+msgid "Nombre de rayons"
+msgstr "Number of spokes"
+
+#: Engrenage.inx:90
+msgid "Largeur de la jante et des rayons"
+msgstr "Width of the rim and spokes"
+
+#: Engrenage.inx:91
+msgid "Diamètre du cercle interne"
+msgstr "Diameter of the inner circle"
+
+#: Engrenage.inx:92
+msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l’option « Dessiner les empreintes de servo sur un cercle à part. » de l’onglet « perçage » a été cochée."
+msgstr "The diameter of the inner circle will be forced to a minimum of 20 mm if the option 'Draw the servo footprints on a separate circle.' in the 'drilling' tab is checked."
+
+#: Engrenage.inx:97
+msgid "Crémaillère"
+msgstr "Rack"
+
+#: Engrenage.inx:98
+msgid "Dessiner la crémaillère (inactif pour les poulies)"
+msgstr "Draw the rack (inactive for pulleys)"
+
+#: Engrenage.inx:99
+msgid "Longueur de la crémaillère (dents)"
+msgstr "Length of the rack (teeth)"
+
+#: Engrenage.inx:100
+msgid "Hauteur de la base"
+msgstr "Base height"
+
+#: Engrenage.inx:101
+msgid "Longueur de l'onglet de fin"
+msgstr "End tab length"
+
+#: Engrenage.inx:102
+msgid "La crémaillère (à denture droite) correspondante est dessinée en plus et en dessous de l’engrenage."
+msgstr "The corresponding (straight-toothed) rack is drawn in addition and below the gear."
+
+#: Engrenage.inx:103
+msgid "Matériel et matériau"
+msgstr "Tools and material"
+
+#: Engrenage.inx:104
+msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser."
+msgstr "The kerf is the amount lost relative to the laser's burn width. Typically in the range of 0.1 to 0.4 mm. Check with your laser supplier. This will depend on the material to be cut and the speed of the laser."
+
+#: Engrenage.inx:106
+msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfini - soit indiquer la largeur de trait de coupe.\nLa liste des matériaux peut-être modifiée dans le fichier « boite_brique.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici :\n%AppData%\\Roaming\\inkscape\\extensions).\nDans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
+msgstr "You can either choose a material - which will apply a predefined kerf width - or specify the kerf width.\nThe list of materials can be modified in the 'Engrenage.inx' file located in your extension folder (under Windows it is probably here:\n%AppData%\\Roaming\\inkscape\\extensions).\nIn this file, search for the word 'Matos' to find the list of materials."
+
+#: Engrenage.inx:110
+msgid "Choisir un matériau"
+msgstr "Choose a material"
+
+#: Engrenage.inx:111
+msgid "Indiquer la largeur du trait de coupe"
+msgstr "Specify the kerf width"
+
+#: Engrenage.inx:113
+msgid "Liste des matériaux :"
+msgstr "List of materials:"
+
+#: Engrenage.inx:118
+msgid "PMMA 5 mm"
+msgstr "PMMA 5 mm"
+
+#: Engrenage.inx:119
+msgid "PMMA 3 mm"
+msgstr "PMMA 3 mm"
+
+#: Engrenage.inx:120
+msgid "Médium 3 mm"
+msgstr "Medium 3 mm"
+
+#: Engrenage.inx:122
+msgid "trait de coupe (quantité perdue par le laser)"
+msgstr "kerf (amount lost by the laser)"
+
+#: Engrenage.inx:123
+msgid "Largeur de ligne affichée = trait de coupe"
+msgstr "Displayed line width = kerf"
+
+#: Engrenage.inx:126
+msgid "Epaisseur de la plaque"
+msgstr "Plate thickness"
+
+#: Engrenage.inx:127
+msgid "Il est conseillé de mesurer au pied à coulisse l’épaisseur réelle de la plaque utilisée."
+msgstr "It is recommended to measure the actual thickness of the plate using a caliper."
+
+#: Engrenage.inx:128
+msgid "Jeu entre les pièces d'assemblage"
+msgstr "Clearance between assembly parts"
+
+#: Engrenage.inx:129
+msgid "Ce jeu permet de réaliser un ajustement moins serré afin de s’assurer que les pièces d’assemblage rentrent."
+msgstr "This clearance allows for a looser fit to ensure that the assembly parts fit together."
+
+#: Engrenage.inx:130
+msgid "Options avancées"
+msgstr "Advanced options"
+
+#: Engrenage.inx:131
+msgid "Dessiner la croix centrale"
+msgstr "Draw the center cross"
+
+#: Engrenage.inx:132
+msgid "Dessiner le cercle primitif (pour l'engrenage)"
+msgstr "Draw the pitch circle (for the gear)"
+
+#: Engrenage.inx:133
+msgid "Dessiner le texte d'annotation"
+msgstr "Draw annotation text"
+
+#: Engrenage.inx:134
+msgid "Le texte d’annotation donne notamment le diamètre primitif."
+msgstr "The annotation text gives the pitch diameter."
+
+#: Engrenage.inx:136
+msgid "Jeu (bas)"
+msgstr "Clearance (bottom)"
+
+#: Engrenage.inx:137
+msgid "Déplacement de profil [% du module]"
+msgstr "Profile shift [% of the module]"
+
+#: Engrenage.inx:138
+msgid "Précision de la dent"
+msgstr "Tooth accuracy"
+
+#: Engrenage.inx:139
+msgid "automatique"
+msgstr "automatic"
+
+#: Engrenage.inx:140
+msgid "20 points : meilleur"
+msgstr "20 points: best"
+
+#: Engrenage.inx:141
+msgid "12 points : moyen"
+msgstr "12 points: medium"
+
+#: Engrenage.inx:142
+msgid "6 points : faible"
+msgstr "6 points: low"
+
+#: Engrenage.inx:143
+msgid "Utilisez une précision plus élevée avec un nombre de dents plus faible."
+msgstr "Use higher accuracy with a lower number of teeth."
+
+#: Engrenage.inx:145
+msgid "Attention : La sous-coupe n’est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents, nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu’un avertissement."
+msgstr "Warning: Undercut is not currently generated. For example, a gear with a pressure angle of 20 degrees and less than 17 teeth would require either a profile shift (negative!) or would cause undercut. We only produce a warning."
+
+#: Engrenage.inx:146
+msgid "Confirmer automatiquement l'engrenage avec sous-coupe"
+msgstr "Automatically confirm the gear with undercut"
+
+#: Engrenage.inx:148
+msgid "Explications"
+msgstr "Explanations"
+
+#: Engrenage.inx:151
+msgid "L’entraxe entre 2 roues est égal à la somme des rayons primitifs des 2 roues."
+msgstr "The center distance between 2 wheels is equal to the sum of the pitch radii of the 2 wheels."
+
+#: Engrenage.inx:155
+msgid "Pas métrique"
+msgstr "Metric pitch"
+
+#: Engrenage.inx:158
+msgid "Calculs"
+msgstr "Calculations"
+
+#: Engrenage.inx:162
+msgid "Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.\n\nPour que les engrenages s’engrènent — la taille des dents sur chaque engrenage doit être la même.\nC’est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.\n\nLe pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.\np = pi x D/z\n   – où z est le nombre de dents sur un engrenage de diamètre primitif D.\nLa mesure SI est le module — qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :\nm = p/pi = D/z\n\n   – Cercle primitif : Le rayon est égal à la distance du centre de l’engrenage au point primitif.\n   – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.\n   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction])."
+msgstr "Make sure to set the document properties to inches or mm if you want real dimensions.\n\nFor gears to mesh - the size of the teeth on each gear must be the same.\nThat's why the number of teeth and the circular pitch or metric module are used to define gears and not the radius.\n\nThe angular pitch, p, is the distance between adjacent teeth around the pitch circle.\np = pi x D / z\n   - where z is the number of teeth on a gear of pitch diameter D.\nThe SI measure is the module - which expresses the basic ratio between the pitch diameter and the number of teeth:\nm = p / pi = D / z\n\n   - Pitch circle: The radius is equal to the distance from the center of the gear to the pitch point.\n   - Pitch point: The point of tangency of the pitch circles of two meshing gears.\n   - Pressure angle [in degrees]. Usually 20. Historically: 14.5; High torque gears: 25 (The higher the pressure angle, the stronger the teeth. With higher pressure angles, more effort is required to turn the gears [due to friction])."
+
+#: Engrenage.inx:171
+msgid "Profil de denture au pas métrique (T) : "
+msgstr "Metric pitch tooth profile (T):"
+
+#: Engrenage.inx:172
+msgid "Le pas métrique est une mesure de la distance entre les dents d’un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l’engrenage, mesurée le long de l’arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres."
+msgstr "The metric pitch is a measure of the distance between the teeth of a gear. It is defined as the distance between two consecutive points on the pitch circle of the gear, measured along the arc of the pitch circle. The metric pitch is usually measured in millimeters."
+
+#: Engrenage.inx:181
+msgid "Formes"
+msgstr "Shapes"
+
+#: FrankSAURET\engrenage.inx:8
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: FrankSAURET\engrenage.inx:14
+msgid "Les dimensions peuvent mesurer la taille externe ou interne de l'engrenage.\nLes unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).\nL'engrenage peut avoir un moyeu ou pas. S'il n'y en a pas, ce sera le centre de l'engrenage qui sera lisse (diamètre x épaisseur)."
+msgstr "The dimensions can measure the external or internal size of the gear.\nThe document units should be set to mm instead of pixels (assuming you really want to cut them with a laser).\nThe gear can have a hub or not. If there is none, it will be the center of the gear that will be smooth (diameter x thickness)."
+
+#: FrankSAURET\engrenage.inx:18
+msgid "L'engrenage doit-il avoir un moyeu (engrenage fermé) : "
+msgstr "Should the gear have a hub (closed gear):"
+
+#: FrankSAURET\engrenage.inx:19
+msgid "Avec moyeu"
+msgstr "With hub"
+
+#: FrankSAURET\engrenage.inx:20
+msgid "Sans moyeu"
+msgstr "Without hub"
+
+#: FrankSAURET\engrenage.inx:22
+msgid "Les dimensions sont : "
+msgstr "The dimensions are:"
+
+#: FrankSAURET\engrenage.inx:23
+msgid "Externe"
+msgstr "External"
+
+#: FrankSAURET\engrenage.inx:24
+msgid "Interne"
+msgstr "Internal"
+
+#: FrankSAURET\engrenage.inx:26
+msgid "Unité"
+msgstr "Unit"
+
+#: FrankSAURET\engrenage.inx:32
+msgid "Diamètre"
+msgstr "Diameter"
+
+#: FrankSAURET\engrenage.inx:33
+msgid "Épaisseur"
+msgstr "Thickness"
+
+#: FrankSAURET\engrenage.inx:34
+msgid "Nombre de dents"
+msgstr "Number of teeth"
+
+#: FrankSAURET\engrenage.inx:35
+msgid "Module"
+msgstr "Module"
+
+#: FrankSAURET\engrenage.inx:36
+msgid "Angle de pression"
+msgstr "Pressure angle"
+
+#: FrankSAURET\engrenage.inx:37
+msgid "Jeu"
+msgstr "Backlash"
+
+#: FrankSAURET\engrenage.inx:38
+msgid "Distance entre chaque dent"
+msgstr "Distance between each tooth"
+
+#: FrankSAURET\engrenage.inx:42
+msgid "Les coins des dents peuvent être omis ou pas."
+msgstr "The corners of the teeth can be omitted or not."
+
+#: FrankSAURET\engrenage.inx:43
+msgid "Inclure les coins."
+msgstr "Include corners."
+
+#: FrankSAURET\engrenage.inx:46
+msgid "Trait de coupe"
+msgstr "Kerf"
+
+#: FrankSAURET\engrenage.inx:54
+msgid "Diamètre du trou central : "
+msgstr "Central hole diameter:"
+
+#: FrankSAURET\engrenage.inx:60
+msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.\n\nMettre le trait de coupe à 0 créera un engrenage qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle."
+msgstr "The kerf is the amount lost relative to the laser's burn width. Typically in the range of 0.1 to 0.4 mm. Check with your laser supplier. This will depend on the material to be cut and the speed of the laser.\n\nSetting the kerf to 0 will create a gear that uses the least amount of material possible. However, the pieces may be poorly fitted and will likely require glue."
+
+#: FrankSAURET\engrenage.inx:61
+msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfinie - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « engrenage.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\\Roaming\\inkscape\\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
+msgstr "You can either choose a material - which will apply a predefined kerf width - or specify the kerf width. The list of materials can be modified in the 'engrenage.inx' file located in your extension folder (under Windows it is probably here: %AppData%\\Roaming\\inkscape\\extensions). In this file, search for the word 'Matos' to find the list of materials."
+
+#: FrankSAURET\engrenage.inx:71
+msgid "PMMA 5 mm"
+msgstr "PMMA 5 mm"
+
+#: FrankSAURET\engrenage.inx:72
+msgid "PMMA 3 mm"
+msgstr "PMMA 3 mm"
+
+#: FrankSAURET\engrenage.inx:73
+msgid "Médium 3 mm"
+msgstr "Medium 3 mm"
+
+#: FrankSAURET\engrenage.inx:77
+msgid "Forcer la séparation des panneaux si le trait de coupe est égale à 0"
+msgstr "Force panel separation if the kerf is equal to 0"
+
+#: FrankSAURET\engrenage.inx:80
+msgid "Informations"
+msgstr "Informations"
+
+#: FrankSAURET\engrenage.inx:81
+msgid "Couleurs :"
+msgstr "Colors:"
+
+#: FrankSAURET\engrenage.inx:82
+msgid "– Les contours externes sont violet #660066,\n– Les contours internes sont vert foncé #006633,\n– Orange est une annotation non imprimable."
+msgstr "– External contours are purple #660066,\n– Internal contours are dark green #006633,\n– Orange is a non-printable annotation."
+
+#: FrankSAURET\engrenage.inx:83
+msgid "Découpe Laser"
+msgstr "Laser Cut"
+
+#: FrankSAURET\engrenage.inx:97
+msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l’option « Dessiner les empreintes de servo sur un cercle à part. » de l’onglet « perçage » a été cochée."
+msgstr "The diameter of the inner circle will be forced to a minimum of 20 mm if the option 'Draw the servo footprints on a separate circle.' in the 'drilling' tab is checked."
