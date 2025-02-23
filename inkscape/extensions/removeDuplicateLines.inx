@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>Supprimer les lignes en double</name>
+  <id>EllenWasbo.cutlings.RemoveDuplicateLines</id>
+  <dependency type="executable" location="inx">removeDuplicateLines.py</dependency>
+  <param type="notebook" name="tab">
+    <page name="options" gui-text="Options">
+      <param name="help" type="description">Supprime les segments de ligne en double des chemins sélectionnés.</param>
+      <param name="help" type="description"></param>
+      <param name="selfPath" type="boolean" gui-text="Inclure la vérification de chaque chemin par rapport à lui-même.">false</param>
+      <param name="selfinfo" indent="3" type="description">Attention : les segments plus petits que la tolérance définie ci-dessous pourraient disparaître</param>
+      <param name="ml0" type="description"></param>
+      <!-- <param name="minUse" type="boolean" gui-text="Supprime également les segments de ligne où les nœuds et les points de contrôle diffèrent de moins de">false</param> -->
+      <param name="tolerance" indent="3" type="float" precision="3" min="0.001" max="9999" gui-text="Tolérance (mettre la largeur du trait de coupe par exemple.)">0.001</param>
+      <param name="ml1" type="description"></param>
+      <param name="unitinfo" indent="3" type="description">Unité telle que définie dans le document (Fichier > Propriétés du document > Affichage).</param>
+      <param name="ml2" type="description"></param>
+      <param name="interp" type="boolean" gui-text="Laisser le segment de ligne restant être une interpolation des segments de ligne correspondants.">false</param>
+      <param name="ml3" type="description"></param>
+    </page>
+    <page name="help" gui-text="Information">
+      <param name="infotext" type="description" xml:space="preserve">
+La suppression des segments de ligne en double (avec exactement les mêmes coordonnées) sera toujours effectuée.
+
+Pour plus d'informations : 
+https://gitlab.com/EllenWasbo/inkscape-extension-removeduplicatelines
+      </param>
+    </page>
+  </param>
+  <effect>
+    <effects-menu>
+      <submenu name="Découpe Laser"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command location="inx" interpreter="python">removeDuplicateLines.py</command>
+  </script>
+</inkscape-extension>
