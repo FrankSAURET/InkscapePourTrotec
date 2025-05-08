@@ -19,12 +19,12 @@ msgstr ""
 
 #: Maj.inx:3
 msgid "‎Mise à jour des extensions de Frank SAURET"
-msgstr "‎Update of Frank SAURET's extensions"
+msgstr ""
 
 #: Maj.inx:4
 msgid "Ce script va mettre à jour toutes les extensions que j'ai créée ou retouchée."
-msgstr "This script will update all the extensions I have created or modified."
+msgstr ""
 
 #: Maj.inx:5
 msgid "Pour utiliser les nouvelles versions, il faut quitter toutes les occurences d'inkscape et le relancer."
-msgstr "To use the new versions, you need to close all instances of Inkscape and restart it."
+msgstr ""

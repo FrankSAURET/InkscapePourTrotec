@@ -5,26 +5,23 @@
    <param name="active_tab" type="notebook">
       <!-- * 1-onglet denture -->
       <page name="Gear" gui-text="Denture">
-         <hbox><param name="teeth" type="int" min="3" max="1200" gui-text="Nombre de dents (de 3 à 1200)">20</param></hbox>
-         <hbox><param name="units" type="optiongroup" appearance="combo" gui-text="Unités : ">
-            <option value="mm" translatable="no">mm</option>
-            <option value="cm" translatable="no">cm</option>
-            <option value="in" translatable="no">in</option>
-         </param></hbox>
+         <label appearance="header">Attention : L'unité est le mm pour toutes les mesures.</label>
+         <separator/>
+         <hbox><param name="teeth" type="int" min="18" max="1200" gui-text="Nombre de dents (de 18 à 1200)">20</param></hbox>
          <hbox>
             <param name="type" type="optiongroup" appearance="radio" gui-text="Type de denture : ">
                <option value="dev">Développante de cercle</option>
-               <option value="T">Pas métrique (T)</option>
+               <option value="T">Profil de denture au pas métrique (T) : </option>
             </param>
             <image>Engrenage-1.svg</image>
          </hbox>
          <separator/>
-         <label appearance="header">dev</label>
-         <hbox><param name="dimension" type="float" min="0.1" max="100.0" precision="0.1" gui-text="Module : " gui-description="Voir l'onglet explication au besoin.">1.0</param></hbox>
+         <label appearance="header">Développante de cercle : </label>
+         <hbox><param name="dimension" type="float" min="0.1" max="100.0" precision="1" gui-text="Module : " gui-description="Voir l'onglet explication au besoin.">1.0</param></hbox>
          <hbox><param name="angle" type="float" min="5.0" max="45.0" precision="1" gui-text="Angle de pression (de 5 à 45)">20.0</param></hbox>
          <param name="internal_ring" type="bool" gui-text="Engrenage annulaire (Engrenage interne)">false</param>
          <separator/>
-         <label appearance="header">Poulie au pas métrique : </label>
+         <label appearance="header">Profil de denture au pas métrique (T) : </label>
          <hbox><param name="pas" type="optiongroup" appearance="combo" gui-text="Longueur du pas : ">
             <option value="2">2</option>
             <option value="2.5">2.5</option>
@@ -57,10 +54,10 @@
          <hbox>
             <vbox>
                <hbox>
-                  <param name="hole_width" type="float" min="0.1" max="100" precision="3" gui-text="Largeur du trou rectangulaire (dimension horizontale): ">2.9</param>
+                  <param name="hole_width" type="float" min="0.001" max="100.000" precision="3" gui-text="Largeur du trou rectangulaire (dimension horizontale): ">2.900</param>
                </hbox>
                <hbox>
-                  <param name="hole_length" type="float" min="0.1" max="100" precision="3" gui-text="Hauteur du trou rectangulaire (dimension Verticale) : ">2.9</param>
+                  <param name="hole_length" type="float" min="0.001" max="100.000" precision="3" gui-text="Hauteur du trou rectangulaire (dimension Verticale) : ">2.900</param>
                </hbox>
             </vbox>
             <separator/>
@@ -76,6 +73,8 @@
          <hbox>
             <param name="servo" type="optiongroup" appearance="minimal" gui-text="Choisir le servo : ">
                <!--  Lister ci dessous les servo moteurs utilisés   -->
+               <option value="FT5330M">Servomoteur : FT5330M</option>
+               <option value="FS90">Servomoteur : FS90</option>
                <option value="MOTOR02">Servomoteur : MOTOR02</option>
                <option value="FS5113R">Servomoteur : FS5113R</option>
                <option value="FS5106R">Servomoteur : FS5106R</option>
@@ -176,23 +175,23 @@ Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matéria
             <page name="page_3" gui-text="Pas métrique">
                <image>Engrenage-4.svg</image>
             </page>
-            <page name="page_2" gui-text="Calculs">
+            <page name="page_2" gui-text="Informations">
                <vbox>
-                  <label appearance="header">dev</label>
+                  <label appearance="header">Développante de cercle : </label>
                   <label xml:space="preserve">Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.
 
-Pour que les engrenages s’engrènent — la taille des dents sur chaque engrenage doit être la même.
+Pour que les engrenages s’engrènent — la taille des dents (et donc le module) sur chaque engrenage doit être la même.
 C’est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.
 
 Le pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.
 p = pi x D/z
-   – où z est le nombre de dents sur un engrenage de diamètre primitif D.
-La mesure SI est le module — qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :
+   – où z est le nombre de dents sur un engrenage de diamètre primitif D.
+La mesure SI est le module — qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :
 m = p/pi = D/z
 
-   – Cercle primitif : Le rayon est égal à la distance du centre de l’engrenage au point primitif.
-   – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.
-   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction]).</label>
+   – Cercle primitif : Le rayon est égal à la distance du centre de l’engrenage au point primitif.
+   – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.
+   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction]).</label>
                   <label appearance="header">Profil de denture au pas métrique (T) : </label>
                   <label xml:space="preserve">Le pas métrique est une mesure de la distance entre les dents d’un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l’engrenage, mesurée le long de l’arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres.</label>
                </vbox>

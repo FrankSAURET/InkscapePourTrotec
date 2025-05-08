@@ -9,10 +9,10 @@ msgstr ""
 "Project-Id-Version: Traduction \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-01 19:30+0100\n"
-"PO-Revision-Date: 2024-11-13 14:18+0100\n"
+"PO-Revision-Date: 2025-05-08 17:18+0100\n"
 "Last-Translator: Frank SAURET <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
-"Language: en\n"
+"Language-Team: none <LL@li.org>\n"
+"Language: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgid "Denture"
 msgstr ""
 
 #: Engrenage.inx:10
-msgid "Nombre de dents (de 3 à 1200)"
+msgid "Nombre de dents (de 18 à 1200)"
 msgstr ""
 
 #: Engrenage.inx:11
@@ -46,7 +46,7 @@ msgid "Pas métrique (T)"
 msgstr ""
 
 #: Engrenage.inx:19
-msgid "dev"
+msgid "Développante de cercle :"
 msgstr ""
 
 #: Engrenage.inx:20
@@ -63,10 +63,6 @@ msgstr ""
 
 #: Engrenage.inx:23
 msgid "Engrenage annulaire (Engrenage interne)"
-msgstr ""
-
-#: Engrenage.inx:26
-msgid "Poulie au pas métrique : "
 msgstr ""
 
 #: Engrenage.inx:27
@@ -178,7 +174,7 @@ msgid "Diamètre du cercle interne"
 msgstr ""
 
 #: Engrenage.inx:92
-msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l’option « Dessiner les empreintes de servo sur un cercle à part. » de l’onglet « perçage » a été cochée."
+msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l'option « Dessiner les empreintes de servo sur un cercle à part. » de l'onglet « perçage » a été cochée."
 msgstr ""
 
 #: Engrenage.inx:97
@@ -202,7 +198,7 @@ msgid "Longueur de l'onglet de fin"
 msgstr ""
 
 #: Engrenage.inx:102
-msgid "La crémaillère (à denture droite) correspondante est dessinée en plus et en dessous de l’engrenage."
+msgid "La crémaillère (à denture droite) correspondante est dessinée en plus et en dessous de l'engrenage."
 msgstr ""
 
 #: Engrenage.inx:103
@@ -254,7 +250,7 @@ msgid "Epaisseur de la plaque"
 msgstr ""
 
 #: Engrenage.inx:127
-msgid "Il est conseillé de mesurer au pied à coulisse l’épaisseur réelle de la plaque utilisée."
+msgid "Il est conseillé de mesurer au pied à coulisse l'épaisseur réelle de la plaque utilisée."
 msgstr ""
 
 #: Engrenage.inx:128
@@ -262,7 +258,7 @@ msgid "Jeu entre les pièces d'assemblage"
 msgstr ""
 
 #: Engrenage.inx:129
-msgid "Ce jeu permet de réaliser un ajustement moins serré afin de s’assurer que les pièces d’assemblage rentrent."
+msgid "Ce jeu permet de réaliser un ajustement moins serré afin de s'assurer que les pièces d'assemblage rentrent."
 msgstr ""
 
 #: Engrenage.inx:130
@@ -282,7 +278,7 @@ msgid "Dessiner le texte d'annotation"
 msgstr ""
 
 #: Engrenage.inx:134
-msgid "Le texte d’annotation donne notamment le diamètre primitif."
+msgid "Le texte d'annotation donne notamment le diamètre primitif."
 msgstr ""
 
 #: Engrenage.inx:136
@@ -318,7 +314,7 @@ msgid "Utilisez une précision plus élevée avec un nombre de dents plus faible
 msgstr ""
 
 #: Engrenage.inx:145
-msgid "Attention : La sous-coupe n’est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents, nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu’un avertissement."
+msgid "Attention : La sous-coupe n'est actuellement pas générée. Par exemple, un engrenage à un angle de pression de 20 degrés et moins de 17 dents, nécessiterait soit un déplacement de profil (négatif !) soit causerait une sous-coupe. Nous ne produisons qu'un avertissement."
 msgstr ""
 
 #: Engrenage.inx:146
@@ -330,7 +326,7 @@ msgid "Explications"
 msgstr ""
 
 #: Engrenage.inx:151
-msgid "L’entraxe entre 2 roues est égal à la somme des rayons primitifs des 2 roues."
+msgid "L'entraxe entre 2 roues est égal à la somme des rayons primitifs des 2 roues."
 msgstr ""
 
 #: Engrenage.inx:155
@@ -342,141 +338,218 @@ msgid "Calculs"
 msgstr ""
 
 #: Engrenage.inx:162
-msgid "Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.\n\nPour que les engrenages s’engrènent — la taille des dents sur chaque engrenage doit être la même.\nC’est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.\n\nLe pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.\np = pi x D/z\n   – où z est le nombre de dents sur un engrenage de diamètre primitif D.\nLa mesure SI est le module — qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :\nm = p/pi = D/z\n\n   – Cercle primitif : Le rayon est égal à la distance du centre de l’engrenage au point primitif.\n   – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.\n   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l’angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction])."
+msgid "Assurez-vous de définir les propriétés du document en pouces ou en mm si vous voulez des dimensions réelles.\n\nPour que les engrenages s'engrènent — la taille des dents (et donc le module) sur chaque engrenage doit être la même.\nC'est pourquoi le nombre de dents et le pas circulaire ou le module métrique sont utilisés pour définir les engrenages et non le rayon.\n\nLe pas angulaire, p, est la distance entre les dents adjacentes autour du cercle primitif.\np = pi x D/z\n   – où z est le nombre de dents sur un engrenage de diamètre primitif D.\nLa mesure SI est le module — qui exprime le rapport de base entre le diamètre primitif et le nombre de dents :\nm = p/pi = D/z\n\n   – Cercle primitif : Le rayon est égal à la distance du centre de l'engrenage au point primitif.\n   – Point primitif : Le point de tangence des cercles primitifs de deux engrenages en prise.\n   – Angle de pression [en degrés]. Habituellement, 20. Historiquement : 14,5 ; Engrenages à couple élevé : 25 (Plus l'angle de pression est élevé, plus les dents sont solides. Avec des angles de pression plus élevés, un effort plus grand est nécessaire pour tourner les engrenages [en raison de la friction])."
 msgstr ""
 
 #: Engrenage.inx:171
-msgid "Profil de denture au pas métrique (T) : "
+msgid "Profil de denture au pas métrique (T) :"
 msgstr ""
 
 #: Engrenage.inx:172
-msgid "Le pas métrique est une mesure de la distance entre les dents d’un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l’engrenage, mesurée le long de l’arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres."
+msgid "Le pas métrique est une mesure de la distance entre les dents d'un engrenage. Il est défini comme la distance entre deux points consécutifs sur le cercle primitif de l'engrenage, mesurée le long de l'arc du cercle primitif. Le pas métrique est généralement mesuré en millimètres."
 msgstr ""
 
 #: Engrenage.inx:181
 msgid "Formes"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:8
+#: Engrenage.inx:8
 msgid "Dimensions"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:14
+#: Engrenage.inx:14
 msgid "Les dimensions peuvent mesurer la taille externe ou interne de l'engrenage.\nLes unités du document doivent être réglées en mm au lieu de pixels (en supposant que vous vouliez vraiment les découper avec un laser).\nL'engrenage peut avoir un moyeu ou pas. S'il n'y en a pas, ce sera le centre de l'engrenage qui sera lisse (diamètre x épaisseur)."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:18
+#: Engrenage.inx:18
 msgid "L'engrenage doit-il avoir un moyeu (engrenage fermé) : "
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:19
+#: Engrenage.inx:19
 msgid "Avec moyeu"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:20
+#: Engrenage.inx:20
 msgid "Sans moyeu"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:22
+#: Engrenage.inx:22
 msgid "Les dimensions sont : "
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:23
+#: Engrenage.inx:23
 msgid "Externe"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:24
+#: Engrenage.inx:24
 msgid "Interne"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:26
+#: Engrenage.inx:26
 msgid "Unité"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:32
+#: Engrenage.inx:32
 msgid "Diamètre"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:33
+#: Engrenage.inx:33
 msgid "Épaisseur"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:34
+#: Engrenage.inx:34
 msgid "Nombre de dents"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:35
+#: Engrenage.inx:35
 msgid "Module"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:36
+#: Engrenage.inx:36
 msgid "Angle de pression"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:37
+#: Engrenage.inx:37
 msgid "Jeu"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:38
+#: Engrenage.inx:38
 msgid "Distance entre chaque dent"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:42
+#: Engrenage.inx:42
 msgid "Les coins des dents peuvent être omis ou pas."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:43
+#: Engrenage.inx:43
 msgid "Inclure les coins."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:46
+#: Engrenage.inx:46
 msgid "Trait de coupe"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:54
+#: Engrenage.inx:54
 msgid "Diamètre du trou central : "
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:60
+#: Engrenage.inx:60
 msgid "Le trait de coupe est la quantité perdue par rapport à la largeur de combustion du laser. Typiquement dans la plage de 0,1 à 0,4 mm. Vérifiez auprès de votre fournisseur de laser. Cela dépendra du matériau à couper et de la vitesse du laser.\n\nMettre le trait de coupe à 0 créera un engrenage qui utilisera le moins de matériau possible. Cependant, les morceaux peuvent être mal ajustés et cela nécessitera probablement de la colle."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:61
+#: Engrenage.inx:61
 msgid "Vous pouvez ici, soit choisir un matériau - ce qui appliquera une largeur de trait de coupe prédéfinie - soit indiquer la largeur de trait de coupe. La liste des matériaux peut-être modifiée dans le fichier « engrenage.inx » qui se trouve dans votre dossier extension (sous windows il est sans doute ici : %AppData%\\Roaming\\inkscape\\extensions). Dans ce fichier rechercher le mot « Matos » pour trouver la liste des matériaux."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:71
+#: Engrenage.inx:71
 msgid "PMMA 5 mm"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:72
+#: Engrenage.inx:72
 msgid "PMMA 3 mm"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:73
+#: Engrenage.inx:73
 msgid "Médium 3 mm"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:77
+#: Engrenage.inx:77
 msgid "Forcer la séparation des panneaux si le trait de coupe est égale à 0"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:80
+#: Engrenage.inx:80
 msgid "Informations"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:81
+#: Engrenage.inx:81
 msgid "Couleurs :"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:82
+#: Engrenage.inx:82
 msgid "– Les contours externes sont violet #660066,\n– Les contours internes sont vert foncé #006633,\n– Orange est une annotation non imprimable."
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:83
+#: Engrenage.inx:83
 msgid "Découpe Laser"
 msgstr ""
 
-#: FrankSAURET\engrenage.inx:97
-msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l’option « Dessiner les empreintes de servo sur un cercle à part. » de l’onglet « perçage » a été cochée."
+#: Engrenage.inx:97
+msgid "Le diamètre du cercle interne sera forcé à 20 mm minimum si l'option « Dessiner les empreintes de servo sur un cercle à part. » de l'onglet « perçage » a été cochée."
+msgstr ""
+
+########## Ajout du 8/05/2025 ##########
+#: Engrenage.inx:8
+msgid "Attention : L'unité est le mm pour toutes les mesures."
+msgstr ""
+
+#: Engrenage.py:387
+msgid "Support de montage trop petit. Augmentation automatique à %2.2f%s."
+msgstr ""
+
+#: Engrenage.py:392
+msgid "Trop de rayons. Support de montage augmenté de %2.3f%s"
+msgstr ""
+
+#: Engrenage.py:399
+msgid "Pas assez d'espace pour les rayons. Diminuez le diamètre."
+msgstr ""
+
+#: Engrenage.py:600
+msgid "Attention !\nAvertissement de sous-coupe !\nCet engrenage (%d dents) ne fonctionnera pas bien.\nEssayez un nombre de dents de %d ou plus,\nou un angle de pression de %s [deg] ou plus,\nou essayez un décalage de profil de %d %%.\nOu d'autres combinaisons."
+msgstr ""
+
+#: Engrenage.py:831
+msgid "Dents : %d"
+msgstr ""
+
+#: Engrenage.py:832
+msgid "Pas angulaire : %s %s (%s °)"
+msgstr ""
+
+#: Engrenage.py:833
+msgid "Module : %s %s"
+msgstr ""
+
+#: Engrenage.py:834
+msgid "Angle de pression : %s °"
+msgstr ""
+
+#: Engrenage.py:837
+msgid "Diamètre de base :  %s %s"
+msgstr ""
+
+#: Engrenage.py:838
+msgid "Diamètre de pied :  %s %s"
+msgstr ""
+
+#: Engrenage.py:840
+msgid "Épaisseur de dent : %s %s"
+msgstr ""
+
+#: Engrenage.py:841
+msgid "Saillie : %s %s"
+msgstr ""
+
+#: Engrenage.py:
+msgid "Creux : %s %s"
+msgstr ""
+
+#: Engrenage.py:848
+msgid "Pas : %s"
+msgstr ""
+
+#: Engrenage.py:849
+msgid "Diamètre primitif : %s %s"
+msgstr ""
+
+#: Engrenage.py:850
+msgid "Diamètre extérieur : %s %s"
+msgstr ""
+
+#: Engrenage.py:851
+msgid "Diamètre intérieur :  %s %s"
+msgstr ""
+
+#: Engrenage.py:852
+msgid "Hauteur de dent :  %s %s"
 msgstr ""

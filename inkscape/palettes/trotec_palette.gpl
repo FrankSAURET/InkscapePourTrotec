@@ -1,19 +1,70 @@
 GIMP Palette
 Name: Trotec (découpeuse laser)
 #
-  0   0   0  Black
-255   0   0  ff0000
-  0   0 255  0000ff
- 51 102 153  336699
-  0 255 255  00ffff
-  0 255   0  00ff00
-  0 153  51  009933
-  0 102  51  006633
-153 153  51  999933
-153 102  51  996633
-102  51   0  663300
-102   0 102  660066
-153   0 204  9900cc
-255   0 255  ff00ff
-255 102   0  ff6600
-255 255   0  ffff00
+  0   0   0  Noir
+255   0   0  Rouge
+  0   0 255  Bleu
+ 51 102 153  Bleu acier
+  0 255 255  Cyan
+  0 255   0  Lime
+  0 153  51  Vert foncé
+  0 102  51  Vert sapin foncé
+153 153  51  Ocre
+153 102  51  Noisette
+102  51   0  Chocolat
+102   0 102  Violet profond
+153   0 204  Violet foncé
+255   0 255  Fuchsia
+255 102   0  Orange
+255 255   0  Jaune
+255 255 255  Blanc
+255 255 255  Blanc
+255 255 255  Blanc 
+255 255 255  Blanc
+255 255 255  Blanc
+255 255 255  Blanc 
+153 193 241	Bleu 1
+ 98 160 234	Bleu 2
+ 53 132 228	Bleu 3
+ 28 113 216	Bleu 4
+ 26  95 180	Bleu 5
+143 240 164	Vert 1
+ 87 227 137	Vert 2
+ 51 209 122	Vert 3
+ 46 194 126	Vert 4
+ 38 162 105	Vert 5
+249 240 107	Jaune 1
+248 228  92	Jaune 2
+246 211  45	Jaune 3
+245 194  17	Jaune 4
+229 165  10	Jaune 5
+255 190 111	Orange 1
+255 163  72	Orange 2
+255 120   0	Orange 3
+230  97	  0	Orange 4
+198  70   0	Orange 5
+246  97  81	Rouge 1
+237  51  59	Rouge 2
+224  27  36	Rouge 3
+192  28  40	Rouge 4
+165  29  45	Rouge 5
+220 138 221	Violet 1
+192  97 203	Violet 2
+145  65 172	Violet 3
+129  61 156	Violet 4
+ 97  53 131	Violet 5
+205 171 143	Marron 1
+181 131  90	Marron 2
+152 106  68	Marron 3
+134  94  60	Marron 4
+ 99  69  44	Marron 5
+254 254 254	Gris 1
+246 246 246	Gris 2
+222 222 222	Gris 3
+192 192 192	Gris 4
+154 154 154	Gris 5
+119 119 119	Gris 6
+ 94  94 94	Gris 7
+ 61  61	 61	Gris 8
+ 36  36  36	Gris 9
+  1   1   1	Gris 10

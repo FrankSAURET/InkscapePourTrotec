@@ -44,6 +44,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 2024-07-20 Frank sauret 1.4 : Ajout du tracé de poulie au pas métrique
 2024-10-25 Frank sauret 2024.1 : Ajout du tracé de roue de fixation pour les servomoteurs. Changement de versionnage
 2024-11-06 Frank sauret 2024.2 : La roue de fixation pour les servomoteurs est maintenant paramétrable. 
+2025-04-16 Frank Sauret 2025.1 : Ajout d'empreintes de servo. Correction d'un bug pour le "carré parfait".
+2025-05-08 Frank Sauret 2025.2 : Suppression du choix de l'unité. Maintenant c'est le mm et les anglosaxons n'ont qu'à se rappeller qu'ils ont signé la convention du mètre  ;).
 '''
 
 import inkex
@@ -55,7 +57,7 @@ two_pi = 2 * np.pi
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
-__version__ = '2024.2'
+__version__ = '2025.2'
 
 def uutounit(self,nn,uu):
     return self.svg.uutounit(nn,uu)
@@ -207,6 +209,7 @@ def gear_calculations(num_teeth, circular_pitch, pressure_angle, clearance=0, ri
 
 def pulley_values(pitch):
     # Sélection basée sur le pas (comme précédemment décrit)
+    # Les valeurs de base sont en mm
     if pitch == 2:
         return (0.15, 0.25, 0.55, 1.1, 0.7)
     elif pitch == 2.5:
@@ -219,11 +222,12 @@ def pulley_values(pitch):
         return (0.8, 1, 2.87, 5.7, 6.5)
     
 def pulley_calculations(teeth, pitch):
+    # On récupère les valeurs de base
     ri, re, Sp, hd, tooth_width = pulley_values(pitch)
     
-    pitch_radius = (teeth * pitch) /np.pi/2 # Rayon primitif
-    outer_radius= pitch_radius - (Sp/2) # Rayon externe
-    root_radius=outer_radius-hd # Rayon interne
+    pitch_radius = (teeth * pitch) / np.pi / 2  # Rayon primitif
+    outer_radius = pitch_radius - (Sp/2)  # Rayon externe
+    root_radius = outer_radius - hd  # Rayon interne
    
     return (pitch_radius, outer_radius, root_radius)
 
@@ -357,8 +361,7 @@ def generate_pulley_points(teeth, pitch, Re, Ri):
 
     return points
 
-def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
-                         unit_factor, unit_label):
+def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole, unit_label):
     """ 
     Trace les rayons
     donne un ensemble de contraintes
@@ -382,19 +385,19 @@ def generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mo
             collision = True
         else:
             mount_radius = mount_hole/2 + adj_factor # small fix
-            messages.append("Support de montage trop petit. Augmentation automatique à %2.2f%s." % (mount_radius/unit_factor*2, unit_label))            
+            messages.append(_("Support de montage trop petit. Augmentation automatique à %2.2f%s.") % (mount_radius*2, unit_label))            
     # then check to see if cross-over on spoke width
     if spoke_width * spoke_count +0.5 >= two_pi * mount_radius:
         adj_factor = 1.2 # wrong value. its probably one of the points distances calculated below
         mount_radius += adj_factor
-        messages.append("Trop de rayons. Support de montage augmenté de %2.3f%s" % (adj_factor/unit_factor, unit_label))
+        messages.append(_("Trop de rayons. Support de montage augmenté de %2.3f%s") % (adj_factor, unit_label))
     
     # check for collision with outer rim
     if r_outer <= mount_radius:
         # not enough room to draw spokes so cancel
         collision = True
     if collision: # don't draw spokes if no room.
-        messages.append("Pas assez d'espace pour les rayons. Diminuez le diamètre.")
+        messages.append(_("Pas assez d'espace pour les rayons. Diminuez le diamètre."))
     else: # draw spokes
         for i in range(spoke_count):
             points = []
@@ -495,17 +498,6 @@ class Gears(inkex.EffectExtension):
         line = etree.SubElement(node, inkex.addNS('text','svg'), line_attribs)
         line.text = text
 
-    def calc_unit_factor(self):
-        """ return the scale factor for all dimension conversions.
-            - The document units are always irrelevant as
-              everything in inkscape is expected to be in 90dpi pixel units
-        """
-        # namedView = self.document.getroot().find(inkex.addNS('namedview', 'sodipodi'))
-        # doc_units = uutounit(self, 1.0, namedView.get(inkex.addNS('document-units', 'inkscape')))
-        dialog_units = uutounit(self, 1.0, self.options.units)
-        unit_factor = 1.0 / dialog_units
-        return unit_factor
-
     def calc_circular_pitch(self):
         """ We use math based on circular pitch.
             Expressed in inkscape units which is 90dpi 'pixel' units.
@@ -537,8 +529,6 @@ class Gears(inkex.EffectExtension):
         path_fill   = 'none'     # no fill - just a line
         #
         warnings = [] # list of extra messages to be shown in annotations
-        # calculate unit factor for units defined in dialog. 
-        unit_factor = self.calc_unit_factor()
         # User defined options
         teeth = self.options.teeth
         # Angle of tangent to tooth at circular pitch wrt radial line.
@@ -547,29 +537,29 @@ class Gears(inkex.EffectExtension):
         pas=self.options.pas
         # Clearance: Radial distance between top of tooth on one gear to 
         # bottom of gap on another.
-        clearance = self.options.clearance * unit_factor
+        clearance = self.options.clearance
         hole=self.options.hole
         shape=self.options.shape
-        hole_width=self.options.hole_width * unit_factor
-        hole_length=self.options.hole_length * unit_factor
-        mount_hole = self.options.mount_hole * unit_factor
+        hole_width=self.options.hole_width
+        hole_length=self.options.hole_length
+        mount_hole = self.options.mount_hole
         servo=self.options.servo
-        jeu=self.options.jeu * unit_factor
-        epaisseur_matos=self.options.epaisseur_matos * unit_factor
+        jeu=self.options.jeu
+        epaisseur_matos=self.options.epaisseur_matos
         if self.options.bymaterial:
-            kerf=self.options.materiaux * unit_factor
+            kerf=self.options.materiaux
         else:
-            kerf=self.options.kerf_size * unit_factor
+            kerf=self.options.kerf_size
         path_stroke_width  = kerf # default line width = kerf
         path_stroke_light  = uutounit(self, 0.05, 'mm') # guides are thinner
-        DiametreCercle=self.options.DiametreCercle * unit_factor    
+        DiametreCercle=self.options.DiametreCercle    
         cote=epaisseur_matos-kerf+jeu
         # for spokes
-        mount_radius = self.options.mount_diameter * 0.5 * unit_factor
+        mount_radius = self.options.mount_diameter * 0.5
         spoke_count = self.options.spoke_count
         if not(self.options.draw_spoke) or  type=="T":
             spoke_count=0
-        spoke_width = self.options.spoke_width * unit_factor
+        spoke_width = self.options.spoke_width
         # visible guide lines
         centercross = self.options.centercross # draw center or not (boolean)
         pitchcircle = self.options.pitchcircle # draw pitch circle or not (boolean)
@@ -608,7 +598,7 @@ class Gears(inkex.EffectExtension):
             min_teeth = int(ceil(undercut_min_teeth(angle, 1.0)))
             min_angle = undercut_min_angle(teeth, 1.0) + .1
             max_k = undercut_max_k(teeth, angle)
-            msg = "Attention !\nAvertissement de sous-coupe !\nCet engrenage (%d dents) ne fonctionnera pas bien.\nEssayez un nombre de dents de %d ou plus,\nou un angle de pression de %s [deg] ou plus,\nou essayez un décalage de profil de %d %%.\nOu d'autres combinaisons." % (teeth, min_teeth, locale.format_string("%.1f", min_angle).rstrip('0').rstrip(','), int(100. * max_k) - 100.)            
+            msg = _("Attention !\nAvertissement de sous-coupe !\nCet engrenage (%d dents) ne fonctionnera pas bien.\nEssayez un nombre de dents de %d ou plus,\nou un angle de pression de %s [deg] ou plus,\nou essayez un décalage de profil de %d %%.\nOu d'autres combinaisons.") % (teeth, min_teeth, locale.format_string("%.1f", min_angle).rstrip('0').rstrip(','), int(100. * max_k) - 100.)            
             self.options.annotation=True
             # alas annotation cannot handle the degree symbol.  Also it ignore
             # newlines.
@@ -633,8 +623,7 @@ class Gears(inkex.EffectExtension):
             if self.options.RoueServo:# s'assure que les carrés de fixation soient dans de la matière
                 if mount_radius<10:
                     mount_radius=10
-            spokes_path, msg = generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole,
-                                                    unit_factor, self.options.units)
+            spokes_path, msg = generate_spokes_path(root_radius, spoke_width, spoke_count, mount_radius, mount_hole, self.options.units)
             warnings.extend(msg)
             # Spokes (add to current path)
             pathSpoke = spokes_path
@@ -713,10 +702,10 @@ class Gears(inkex.EffectExtension):
             
         bbox_points = list(points_to_bbox(points))
         
-        if self.options.CarreParfait and self.options.BarreAxe:
+        if self.options.CarreParfait and self.options.BarreAxe and shape=="Rectangulaire":
             # trace l'axe
-            xAxe=DiametreCercle/2+2
-            yAxe=-DiametreCercle/2
+            xAxe=outer_radius
+            yAxe=-outer_radius
             LargeurAxe=epaisseur_matos+kerf
             draw_SVG_rect(g,xAxe,yAxe,LargeurAxe,self.options.LongueurAxe,'RectFixationDroit',styles['pathRect'])
             bbox_points[2] = bbox_points[2] + LargeurAxe
@@ -802,8 +791,8 @@ class Gears(inkex.EffectExtension):
 
         # Add Rack (below)
         if self.options.draw_rack:
-            rack_base_height = self.options.rack_base_height * unit_factor
-            tab_width = self.options.rack_base_tab * unit_factor
+            rack_base_height = self.options.rack_base_height
+            tab_width = self.options.rack_base_tab
             tooth_count = self.options.rack_teeth_length
             (points, guide_path) = generate_rack_points(tooth_count, pitch, addendum, angle,
                                                         rack_base_height, tab_width, clearance, pitchcircle)
@@ -840,29 +829,29 @@ class Gears(inkex.EffectExtension):
             #notes.append('Document (%s) scale conversion = %2.4f' % (self.document.getroot().find(inkex.addNS('namedview', 'sodipodi')).get(inkex.addNS('document-units', 'inkscape')), unit_factor))
             if type=="dev":
                 notes.extend([
-                    'Dents : %d' % (teeth),
-                    'Pas angulaire : %s %s (%s °)' % (locale.format_string("%.2f", pitch / unit_factor).rstrip('0').rstrip(','), self.options.units,locale.format_string("%.1f", 360/teeth).rstrip('0').rstrip(',')),
-                    'Module : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / teeth).rstrip('0').rstrip(','), self.options.units),
-                    'Angle de pression : %s °' % (locale.format_string("%.2f", angle).rstrip('0').rstrip(',')),
-                    'Diamètre primitif : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Diamètre extérieur : %s %s' % (locale.format_string("%.2f", outer_dia / unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Diamètre de base :  %s %s' % (locale.format_string("%.2f", base_radius * 2 / unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Diamètre de pied :  %s %s' % (locale.format_string("%.2f",  pitch_radius * 2 * (1-2.5/teeth) ).rstrip('0').rstrip(','), self.options.units),
-                    'Hauteur de dent :  %s %s' % (locale.format_string("%.2f",  (dedendum+addendum)/ unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Épaisseur de dent : %s %s' % (locale.format_string("%.2f", tooth / unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Saillie : %s %s' % (locale.format_string("%.2f", addendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
-                    'Creux : %s %s' % (locale.format_string("%.2f", dedendum/ unit_factor).rstrip('0').rstrip(','), self.options.units),
+                    _('Dents : %d') % (teeth),
+                    _('Pas angulaire : %s %s (%s °)') % (locale.format_string("%.2f", pitch).rstrip('0').rstrip(','), self.options.units,locale.format_string("%.1f", 360/teeth).rstrip('0').rstrip(',')),
+                    _('Module : %s %s') % (locale.format_string("%.2f", pitch_radius * 2 / teeth).rstrip('0').rstrip(','), self.options.units),
+                    _('Angle de pression : %s °') % (locale.format_string("%.2f", angle).rstrip('0').rstrip(',')),
+                    _('Diamètre primitif : %s %s') % (locale.format_string("%.2f", pitch_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    _('Diamètre extérieur : %s %s') % (locale.format_string("%.2f", outer_dia ).rstrip('0').rstrip(','), self.options.units),
+                    _('Diamètre de base :  %s %s') % (locale.format_string("%.2f", base_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    _('Diamètre de pied :  %s %s') % (locale.format_string("%.2f",  pitch_radius * 2 * (1-2.5/teeth) ).rstrip('0').rstrip(','), self.options.units),
+                    _('Hauteur de dent :  %s %s') % (locale.format_string("%.2f",  (dedendum+addendum)).rstrip('0').rstrip(','), self.options.units),
+                    _('Épaisseur de dent : %s %s') % (locale.format_string("%.2f", tooth).rstrip('0').rstrip(','), self.options.units),
+                    _('Saillie : %s %s') % (locale.format_string("%.2f", addendum).rstrip('0').rstrip(','), self.options.units),
+                    _('Creux : %s %s') % (locale.format_string("%.2f", dedendum).rstrip('0').rstrip(','), self.options.units),
                     ])
             else:
                 ri, re, Sp, hd, tooth_width = pulley_values(pas)
                 notes.extend([
-                    'Dents : %d' % teeth,
-                    'Pas : %s' % locale.format_string("%.1f", pas),
-                    'Diamètre primitif : %s %s' % (locale.format_string("%.2f", pitch_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
-                    'Diamètre extérieur : %s %s' % (locale.format_string("%.2f", outer_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
-                    'Diamètre intérieur :  %s %s' % (locale.format_string("%.2f", root_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
-                    'Hauteur de dent :  %s %s' % (locale.format_string("%.2f", hd), self.options.units),
-                    'Largeur de dent : %s %s' % (locale.format_string("%.2f", tooth_width), self.options.units),
+                    _('Dents : %d') % teeth,
+                    _('Pas : %s') % locale.format_string("%.1f", pas),
+                    _('Diamètre primitif : %s %s') % (locale.format_string("%.2f", pitch_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    _('Diamètre extérieur : %s %s') % (locale.format_string("%.2f", outer_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    _('Diamètre intérieur :  %s %s') % (locale.format_string("%.2f", root_radius * 2 ).rstrip('0').rstrip(','), self.options.units),
+                    _('Hauteur de dent :  %s %s') % (locale.format_string("%.2f", hd), self.options.units),
+                    _('Largeur de dent : %s %s') % (locale.format_string("%.2f", tooth_width), self.options.units),
                     ])          
             # text height relative to gear size.
             # ranges from 10 to 22 over outer radius size 60 to 360
