@@ -1,0 +1,8 @@
+# Ignore all zip files
+*.zip
+
+
+
+# Ignorer les dossiers
+Sauvegardes/
+pjx/
