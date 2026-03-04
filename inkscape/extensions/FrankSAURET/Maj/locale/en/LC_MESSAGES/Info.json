@@ -1,0 +1,9 @@
+{
+  "type": "InkScape extension",
+  "name": "Update Manager",
+  "short_description": "Inkscape extension manager.",
+  "author": "Frank SAURET",
+  "version": "2026.3",
+  "download": ["Maj/"],
+  "repos": "https://github.com/FrankSAURET/Maj"
+}

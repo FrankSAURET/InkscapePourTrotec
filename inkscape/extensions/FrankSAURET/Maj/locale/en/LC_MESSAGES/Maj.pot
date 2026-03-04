@@ -1,0 +1,324 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Frank SAURET, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Maj 2026\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-24 18:49+0100\n"
+"PO-Revision-Date: 2026-02-24 18:49+0100\n"
+"Last-Translator: Frank SAURET\n"
+"Language-Team: electropol\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Maj\Maj.inx:3
+msgid "‎Mise à jour des extensions de Frank SAURET"
+msgstr "‎Update Frank SAURET's extensions"
+
+#: gui\installable_extensions_list_widget.py:127
+#: gui\installed_extensions_list_widget.py:195
+msgid " par "
+msgstr " by "
+
+#: gui\installable_extensions_list_widget.py:134
+#: gui\main_window.py:1000
+#, python-brace-format
+msgid "Version : {version}"
+msgstr "Version: {version}"
+
+#: gui\installable_extensions_list_widget.py:144
+#, python-brace-format
+msgid "Pour {compat}"
+msgstr "For {compat}"
+
+#: gui\installed_extensions_list_widget.py:148
+msgid "Attention : seules les extensions avec un fichier Info.json sont listées !"
+msgstr "Warning: only extensions with an Info.json file are listed!"
+
+#: gui\installed_extensions_list_widget.py:166
+msgid " - À jour"
+msgstr " - Up to date"
+
+#: gui\installed_extensions_list_widget.py:219
+msgid "« M à j » ne peut pas être mis à jour par elle même. Pour la mettre à jour allez dans le dépôt :"
+msgstr "\"Maj\" cannot update itself. To update it, go to the repository:"
+
+#: gui\main_window.py:348
+#: gui\main_window.py:998
+msgid "Gestionnaire d’extensions Inkscape – Maj"
+msgstr "Inkscape Extension Manager – Maj"
+
+#: gui\main_window.py:372
+msgid "Extensions installées"
+msgstr "Installed extensions"
+
+#: gui\main_window.py:377
+msgid "Ajouter une extension"
+msgstr "Add an extension"
+
+#: gui\main_window.py:381
+msgid "Actions :"
+msgstr "Actions:"
+
+#: gui\main_window.py:403
+msgid "Paramètres"
+msgstr "Settings"
+
+#: gui\main_window.py:409
+msgid "À propos"
+msgstr "About"
+
+#: gui\main_window.py:446
+msgid "Extensions installées :"
+msgstr "Installed extensions:"
+
+#: gui\main_window.py:448
+msgid "Uniquement les extensions avec une mise à jour disponible"
+msgstr "Only extensions with an available update"
+
+#: gui\main_window.py:490
+msgid "Mettre à jour"
+msgstr "Update"
+
+#: gui\main_window.py:491
+#: gui\main_window.py:942
+msgid "Supprimer"
+msgstr "Delete"
+
+#: gui\main_window.py:501
+#: gui\main_window.py:512
+msgid "Aucune extension sélectionnée pour mise à jour."
+msgstr "No extension selected for update."
+
+#: gui\main_window.py:516
+#, python-brace-format
+msgid "Mise à jour de l'extension : {ext_name}"
+msgstr "Updating extension: {ext_name}"
+
+#: gui\main_window.py:519
+msgid "Information de téléchargement ou dossier d'installation manquante."
+msgstr "Missing download information or installation folder."
+
+#: gui\main_window.py:525
+#, python-brace-format
+msgid ""
+"Dossier d'installation : \n"
+"   {install_dir}"
+msgstr ""
+"Installation folder:\n"
+"   {install_dir}"
+
+#: gui\main_window.py:531
+msgid "Aucun provider compatible trouvé pour ce dépôt."
+msgstr "No compatible provider found for this repository."
+
+#: gui\main_window.py:544
+#, python-brace-format
+msgid "Tentative téléchargement : {zip_url}"
+msgstr "Attempting download: {zip_url}"
+
+#: gui\main_window.py:555
+msgid "Impossible de télécharger l'archive du dépôt sur aucune branche connue."
+msgstr "Unable to download the repository archive from any known branch."
+
+#: gui\main_window.py:622
+#, python-brace-format
+msgid ""
+"Dossier mis à jour : \n"
+"   {dest_path}"
+msgstr ""
+"Folder updated:\n"
+"   {dest_path}"
+
+#: gui\main_window.py:625
+#: gui\main_window.py:867
+#, python-brace-format
+msgid "Dossier non trouvé dans l'archive : {src_path}"
+msgstr "Folder not found in archive: {src_path}"
+
+#: gui\main_window.py:637
+#, python-brace-format
+msgid ""
+"Fichier mis à jour : \n"
+"{dest_path}"
+msgstr ""
+"File updated:\n"
+"{dest_path}"
+
+#: gui\main_window.py:639
+#: gui\main_window.py:880
+#, python-brace-format
+msgid "Fichier non trouvé dans l'archive : {src_path}"
+msgstr "File not found in archive: {src_path}"
+
+#: gui\main_window.py:648
+msgid "Mise à jour terminée ! Relancez InkScape pour voir l'extension.\n"
+msgstr "Update complete! Restart Inkscape to see the extension.\n"
+
+#: gui\main_window.py:656
+#: gui\main_window.py:896
+msgid "   Vous la trouverez ici :\n"
+msgstr "   You will find it here:\n"
+
+#: gui\main_window.py:665
+#, python-brace-format
+msgid "Erreur lors de la mise à jour : {e}"
+msgstr "Error during update: {e}"
+
+#: gui\main_window.py:677
+#: gui\main_window.py:686
+msgid "Aucune extension sélectionnée pour suppression."
+msgstr "No extension selected for deletion."
+
+#: gui\main_window.py:701
+#: gui\main_window.py:716
+#, python-brace-format
+msgid "Erreur suppression dossier {install_dir}: {e}"
+msgstr "Error deleting folder {install_dir}: {e}"
+
+#: gui\main_window.py:710
+#, python-brace-format
+msgid "Erreur suppression {path}: {e}"
+msgstr "Error deleting {path}: {e}"
+
+#: gui\main_window.py:730
+#, python-brace-format
+msgid "Erreur mise à jour installed_extensions.json: {e}"
+msgstr "Error updating installed_extensions.json: {e}"
+
+#: gui\main_window.py:733
+#, python-brace-format
+msgid "Extension supprimée : {name}"
+msgstr "Extension deleted: {name}"
+
+#: gui\main_window.py:735
+#, python-brace-format
+msgid "Erreur lors de la suppression : {e}"
+msgstr "Error during deletion: {e}"
+
+#: gui\main_window.py:741
+msgid "Choisir un dépôt :"
+msgstr "Choose a repository:"
+
+#: gui\main_window.py:743
+msgid "Sujet :"
+msgstr "Subject:"
+
+#: gui\main_window.py:763
+msgid "Installer"
+msgstr "Install"
+
+#: gui\main_window.py:774
+#, python-brace-format
+msgid "Installation de l'extension : {ext_name}"
+msgstr "Installing extension: {ext_name}"
+
+#: gui\main_window.py:776
+msgid "Aucune extension sélectionnée ou information de téléchargement manquante."
+msgstr "No extension selected or missing download information."
+
+#: gui\main_window.py:789
+#, python-brace-format
+msgid ""
+"Dossier d'installation : \n"
+"   {inkscape_dir}"
+msgstr ""
+"Installation folder:\n"
+"   {inkscape_dir}"
+
+#: gui\main_window.py:798
+#, python-brace-format
+msgid ""
+"Téléchargement du dépôt : \n"
+"   {zip_url}"
+msgstr ""
+"Downloading repository:\n"
+"   {zip_url}"
+
+#: gui\main_window.py:865
+#, python-brace-format
+msgid ""
+"Dossier copié : \n"
+"   {dest_path}"
+msgstr ""
+"Folder copied:\n"
+"   {dest_path}"
+
+#: gui\main_window.py:878
+#, python-brace-format
+msgid ""
+"Fichier copié : \n"
+"{dest_path}"
+msgstr ""
+"File copied:\n"
+"{dest_path}"
+
+#: gui\main_window.py:888
+msgid "Installation terminée ! Relancez InkScape pour voir l'extension.\n"
+msgstr "Installation complete! Restart Inkscape to see the extension.\n"
+
+#: gui\main_window.py:903
+#, python-brace-format
+msgid "Erreur lors de l'installation : {e}"
+msgstr "Error during installation: {e}"
+
+#: gui\main_window.py:924
+msgid "Ajouter un dépôt :"
+msgstr "Add a repository:"
+
+#: gui\main_window.py:930
+msgid "Ajouter"
+msgstr "Add"
+
+#: gui\main_window.py:932
+msgid "Testé uniquement avec un dépot github."
+msgstr "Only tested with a GitHub repository."
+
+#: gui\main_window.py:936
+msgid "Dépôts enregistrés :"
+msgstr "Registered repositories:"
+
+#: gui\main_window.py:959
+#, python-brace-format
+msgid "Dépôt ajouté : {repo}"
+msgstr "Repository added: {repo}"
+
+#: gui\main_window.py:970
+#, python-brace-format
+msgid "Dépôt supprimé : {repo}"
+msgstr "Repository removed: {repo}"
+
+#: gui\main_window.py:974
+#, python-brace-format
+msgid "Fréquence de vérification enregistrée : {freq} jours"
+msgstr "Check frequency saved: {freq} days"
+
+#: gui\main_window.py:1002
+#, python-brace-format
+msgid "Auteur : {author}"
+msgstr "Author: {author}"
+
+#: gui\main_window.py:1004
+#, python-brace-format
+msgid "Licence : {license}"
+msgstr "License: {license}"
+
+#: gui\main_window.py:1081
+msgid "Documentation développeur"
+msgstr "Developer documentation"
+
+#: gui\installed_extensions_list_widget.py
+#, python-brace-format
+msgid " | Version en ligne : {version}"
+msgstr " | Online version: {version}"
+
+#: gui\installed_extensions_list_widget.py
+#, python-brace-format
+msgid "(Version installée: {local_version}{online_txt})"
+msgstr "(Installed version: {local_version}{online_txt})"
