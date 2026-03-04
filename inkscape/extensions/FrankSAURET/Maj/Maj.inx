@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension translationdomain="Maj" xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<name>‎Mise à jour des extensions de Frank SAURET</name>
+	<id>franksauret.Maj</id>
+
+	<effect implements-custom-gui="true" show-stderr="true">
+		<object-type>all</object-type>
+		<effects-menu />
+	</effect>
+	<script>
+		<command location="inx" interpreter="python">Maj.py</command>
+	</script>
+</inkscape-extension>

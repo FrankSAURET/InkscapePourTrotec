@@ -1,0 +1,100 @@
+{
+  "Params": [
+    {
+      "repos": [
+        "https://github.com/FrankSAURET/InkScape_Extensions"
+      ],
+      "update_frequency": 31,
+      "subjects": [
+        "Assemblage",
+        "Chemin",
+        "Création d'objets",
+        "Découpe laser",
+        "Formes",
+        "Tableau"
+      ],
+      "show_only_updates": false
+    }
+  ],
+  "Template": [
+    {
+      "colors": {
+        "fond_principal": "#e8f5e9",
+        "fond_bouton_supprimer": "#c0392b",
+        "fond_saisie": "white",
+        "fond_non_modifiable": "#f0f0f0",
+        "fond_bouton": "#27ae60",
+        "fond_onglet": "#27ae60",
+        "scrollbar_trough": "#b7e4c7",
+        "scrollbar_slider": "#43a047",
+        "scrollbar_slider_hover": "#388e3c",
+        "scrollbar_arrow": "#1b5e20",
+        "fond_selectionne": "#2ecc40",
+        "fond_focus": "#2ecc40",
+        "fond_ligne_paire": "white",
+        "fond_ligne_impaire": "#f0f7f1",
+        "fond_selected_ext": "#b2dfdb",
+        "fond_warning": "#f0c000",
+        "fond_pale": "#f0c000",
+        "text_sombre": "#145a32",
+        "text_clair": "white",
+        "text_lien": "blue",
+        "text_erreur": "red",
+        "text_repo_bar": "white",
+        "fond_repo_bar": "#27ae60",
+        "text_author": "#0074D9",
+        "text_desc": "#145a32",
+        "text_version": "#c0392b",
+        "text_highlight": "#028D7A",
+        "text_by": "#747474",
+        "text_compatibility": "#96A9DD"
+      },
+      "format_text": {
+        "font_base": [
+          "Arial",
+          11
+        ],
+        "font_bold": [
+          "Arial",
+          11,
+          "bold"
+        ],
+        "font_repo": [
+          "Arial",
+          12,
+          "bold"
+        ],
+        "font_author": [
+          "Arial",
+          10,
+          "italic"
+        ],
+        "font_desc": [
+          "Arial",
+          11
+        ],
+        "font_version": [
+          "Arial",
+          9
+        ],
+        "font_litle": [
+          "Arial",
+          9
+        ],
+        "font_warning": [
+          "Arial",
+          10,
+          "italic"
+        ]
+      }
+    }
+  ],
+  "subjects": [
+    "Assemblage",
+    "Chemin",
+    "Création d'objets",
+    "Découpe laser",
+    "Formes",
+    "Tableau"
+  ]
+}

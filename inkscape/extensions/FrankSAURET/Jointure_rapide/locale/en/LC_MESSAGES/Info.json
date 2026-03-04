@@ -1,0 +1,9 @@
+{
+  "type": "InkScape extension",
+  "name": "Quick Joint",
+  "short_description": "Extension to quickly create joints for laser cutting.",
+  "author": "Jarrett Rainimo",
+  "version": "2026.1",
+  "download": ["Jointure_rapide/"],
+  "repos": "https://github.com/FrankSAURET/Jointure_rapide"
+}

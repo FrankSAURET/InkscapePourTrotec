@@ -1,0 +1,319 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-24 18:49+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Maj\Maj.inx:3
+msgid "‎Mise à jour des extensions de Frank SAURET"
+msgstr "‎"
+
+#: gui\installable_extensions_list_widget.py:127
+#: gui\installed_extensions_list_widget.py:195
+msgid " par "
+msgstr ""
+
+#: gui\installable_extensions_list_widget.py:134
+#: gui\main_window.py:1000
+#, python-brace-format
+msgid "Version : {version}"
+msgstr ""
+
+#: gui\installable_extensions_list_widget.py:144
+#, python-brace-format
+msgid "Pour {compat}"
+msgstr ""
+
+#: gui\installed_extensions_list_widget.py:148
+msgid ""
+"Attention : seules les extensions avec un fichier Info.json sont listées !"
+msgstr ""
+
+#: gui\installed_extensions_list_widget.py:166
+msgid " - À jour"
+msgstr ""
+
+#: gui\installed_extensions_list_widget.py:219
+msgid ""
+"« M à j » ne peut pas être mis à jour par elle même. Pour la mettre à jour "
+"allez dans le dépôt :"
+msgstr ""
+
+#: gui\main_window.py:348
+#: gui\main_window.py:998
+msgid "Gestionnaire d’extensions Inkscape – Maj"
+msgstr ""
+
+#: gui\main_window.py:372
+msgid "Extensions installées"
+msgstr ""
+
+#: gui\main_window.py:377
+msgid "Ajouter une extension"
+msgstr ""
+
+#: gui\main_window.py:381
+msgid "Actions :"
+msgstr ""
+
+#: gui\main_window.py:403
+msgid "Paramètres"
+msgstr ""
+
+#: gui\main_window.py:409
+msgid "À propos"
+msgstr ""
+
+#: gui\main_window.py:446
+msgid "Extensions installées :"
+msgstr ""
+
+#: gui\main_window.py:448
+msgid "Uniquement les extensions avec une mise à jour disponible"
+msgstr ""
+
+#: gui\main_window.py:490
+msgid "Mettre à jour"
+msgstr ""
+
+#: gui\main_window.py:491
+#: gui\main_window.py:942
+msgid "Supprimer"
+msgstr ""
+
+#: gui\main_window.py:501
+#: gui\main_window.py:512
+msgid "Aucune extension sélectionnée pour mise à jour."
+msgstr ""
+
+#: gui\main_window.py:516
+#, python-brace-format
+msgid "Mise à jour de l'extension : {ext_name}"
+msgstr ""
+
+#: gui\main_window.py:519
+msgid "Information de téléchargement ou dossier d'installation manquante."
+msgstr ""
+
+#: gui\main_window.py:525
+#, python-brace-format
+msgid ""
+"Dossier d'installation : \n"
+"   {install_dir}"
+msgstr ""
+
+#: gui\main_window.py:531
+msgid "Aucun provider compatible trouvé pour ce dépôt."
+msgstr ""
+
+#: gui\main_window.py:544
+#, python-brace-format
+msgid "Tentative téléchargement : {zip_url}"
+msgstr ""
+
+#: gui\main_window.py:555
+msgid "Impossible de télécharger l'archive du dépôt sur aucune branche connue."
+msgstr ""
+
+#: gui\main_window.py:622
+#, python-brace-format
+msgid ""
+"Dossier mis à jour : \n"
+"   {dest_path}"
+msgstr ""
+
+#: gui\main_window.py:625
+#: gui\main_window.py:867
+#, python-brace-format
+msgid "Dossier non trouvé dans l'archive : {src_path}"
+msgstr ""
+
+#: gui\main_window.py:637
+#, python-brace-format
+msgid ""
+"Fichier mis à jour : \n"
+"{dest_path}"
+msgstr ""
+
+#: gui\main_window.py:639
+#: gui\main_window.py:880
+#, python-brace-format
+msgid "Fichier non trouvé dans l'archive : {src_path}"
+msgstr ""
+
+#: gui\main_window.py:648
+msgid "Mise à jour terminée ! Relancez InkScape pour voir l'extension.\n"
+msgstr ""
+
+#: gui\main_window.py:656
+#: gui\main_window.py:896
+msgid "   Vous la trouverez ici :\n"
+msgstr ""
+
+#: gui\main_window.py:665
+#, python-brace-format
+msgid "Erreur lors de la mise à jour : {e}"
+msgstr ""
+
+#: gui\main_window.py:677
+#: gui\main_window.py:686
+msgid "Aucune extension sélectionnée pour suppression."
+msgstr ""
+
+#: gui\main_window.py:701
+#: gui\main_window.py:716
+#, python-brace-format
+msgid "Erreur suppression dossier {install_dir}: {e}"
+msgstr ""
+
+#: gui\main_window.py:710
+#, python-brace-format
+msgid "Erreur suppression {path}: {e}"
+msgstr ""
+
+#: gui\main_window.py:730
+#, python-brace-format
+msgid "Erreur mise à jour installed_extensions.json: {e}"
+msgstr ""
+
+#: gui\main_window.py:733
+#, python-brace-format
+msgid "Extension supprimée : {name}"
+msgstr ""
+
+#: gui\main_window.py:735
+#, python-brace-format
+msgid "Erreur lors de la suppression : {e}"
+msgstr ""
+
+#: gui\main_window.py:741
+msgid "Choisir un dépôt :"
+msgstr ""
+
+#: gui\main_window.py:743
+msgid "Sujet :"
+msgstr ""
+
+#: gui\main_window.py:763
+msgid "Installer"
+msgstr ""
+
+#: gui\main_window.py:774
+#, python-brace-format
+msgid "Installation de l'extension : {ext_name}"
+msgstr ""
+
+#: gui\main_window.py:776
+msgid ""
+"Aucune extension sélectionnée ou information de téléchargement manquante."
+msgstr ""
+
+#: gui\main_window.py:789
+#, python-brace-format
+msgid ""
+"Dossier d'installation : \n"
+"   {inkscape_dir}"
+msgstr ""
+
+#: gui\main_window.py:798
+#, python-brace-format
+msgid ""
+"Téléchargement du dépôt : \n"
+"   {zip_url}"
+msgstr ""
+
+#: gui\main_window.py:805
+#, python-brace-format
+msgid "Branche 'main' non trouvée, tentative avec 'master' : {zip_url}"
+msgstr ""
+
+#: gui\main_window.py:865
+#, python-brace-format
+msgid ""
+"Dossier copié : \n"
+"   {dest_path}"
+msgstr ""
+
+#: gui\main_window.py:878
+#, python-brace-format
+msgid ""
+"Fichier copié : \n"
+"{dest_path}"
+msgstr ""
+
+#: gui\main_window.py:888
+msgid "Installation terminée ! Relancez InkScape pour voir l'extension.\n"
+msgstr ""
+
+#: gui\main_window.py:903
+#, python-brace-format
+msgid "Erreur lors de l'installation : {e}"
+msgstr ""
+
+#: gui\main_window.py:924
+msgid "Ajouter un dépôt :"
+msgstr ""
+
+#: gui\main_window.py:930
+msgid "Ajouter"
+msgstr ""
+
+#: gui\main_window.py:932
+msgid "Testé uniquement avec un dépot github."
+msgstr ""
+
+#: gui\main_window.py:936
+msgid "Dépôts enregistrés :"
+msgstr ""
+
+#: gui\main_window.py:959
+#, python-brace-format
+msgid "Dépôt ajouté : {repo}"
+msgstr ""
+
+#: gui\main_window.py:970
+#, python-brace-format
+msgid "Dépôt supprimé : {repo}"
+msgstr ""
+
+#: gui\main_window.py:974
+#, python-brace-format
+msgid "Fréquence de vérification enregistrée : {freq} jours"
+msgstr ""
+
+#: gui\main_window.py:1002
+#, python-brace-format
+msgid "Auteur : {author}"
+msgstr ""
+
+#: gui\main_window.py:1004
+#, python-brace-format
+msgid "Licence : {license}"
+msgstr ""
+
+#: gui\main_window.py:1081
+msgid "Documentation développeur"
+msgstr ""
+
+#: gui\installed_extensions_list_widget.py
+#, python-brace-format
+msgid " | Version en ligne : {version}"
+msgstr ""
+
+#: gui\installed_extensions_list_widget.py
+#, python-brace-format
+msgid "(Version installée: {local_version}{online_txt})"
+msgstr ""

@@ -1,0 +1,9 @@
+{
+  "type": "InkScape extension",
+  "name": "Assemblage rapide",
+  "short_description": "Extension pour créer rapidement des jointures pour la découpe laser.",
+  "author": "Jarrett Rainimo",
+  "version": "2026.1",
+  "download": ["Jointure_rapide/"],
+  "repos": "https://github.com/FrankSAURET/Jointure_rapide"
+}

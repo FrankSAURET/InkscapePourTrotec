@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "providers": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "main_url": "https://github.com/{owner}/{repo}/",
+      "download_file_url": "https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}",
+      "download_folder_url": "https://github.com/{owner}/{repo}/archive/refs/heads/{branch}.zip",
+      "alternative_main_branch": ["main", "master"],
+      "compressed_format": ".zip"
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "main_url": "https://gitlab.com/{owner}/{repo}/",
+      "download_file_url": "https://gitlab.com/{owner}/{repo}/-/raw/{branch}/{path}",
+      "download_folder_url": "https://gitlab.com/{owner}/{repo}/-/archive/{branch}/{repo}-{branch}.zip",
+      "alternative_main_branch": ["main", "master"],
+      "compressed_format": ".zip"
+    },
+    {
+      "id": "codeberg",
+      "name": "Codeberg",
+      "main_url": "https://codeberg.org/{owner}/{repo}/",
+      "download_file_url": "https://codeberg.org/{owner}/{repo}/raw/branch/{branch}/{path}",
+      "download_folder_url": "https://codeberg.org/{owner}/{repo}/archive/{branch}.zip",
+      "alternative_main_branch": ["main", "master"],
+      "compressed_format": ".zip"
+    },
+    {
+      "id": "bitbucket",
+      "name": "Bitbucket",
+      "main_url": "https://bitbucket.org/{owner}/{repo}/",
+      "download_file_url": "https://bitbucket.org/{owner}/{repo}/raw/{branch}/{path}",
+      "download_folder_url": "https://bitbucket.org/{owner}/{repo}/get/{branch}.zip",
+      "alternative_main_branch": ["main", "master", "default"],
+      "compressed_format": ".zip"
+    }
+  ]
+}

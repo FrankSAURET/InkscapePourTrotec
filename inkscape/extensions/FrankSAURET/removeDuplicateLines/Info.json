@@ -1,0 +1,9 @@
+{
+  "type": "InkScape extension",
+  "name": "Remove duplicate lines",
+  "short_description": "Une extension Inkscape pour supprimer les segments de ligne dupliqués avec une option de tolérance pour détecter les segments comme identiques.",
+  "author": "Ellen Wasbø",
+  "version": "2026.1",
+  "download": ["removeDuplicateLines/"],
+  "repos": "https://github.com/FrankSAURET/removeDuplicateLines"
+}

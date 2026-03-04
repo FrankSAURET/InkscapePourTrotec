@@ -1,0 +1,10 @@
+{
+  "type": "InkScape extension",
+  "name": "Boite brique",
+  "short_description": "Génére des boîtes parallélépipédiques.",
+  "author": "Frank SAURET",
+  "version": "2026.1",
+  "download": ["boite_brique/"],
+  "repos": "https://github.com/FrankSAURET/Boite_brique"
+}
+

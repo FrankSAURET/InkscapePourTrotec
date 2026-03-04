@@ -1,0 +1,19 @@
+{
+  "repos": [
+    "https://github.com/FrankSAURET/InkScape_Extensions"
+  ],
+  "colors": {
+    "fond": "#e8f5e9",
+    "texte_sombre": "#145a32",
+    "fond_bouton": "#27ae60",
+    "onglet": "#27ae60",
+    "selectionne": "#2ecc40",
+    "focus": "#2ecc40",
+    "texte_claire": "white",
+    "fond_bouton_supprimer": "#c0392b",
+    "fond_saisie": "white",
+    "fond_non_modifiable": "#f0f0f0",
+    "lien": "blue",
+    "text_erreur": "red"
+  }
+}

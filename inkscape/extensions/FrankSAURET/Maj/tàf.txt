@@ -1,0 +1,3 @@
+- ajouter un bouton tout mettre à jour
+- Créer un executable
+
